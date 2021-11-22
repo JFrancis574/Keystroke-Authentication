@@ -1,4 +1,4 @@
-# Your project name here
+# Keystroke Dynamics for user authentication
 
 ## Information about this repository
 
@@ -7,3 +7,5 @@ This is the repository that you are going to use **individually** for developing
 Regarding the use of this repository, once a feature (or part of it) is developed and **working** or parts of your system are integrated and **working**, define a commit and push it to the remote repository. You may find yourself making a commit after a productive hour of work (or even after 20 minutes!), for example. Choose commit message wisely and be concise.
 
 Please choose the structure of the contents of this repository that suits the needs of your project but do indicate in this file where the main software artefacts are located.
+
+All code is located inside the code folder. For documentation and notes. These are located inside the Notes folder. Inside the notes folder, is not only my notes when reading papers but also a copy of the interim report and a copy of all my gantt charts along with the project files.
