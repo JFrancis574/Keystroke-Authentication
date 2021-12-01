@@ -131,18 +131,17 @@ if __name__ == "__main__":
     print("Pairs")
     for y in holdTimes:
         for i in range(1, len(y)):
-            print("Key: " + y[0] + " Holdtime = " + str(y[i]))
+            print("Key: " + y[0] + " Hold time = " + str(y[i]))
         
     avgHoldTimes = avgHoldTime(holdTimes)
     print("Average Hold Times for each key")
     for q in avgHoldTimes:
         print("Key: " + q[0] + " Average hold time: " + str(q[1]))
         
-    
     floattimes = floatTime(rawData)
     print("Floattime - wip")
     for a in floattimes:
-        print("Key1: " + a[0] + " Key2: " + a[1] + " Floatime = " + str(a[2]))
+        print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
         
     storeallData(rawData, holdTimes, avgHoldTimes, floattimes)
     
