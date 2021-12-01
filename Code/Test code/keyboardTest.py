@@ -2,6 +2,7 @@ import keyboard
 from threading import Timer
 from datetime import datetime
 from numpy import add
+import sqlite3 as sq
 
 from numpy.lib.function_base import append
 
@@ -60,21 +61,66 @@ def avgHoldTime(holdArray):
             avgHoldTimeArray.append([b[0], b[1]])
     return avgHoldTimeArray
 
-# Calculate float time
+# Calculate float time - not finished
 def floatTime(rawData):
+    flighTimeArray = []
     for x in range(len(rawData)):
         if (rawData[x][2] == 'up'):
             for i in range(x, len(rawData)):
                 if (rawData[i][2] == 'down'):
                     flightime = rawData[i][1] - rawData[x][1]
-                    print(rawData[x][0] + " " +  rawData[i][0] + " " + str(flightime))
+                    flighTimeArray.append([rawData[x][0], rawData[i][0], flightime])
                     break;
-                    
-                    
-            
-    
+    return flighTimeArray
 
-   
+# Storing all the data                              
+def storeallData(rawData, holdTimes, avgHoldTimes, floatTimes):
+    session = 0;
+    dbConn = sq.connect("keyStorage.db")
+    cursor = dbConn.cursor()
+    # Storing all the raw data. Not in full version
+    cursor.execute("CREATE TABLE IF NOT EXISTS keyPresses (id INTEGER PRIMARY KEY AUTOINCREMENT, session_id INTEGER, key TEXT, key_action TEXT, time_of_action REAL)")
+    
+    sessionID = cursor.execute("SELECT MAX(session_id) FROM keyPresses").fetchone()[0]
+    if (str(sessionID) != "None"):
+        session = sessionID + 1
+        for x in rawData:
+            cursor.execute("INSERT INTO keyPresses (session_id, key, key_action, time_of_action) VALUES (?, ?, ?, ?)", (session, x[0], x[2], x[1]))
+            dbConn.commit()
+    else:
+        for x in rawData:
+            cursor.execute("INSERT INTO keyPresses (session_id, key, key_action, time_of_action) VALUES (?, ?, ?, ?)", (session, x[0], x[2], x[1]))
+            dbConn.commit()
+    # Sessions
+    cursor.execute("CREATE TABLE IF NOT EXISTS sessions (SessionID INTEGER PRIMARY KEY, average_hold_time REAL, average_float_time REAL, session_length_keys INTEGER, session_length_time	REAL)")
+    length_keys = 0
+    for y in holdTimes:
+        for i in range(1, len(y)):
+            length_keys +=1
+    length_time = rawData[len(rawData)-1][1] - rawData[0][1]
+    totalHold = 0
+    countHold = 0
+    for i in avgHoldTimes:
+        totalHold += i[1]
+        countHold += 1
+    sessionAvgHoldTime = totalHold/countHold
+    
+    totalFloat = 0
+    countFloat = 0
+    for i in floatTimes:
+        totalFloat += i[2]
+        countFloat += 1
+    sessionAvgFloatTime = totalFloat/countFloat
+    cursor.execute("INSERT INTO sessions (SessionID, average_hold_time, average_float_time, session_length_keys, session_length_time) VALUES (?,?, ?, ?, ?)", (session, sessionAvgHoldTime, sessionAvgFloatTime, length_keys, length_time))
+    dbConn.commit()
+    
+    # Pairs
+    cursor.execute("CREATE TABLE IF NOT EXISTS pairs (pair_id INTEGER PRIMARY KEY AUTOINCREMENT, session_id INTEGER, key TEXT, holdtime REAL)")
+    for x in holdTimes:
+        for i in range(1, len(x)):
+            cursor.execute("INSERT INTO pairs (session_id, key, holdtime) VALUES (?, ?, ?)", (session, x[0], x[i]))
+            dbConn.commit()
+        
 if __name__ == "__main__":
     rawData = record()
     print("Raw Data:")
@@ -84,14 +130,21 @@ if __name__ == "__main__":
     holdTimes = pairs(rawData)
     print("Pairs")
     for y in holdTimes:
-        print("Key: " + y[0] + " Holdtime = " + str(y[1]))
+        for i in range(1, len(y)):
+            print("Key: " + y[0] + " Holdtime = " + str(y[i]))
         
     avgHoldTimes = avgHoldTime(holdTimes)
     print("Average Hold Times for each key")
     for q in avgHoldTimes:
         print("Key: " + q[0] + " Average hold time: " + str(q[1]))
         
-    floatTime(rawData)
+    
+    floattimes = floatTime(rawData)
+    print("Floattime - wip")
+    for a in floattimes:
+        print("Key1: " + a[0] + " Key2: " + a[1] + " Floatime = " + str(a[2]))
+        
+    storeallData(rawData, holdTimes, avgHoldTimes, floattimes)
     
     
     
