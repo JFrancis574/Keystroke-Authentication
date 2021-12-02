@@ -1,29 +1,47 @@
 import keyboard
 from threading import Timer
 from datetime import datetime
-from numpy import add
+import numpy as np
 import sqlite3 as sq
+import time
+import math
 
 from numpy.lib.function_base import append
 
 # Record events until 'esc' is pressed and then plays them
 def record():
+    startTime = time.time()
     recorded = keyboard.record(until='esc')
-    print(recorded)
     rawKeys = []
     count = 0
     for record in recorded:
-        print(record.name, record.time, record.event_type, count)
+        #print(record.name, (record.time - startTime), record.event_type, count)
         count += 1
-        rawKeys.append([record.name, record.time, record.event_type])
+        rawKeys.append([record.name, (record.time - startTime), record.event_type])
     return rawKeys
+
+# Calculate just pairs
+def rawPairs(rawKeys):
+    pairsArray = []
+    for i in range(len(rawKeys)):
+        try:
+            if (rawKeys[i][2] == 'down' and rawKeys[i+1][2] == 'up' and rawKeys[i][0].lower() == rawKeys[i+1][0].lower()):
+                pairsArray.append([rawKeys[i][0], rawKeys[i][1], rawKeys[i+1][1]])
+            else:
+                for x in range(i, len(rawKeys)):
+                    if (rawKeys[x][0].lower() == rawKeys[i][0].lower() and rawKeys[x][2] == 'up' and rawKeys[i][2] == 'down'):
+                        pairsArray.append([rawKeys[i][0], rawKeys[i][1], rawKeys[x][1]])        
+        except IndexError:
+            pass;
+    return pairsArray
+        
     
 # Calculate pairs and hold time
 def pairs(rawKeys):
     holdTimeArray = []
     for i in range(len(rawKeys)):
         try:
-            if (rawKeys[i][2] == 'down' and rawKeys[i+1][2] == 'up'):
+            if (rawKeys[i][2] == 'down' and rawKeys[i+1][2] == 'up' and rawKeys[i][0].lower() == rawKeys[i+1][0].lower()):
                 holdTime = rawKeys[i+1][1] - rawKeys[i][1]
                 found = False
                 for c in holdTimeArray:
@@ -33,7 +51,7 @@ def pairs(rawKeys):
                 if found == False:
                     holdTimeArray.append([rawKeys[i][0], holdTime])
             else:
-                for x in range(len(rawKeys)):
+                for x in range(i, len(rawKeys)):
                     if (rawKeys[x][0].lower() == rawKeys[i][0].lower() and rawKeys[x][2] == 'up' and rawKeys[i][2] == 'down'):
                         holdTime = rawKeys[x][1] - rawKeys[i][1]
                         found = False
@@ -120,15 +138,39 @@ def storeallData(rawData, holdTimes, avgHoldTimes, floatTimes):
         for i in range(1, len(x)):
             cursor.execute("INSERT INTO pairs (session_id, key, holdtime) VALUES (?, ?, ?)", (session, x[0], x[i]))
             dbConn.commit()
-        
+
+# Heaviside function used for KDS
+def heaviside(x1, x2):
+    if (x1 > x2):
+        return 1
+    elif (x1 == x2):
+        return 0.5
+    else:
+        return 0
+
+# KDS function
+def KDS(time, keysArray):
+    sum = 0
+    for i in range(1, len(keysArray)):
+        #print(time, keysArray[i][1], keysArray[i][2])
+        #print(heaviside(time, keysArray[i][1]) - heaviside(time, keysArray[i][2]))
+        sum += heaviside(time, keysArray[i][1]) - heaviside(time, keysArray[i][2])
+    #print(time, sum)
+    return sum
+
 if __name__ == "__main__":
     rawData = record()
     print("Raw Data:")
     for x in rawData:
         print(x)
+        
+    rawPairsOut = rawPairs(rawData)
+    print("Raw Pairs:")
+    for x in rawPairsOut:
+        print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
     
     holdTimes = pairs(rawData)
-    print("Pairs")
+    print("Pairs with hold times")
     for y in holdTimes:
         for i in range(1, len(y)):
             print("Key: " + y[0] + " Hold time = " + str(y[i]))
@@ -144,6 +186,9 @@ if __name__ == "__main__":
         print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
         
     storeallData(rawData, holdTimes, avgHoldTimes, floattimes)
+    
+    for x in range(0, 10):
+        print(x/10, KDS(x/10, rawPairsOut))
     
     
     
