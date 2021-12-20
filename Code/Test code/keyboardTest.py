@@ -1,12 +1,12 @@
 import keyboard
 from threading import Timer
 from datetime import datetime
-import numpy as np
+#import numpy as np
 import sqlite3 as sq
 import time
 import math
 
-from numpy.lib.function_base import append
+#from numpy.lib.function_base import append
 
 # Record events until 'esc' is pressed and then plays them
 def record():
@@ -15,7 +15,6 @@ def record():
     rawKeys = []
     count = 0
     for record in recorded:
-        #print(record.name, (record.time - startTime), record.event_type, count)
         count += 1
         rawKeys.append([record.name, (record.time - startTime), record.event_type])
     return rawKeys
@@ -161,34 +160,34 @@ def KDS(time, keysArray):
 if __name__ == "__main__":
     rawData = record()
     print("Raw Data:")
-    for x in rawData:
-        print(x)
+    #for x in rawData:
+        #print(x)
         
     rawPairsOut = rawPairs(rawData)
     print("Raw Pairs:")
-    for x in rawPairsOut:
-        print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
+    #for x in rawPairsOut:
+        #print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
     
     holdTimes = pairs(rawData)
     print("Pairs with hold times")
-    for y in holdTimes:
-        for i in range(1, len(y)):
-            print("Key: " + y[0] + " Hold time = " + str(y[i]))
+    #for y in holdTimes:
+        #for i in range(1, len(y)):
+            #print("Key: " + y[0] + " Hold time = " + str(y[i]))
         
     avgHoldTimes = avgHoldTime(holdTimes)
     print("Average Hold Times for each key")
-    for q in avgHoldTimes:
-        print("Key: " + q[0] + " Average hold time: " + str(q[1]))
+    #for q in avgHoldTimes:
+        #print("Key: " + q[0] + " Average hold time: " + str(q[1]))
         
     floattimes = floatTime(rawData)
     print("Floattime - wip")
-    for a in floattimes:
-        print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
+    #for a in floattimes:
+        #print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
         
     storeallData(rawData, holdTimes, avgHoldTimes, floattimes)
     
-    for x in range(0, 10):
-        print(x/10, KDS(x/10, rawPairsOut))
+    #for x in range(0, 10):
+        #print(x/10, KDS(x/10, rawPairsOut))
     
     
     
