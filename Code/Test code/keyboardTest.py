@@ -191,6 +191,14 @@ if __name__ == "__main__":
     
     
     
-    
+""" 
+TODO:
+- Intervak Intervak Interval
+- Second stafe
+- KDS Proper
+ 
+ 
+ 
+"""   
 
 
