@@ -194,8 +194,13 @@ if __name__ == "__main__":
 """ 
 TODO:
 - Intervak Intervak Interval
-- Second stafe
+    - Edit keyboard libary somehow with timer
+- Second stage of algorithm
+    - Not much progress made
 - KDS Proper
+    - Verify KDS
+    - May need the edit
+    -
  
  
  
