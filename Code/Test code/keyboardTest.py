@@ -8,16 +8,22 @@ import math
 
 #from numpy.lib.function_base import append
 
-# Record events until 'esc' is pressed and then plays them
-def record():
-    startTime = time.time()
-    recorded = keyboard.record(until='esc')
+# Record events until at the interval passed in
+def record(interval):
+    recorded = []
+    keyBoardHook = keyboard.hook(recorded.append)
+    time.sleep(interval)
+    keyboard.unhook(keyBoardHook)
+    return recorded
+
+def process(startTime, keys):
     rawKeys = []
     count = 0
-    for record in recorded:
+    for record in keys:
         count += 1
         rawKeys.append([record.name, (record.time - startTime), record.event_type])
     return rawKeys
+    
 
 # Calculate just pairs
 def rawPairs(rawKeys):
@@ -158,33 +164,35 @@ def KDS(time, keysArray):
     return sum
 
 if __name__ == "__main__":
-    rawData = record()
-    print("Raw Data:")
-    #for x in rawData:
-        #print(x)
+    for x in range(10):
+        rawData = record(5.0)
+        print("Processed:")
+        processed = process(rawData)
+        for x in processed:
+            print(x)
+            
+        rawPairsOut = rawPairs(processed)
+        print("Raw Pairs:")
+        #for x in rawPairsOut:
+            #print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
         
-    rawPairsOut = rawPairs(rawData)
-    print("Raw Pairs:")
-    #for x in rawPairsOut:
-        #print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
-    
-    holdTimes = pairs(rawData)
-    print("Pairs with hold times")
-    #for y in holdTimes:
-        #for i in range(1, len(y)):
-            #print("Key: " + y[0] + " Hold time = " + str(y[i]))
+        holdTimes = pairs(processed)
+        print("Pairs with hold times")
+        #for y in holdTimes:
+            #for i in range(1, len(y)):
+                #print("Key: " + y[0] + " Hold time = " + str(y[i]))
+            
+        avgHoldTimes = avgHoldTime(holdTimes)
+        print("Average Hold Times for each key")
+        #for q in avgHoldTimes:
+            #print("Key: " + q[0] + " Average hold time: " + str(q[1]))
+            
+        floattimes = floatTime(processed)
+        print("Floattime - wip")
+        #for a in floattimes:
+            #print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
         
-    avgHoldTimes = avgHoldTime(holdTimes)
-    print("Average Hold Times for each key")
-    #for q in avgHoldTimes:
-        #print("Key: " + q[0] + " Average hold time: " + str(q[1]))
-        
-    floattimes = floatTime(rawData)
-    print("Floattime - wip")
-    #for a in floattimes:
-        #print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
-        
-    storeallData(rawData, holdTimes, avgHoldTimes, floattimes)
+    #storeallData(rawData, holdTimes, avgHoldTimes, floattimes)
     
     #for x in range(0, 10):
         #print(x/10, KDS(x/10, rawPairsOut))
