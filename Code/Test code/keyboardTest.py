@@ -64,8 +64,10 @@ def pairs(rawKeys):
                             if c[0] == rawKeys[i][0]:
                                 c.append(holdTime)
                                 found = True
+                                break
                         if found == False:
-                            holdTimeArray.append([rawKeys[i][0], holdTime])        
+                            holdTimeArray.append([rawKeys[i][0], holdTime])
+                    break        
         except IndexError:
             pass;
     return holdTimeArray
@@ -159,50 +161,51 @@ def KDS(time, keysArray):
     for i in range(1, len(keysArray)):
         #print(time, keysArray[i][1], keysArray[i][2])
         #print(heaviside(time, keysArray[i][1]) - heaviside(time, keysArray[i][2]))
-        sum += heaviside(time, keysArray[i][1]) - heaviside(time, keysArray[i][2])
+        sum += heaviside(time, round(keysArray[i][1], 1)) - heaviside(time, round(keysArray[i][2], 1))
     #print(time, sum)
     return sum
 
 if __name__ == "__main__":
-    for x in range(10):
-        rawData = record(5.0)
+    interval = 5.0
+    for x in range(1):
+        start = time.time()
+        rawData = record(interval)
         print("Processed:")
-        processed = process(rawData)
+        processed = process(start, rawData)
         for x in processed:
             print(x)
             
         rawPairsOut = rawPairs(processed)
         print("Raw Pairs:")
-        #for x in rawPairsOut:
-            #print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
+        for x in rawPairsOut:
+            print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
+            print("Down Rounded: " + str(round(x[1], 1)) + " Up: " + str(round(x[2], 1)))
         
         holdTimes = pairs(processed)
         print("Pairs with hold times")
-        #for y in holdTimes:
-            #for i in range(1, len(y)):
-                #print("Key: " + y[0] + " Hold time = " + str(y[i]))
+        for y in holdTimes:
+            for i in range(1, len(y)):
+                print("Key: " + y[0] + " Hold time = " + str(y[i]))
             
         avgHoldTimes = avgHoldTime(holdTimes)
         print("Average Hold Times for each key")
-        #for q in avgHoldTimes:
-            #print("Key: " + q[0] + " Average hold time: " + str(q[1]))
+        for q in avgHoldTimes:
+            print("Key: " + q[0] + " Average hold time: " + str(q[1]))
             
         floattimes = floatTime(processed)
         print("Floattime - wip")
-        #for a in floattimes:
-            #print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
+        for a in floattimes:
+            print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
         
     #storeallData(rawData, holdTimes, avgHoldTimes, floattimes)
     
-    #for x in range(0, 10):
-        #print(x/10, KDS(x/10, rawPairsOut))
+        for x in range(0, int(interval*10)):
+            print(x/10, KDS(x/10, rawPairsOut))
     
     
     
 """ 
 TODO:
-- Intervak Intervak Interval
-    - Edit keyboard libary somehow with timer
 - Second stage of algorithm
     - Not much progress made
 - KDS Proper
