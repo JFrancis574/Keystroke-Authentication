@@ -5,6 +5,7 @@ from datetime import datetime
 import sqlite3 as sq
 import time
 import math
+from DBConnection import DBStuff
 
 #from numpy.lib.function_base import append
 
@@ -207,14 +208,7 @@ if __name__ == "__main__":
 """ 
 TODO:
 - Second stage of algorithm
-    - Not much progress made
-- KDS Proper
-    - Verify KDS
-    - May need the edit
-    -
- 
- 
- 
+    - Not much progress made 
 """   
 
 
