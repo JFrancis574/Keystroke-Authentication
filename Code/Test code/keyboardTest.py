@@ -6,6 +6,8 @@ import sqlite3 as sq
 import time
 import math
 from DBConnection import DBStuff
+import matplotlib.pyplot as plt
+import pickle
 
 #from numpy.lib.function_base import append
 
@@ -36,41 +38,25 @@ def rawPairs(rawKeys):
             else:
                 for x in range(i, len(rawKeys)):
                     if (rawKeys[x][0].lower() == rawKeys[i][0].lower() and rawKeys[x][2] == 'up' and rawKeys[i][2] == 'down'):
-                        pairsArray.append([rawKeys[i][0], rawKeys[i][1], rawKeys[x][1]])        
+                        pairsArray.append([rawKeys[i][0], rawKeys[i][1], rawKeys[x][1]])
+                        break        
         except IndexError:
             pass;
     return pairsArray
         
     
 # Calculate pairs and hold time
-def pairs(rawKeys):
+def holdTime(pairs):
     holdTimeArray = []
-    for i in range(len(rawKeys)):
-        try:
-            if (rawKeys[i][2] == 'down' and rawKeys[i+1][2] == 'up' and rawKeys[i][0].lower() == rawKeys[i+1][0].lower()):
-                holdTime = rawKeys[i+1][1] - rawKeys[i][1]
-                found = False
-                for c in holdTimeArray:
-                    if c[0] == rawKeys[i][0]:
-                        c.append(holdTime)
-                        found = True
-                if found == False:
-                    holdTimeArray.append([rawKeys[i][0], holdTime])
-            else:
-                for x in range(i, len(rawKeys)):
-                    if (rawKeys[x][0].lower() == rawKeys[i][0].lower() and rawKeys[x][2] == 'up' and rawKeys[i][2] == 'down'):
-                        holdTime = rawKeys[x][1] - rawKeys[i][1]
-                        found = False
-                        for c in holdTimeArray:
-                            if c[0] == rawKeys[i][0]:
-                                c.append(holdTime)
-                                found = True
-                                break
-                        if found == False:
-                            holdTimeArray.append([rawKeys[i][0], holdTime])
-                    break        
-        except IndexError:
-            pass;
+    for i in pairs:
+        holdTimeCalc = i[2] - i[1]
+        found = False
+        for c in holdTimeArray:
+            if c[0] == i[0]:
+                c.append(holdTimeCalc)
+                found = True
+        if found == False:
+            holdTimeArray.append([i[0], holdTimeCalc])
     return holdTimeArray
 
 # Calculate average hold time
@@ -160,19 +146,21 @@ def heaviside(x1, x2):
 def KDS(time, keysArray):
     sum = 0
     for i in range(1, len(keysArray)):
-        #print(time, keysArray[i][1], keysArray[i][2])
-        #print(heaviside(time, keysArray[i][1]) - heaviside(time, keysArray[i][2]))
-        sum += heaviside(time, round(keysArray[i][1], 1)) - heaviside(time, round(keysArray[i][2], 1))
-    #print(time, sum)
+        sum += heaviside(time, round(keysArray[i][1], 2)) - heaviside(time, round(keysArray[i][2], 2))
     return sum
 
 if __name__ == "__main__":
-    interval = 5.0
+    interval = 60.0
+    
+    infile = open("60SecondTestData",'rb')
+    processed = pickle.load(infile)
+    infile.close()
+    
     for x in range(1):
         start = time.time()
-        rawData = record(interval)
+        #rawData = record(interval)
         print("Processed:")
-        processed = process(start, rawData)
+        #processed = process(start, rawData)
         for x in processed:
             print(x)
             
@@ -180,10 +168,9 @@ if __name__ == "__main__":
         print("Raw Pairs:")
         for x in rawPairsOut:
             print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
-            print("Down Rounded: " + str(round(x[1], 1)) + " Up: " + str(round(x[2], 1)))
-        
-        holdTimes = pairs(processed)
-        print("Pairs with hold times")
+
+        holdTimes = holdTime(rawPairsOut)
+        print("Hold times")
         for y in holdTimes:
             for i in range(1, len(y)):
                 print("Key: " + y[0] + " Hold time = " + str(y[i]))
@@ -198,10 +185,14 @@ if __name__ == "__main__":
         for a in floattimes:
             print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
         
-    #storeallData(rawData, holdTimes, avgHoldTimes, floattimes)
-    
-        for x in range(0, int(interval*10)):
-            print(x/10, KDS(x/10, rawPairsOut))
+        storeallData(processed, holdTimes, avgHoldTimes, floattimes)
+        KDSDict = {}
+        for y in [p/100 for p in range(0, int(interval*100)+1)]:
+            KDSDict[y] = KDS(y, rawPairsOut)
+            
+        print(KDSDict)
+        plt.plot(KDSDict.keys(), KDSDict.values())
+        plt.show()
     
     
     

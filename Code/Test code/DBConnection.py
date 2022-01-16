@@ -1,7 +1,6 @@
 import sqlite3 as sq
 
 class DBStuff():
-    
     def __init__(self, dbName):
         self.dbName = dbName
         self.conn = self.connection()
@@ -19,7 +18,7 @@ class DBStuff():
     
     def setupTables(self):
         self.cursor.execute("CREATE TABLE IF NOT EXISTS keyPresses (id INTEGER PRIMARY KEY AUTOINCREMENT, session_id INTEGER, key TEXT, key_action TEXT, time_of_action REAL)")
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS sessions (SessionID INTEGER PRIMARY KEY, average_hold_time REAL, average_float_time REAL, session_length_keys INTEGER, session_length_time	REAL)")
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS sessions (SessionID INTEGER PRIMARY KEY, average_hold_time REAL, average_float_time REAL, session_length_keys INTEGER, session_length_time REAL)")
         self.cursor.execute("CREATE TABLE IF NOT EXISTS pairs (pair_id INTEGER PRIMARY KEY AUTOINCREMENT, session_id INTEGER, key TEXT, holdtime REAL)")
         self.cursor.execute("CREATE TABLE IF NOT EXISTS loginInfo (id INTEGER PRIMARY KEY AUTOINCREMENT, UserID TEXT, EncPassword TEXT)")
         self.conn.commit()

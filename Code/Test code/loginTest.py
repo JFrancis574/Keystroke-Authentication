@@ -1,3 +1,4 @@
+from base64 import encode
 import bcrypt
 from getpass import getpass, getuser
 from DBConnection import DBStuff as db
@@ -9,6 +10,7 @@ password = getpass()
 # Encrypt
 salt = bcrypt.gensalt()
 encodedPW = bcrypt.hashpw(password.encode(), salt)
+print(encodedPW)
 
 # Store
 DataStore = db("keyStorage.db")
