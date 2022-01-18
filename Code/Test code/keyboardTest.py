@@ -254,6 +254,7 @@ if __name__ == "__main__":
         
         print(KDSDictWordByWord)   
         plt.plot(KDSDictWordByWord.keys(), KDSDictWordByWord.values())
+        plt.title("KDS For the first word")
         plt.show()
     
     

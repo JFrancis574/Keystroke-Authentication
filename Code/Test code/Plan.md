@@ -67,7 +67,7 @@ A more detailed 10 second look at the same data looks like this:
 
 A more detailed view is here.
 
-
+![kds](60SecondTestDataKDS1Word.png)
 
 ### Plan for the next month
 - [ ] Fix FloatTime
