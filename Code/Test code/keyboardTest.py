@@ -9,7 +9,7 @@ def words(pairs):
     currentWord = []
     output = []
     for i in pairs:
-        if i[0] not in [',','!','space', 'enter', ';',"'",'(',')']:
+        if i[0] not in [',','!','space', 'enter', ';',"'",'(',')', ',']:
             if i[0] == 'backspace':
                 currentWord.pop(len(currentWord)-1)
             else:
@@ -92,6 +92,20 @@ def floatTime(rawData):
                     break;
     return flighTimeArray
 
+def floatTime2(data):
+    flighTimeArray = []
+    for x in range(len(data)):
+        try:
+            if data[x][2] == 'up' and data[x+1][2] == 'down':
+                flightTime = data[x+1][1] - data[x][1]
+                flighTimeArray.append([data[x][0], data[x+1][0], flightTime])
+            elif data[x][2] == 'down' and data[x+1][2] == 'up':
+                pass
+                
+        except IndexError:
+            pass
+    return flighTimeArray
+
 # Storing all the data                              
 def storeallData(rawData, holdTimes, avgHoldTimes, floatTimes):
     session = 0;
@@ -150,10 +164,10 @@ def heaviside(x1, x2):
         return 0
 
 # KDS function
-def KDS(time, keysArray):
+def KDS(time, keysArray, roundValue):
     sum = 0
     for i in range(1, len(keysArray)):
-        sum += heaviside(time, round(keysArray[i][1], 2)) - heaviside(time, round(keysArray[i][2], 2))
+        sum += heaviside(time, round(keysArray[i][1], roundValue)) - heaviside(time, round(keysArray[i][2], roundValue))
     return sum
 
 if __name__ == "__main__":
@@ -176,42 +190,71 @@ if __name__ == "__main__":
         for x in rawPairsOut:
             print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
 
-        holdTimes = holdTime(rawPairsOut)
-        print("Hold times")
-        for y in holdTimes:
-            for i in range(1, len(y)):
-                print("Key: " + y[0] + " Hold time = " + str(y[i]))
+        #holdTimes = holdTime(rawPairsOut)
+        # print("Hold times")
+        # for y in holdTimes:
+        #     for i in range(1, len(y)):
+                
+        #         print("Key: " + y[0] + " Hold time = " + str(y[i]))
             
-        avgHoldTimes = avgHoldTime(holdTimes)
-        print("Average Hold Times for each key")
-        for q in avgHoldTimes:
-            print("Key: " + q[0] + " Average hold time: " + str(q[1]))
+        # avgHoldTimes = avgHoldTime(holdTimes)
+        # print("Average Hold Times for each key")
+        # for q in avgHoldTimes:
+        #     print("Key: " + q[0] + " Average hold time: " + str(q[1]))
             
-        floattimes = floatTime(processed)
-        print("Floattime - wip")
-        for a in floattimes:
-            print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
+        # floattimes = floatTime(processed)
+        # print("Floattime - wip")
+        # for a in floattimes:
+        #     print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
         
         word = ""
         wordsTest = []
-        for i, j in enumerate(words(rawPairsOut)):
-            for x in j:
-                word += x[0]
-            wordsTest.append(word)
-            word = ""
-        for x in wordsTest:
-            print(x)
+        #print(words(rawPairsOut))
+        # for i, j in enumerate(words(rawPairsOut)):
+        #     for x in j:
+        #         word += x[0]
+        #     wordsTest.append(word)
+        #     word = ""
+        # for x in wordsTest:
+        #     print(x)
             
-        storeallData(processed, holdTimes, avgHoldTimes, floattimes)
+        # storeallData(processed, holdTimes, avgHoldTimes, floattimes)
         
-        KDSDict = {}
-        for y in [p/100 for p in range(0, int(interval*100)+1)]:
-            KDSDict[y] = KDS(y, rawPairsOut)
+        # # KDS FOR WHOLE SAMPLE
+        # KDSDictWhole = {}
+        # for y in [p/100 for p in range(0, int(interval*100)+1)]:
+        #     KDSDictWhole[y] = KDS(y, rawPairsOut,2)
             
-        #print(KDSDict)
-        plt.plot(KDSDict.keys(), KDSDict.values())
+        # #print(KDSDict)
+        # plt.plot(KDSDictWhole.keys(), KDSDictWhole.values())
+        # plt.show()
+        
+        for i in words(rawPairsOut):
+            print(i)
+            break
+        
+        # KDS FOR JUST FIRST WORD
+        wordsOut = words(rawPairsOut)
+        start = wordsOut[0][0][1]
+        finish = wordsOut[0][len(wordsOut[0])-1][2]
+        startRounded = round(start, 4)
+        finishRounded = round(finish, 4)
+        Diff = finishRounded-startRounded
+        DiffDivided = round(Diff/0.0001, 0)
+        print(start)
+        print(finish)
+        print(startRounded)
+        print(finishRounded)
+        print("Diff: " + str(Diff))
+        print(DiffDivided)
+        
+        KDSDictWordByWord = {}
+        for y in [p/10000 for p in range(int(startRounded*10000)-1, int(finishRounded*10000))]:
+            KDSDictWordByWord[y] = KDS(y, wordsOut[0], 4)
+        
+        print(KDSDictWordByWord)   
+        plt.plot(KDSDictWordByWord.keys(), KDSDictWordByWord.values())
         plt.show()
-    
     
     
 """ 
