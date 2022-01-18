@@ -63,7 +63,7 @@ The current KDS output looks like this:
 
 A more detailed 10 second look at the same data looks like this:
 
-![kds](/60SecondTestDataKDS10Seconds.png)
+![kds](60SecondTestDataKDS10Seconds.png)
 
 A more detailed view is here.
 
