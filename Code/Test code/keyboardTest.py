@@ -1,15 +1,23 @@
 import keyboard
-from threading import Timer
-from datetime import datetime
-#import numpy as np
 import sqlite3 as sq
 import time
-import math
 from DBConnection import DBStuff
 import matplotlib.pyplot as plt
 import pickle
 
-#from numpy.lib.function_base import append
+def words(pairs):
+    currentWord = []
+    output = []
+    for i in pairs:
+        if i[0] not in [',','!','space', 'enter', ';',"'",'(',')']:
+            if i[0] == 'backspace':
+                currentWord.pop(len(currentWord)-1)
+            else:
+                currentWord.append(i)
+        else:
+            output.append(currentWord)
+            currentWord = []
+    return output
 
 # Record events until at the interval passed in
 def record(interval):
@@ -27,7 +35,6 @@ def process(startTime, keys):
         rawKeys.append([record.name, (record.time - startTime), record.event_type])
     return rawKeys
     
-
 # Calculate just pairs
 def rawPairs(rawKeys):
     pairsArray = []
@@ -158,7 +165,7 @@ if __name__ == "__main__":
     
     for x in range(1):
         start = time.time()
-        #rawData = record(interval)
+        # rawData = record(interval)
         print("Processed:")
         #processed = process(start, rawData)
         for x in processed:
@@ -185,12 +192,23 @@ if __name__ == "__main__":
         for a in floattimes:
             print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
         
+        word = ""
+        wordsTest = []
+        for i, j in enumerate(words(rawPairsOut)):
+            for x in j:
+                word += x[0]
+            wordsTest.append(word)
+            word = ""
+        for x in wordsTest:
+            print(x)
+            
         storeallData(processed, holdTimes, avgHoldTimes, floattimes)
+        
         KDSDict = {}
         for y in [p/100 for p in range(0, int(interval*100)+1)]:
             KDSDict[y] = KDS(y, rawPairsOut)
             
-        print(KDSDict)
+        #print(KDSDict)
         plt.plot(KDSDict.keys(), KDSDict.values())
         plt.show()
     
