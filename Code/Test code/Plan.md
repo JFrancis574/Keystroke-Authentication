@@ -59,7 +59,7 @@ This function so far returns the correct words in the correct order. I need to g
 
 The current KDS output looks like this:
 
-![kds](/60SecondTestDataKDS.png)
+![kds](https://campus.cs.le.ac.uk/gitlab/ug_project/21-22/jtf10/-/blob/main/Code/Test%20code/60SecondTestDataKDS.png)
 
 A more detailed 10 second look at the same data looks like this:
 
