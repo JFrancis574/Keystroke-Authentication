@@ -51,10 +51,12 @@ for [a,b] in path:
 
 
 print(f)
+print(list(KDS1.values()))
 print(g)
-plt.plot([x/10 for x in range(1,10)], f, color="purple")
-plt.plot([x/10 for x in range(1,10)], g, color="red")
+print(list(KDS2.values()))
+#plt.plot([x/10 for x in range(1,10)], f, color="purple")
+#plt.plot([x/10 for x in range(1,10)], g, color="red")
 
-#plt.plot(KDS1.keys(), KDS1.values())
-#plt.plot(KDS2.keys(), KDS2.values())
-plt.show()
+#plt.plot(KDS1.keys(), KDS1.values(), color="white")
+#plt.plot(KDS2.keys(), KDS2.values(), color="white")
+#plt.show()
