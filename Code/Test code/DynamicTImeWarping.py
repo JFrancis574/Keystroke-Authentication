@@ -43,20 +43,44 @@ distance, path = fastdtw(x, y, dist=euclidean)
 print(path)
 print(distance)
 
-f,g = [], []
-for [a,b] in path:
-    #print(x[a], y[b])
-    f.append(x[a])
-    g.append(y[b])
+# f,g = [], []
+# for [a,b] in path:
+#     #print(x[a], y[b])
+#     f.append(x[a])
+#     g.append(y[b])
 
 
-print(f)
-print(list(KDS1.values()))
-print(g)
-print(list(KDS2.values()))
+# print(f)
+# print(list(KDS1.values()))
+# print(g)
+# print(list(KDS2.values()))
 #plt.plot([x/10 for x in range(1,10)], f, color="purple")
 #plt.plot([x/10 for x in range(1,10)], g, color="red")
 
 #plt.plot(KDS1.keys(), KDS1.values(), color="white")
 #plt.plot(KDS2.keys(), KDS2.values(), color="white")
 #plt.show()
+
+x_path, y_path = zip(*path)
+x_path = np.asarray(x_path)
+y_path = np.asarray(y_path)
+print(x)
+x_warped = x[x_path]
+print(x_warped)
+print(y)
+y_warped = y[y_path]
+print(y_warped)
+
+corr2 = np.corrcoef(x_warped, y_warped)
+print(f'Correlation after DTW: {corr2[0, 1]:.4f}')
+
+fig, ax = plt.subplots(2, 1)
+ax[0].plot(x)
+ax[0].plot(y)
+ax[0].grid(True)
+ax[1].plot(x_warped)
+ax[1].plot(y_warped)
+ax[1].grid(True)
+ax[0].set_title('Original Signals')
+ax[1].set_title('Aligned with DTW')
+plt.show()
