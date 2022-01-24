@@ -1,11 +1,15 @@
 import keyboard
 import sqlite3 as sq
 import time
+
+from pyparsing import Word
 from DBConnection import DBStuff
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
 from fastdtw import fastdtw
+import pandas as pd
+from scipy.spatial.distance import euclidean
 
 def words(pairs):
     currentWord = []
@@ -168,7 +172,7 @@ def heaviside(x1, x2):
 # KDS function
 def KDS(time, keysArray, roundValue):
     sum = 0
-    for i in range(1, len(keysArray)):
+    for i in range(0, len(keysArray)):
         sum += heaviside(time, round(keysArray[i][1], roundValue)) - heaviside(time, round(keysArray[i][2], roundValue))
     return sum
 
@@ -231,42 +235,26 @@ if __name__ == "__main__":
         # plt.plot(KDSDictWhole.keys(), KDSDictWhole.values())
         # plt.show()
         
-        for i in words(rawPairsOut):
-            print(i)
-            break
-        
-        # KDS FOR JUST FIRST WORD
         wordsOut = words(rawPairsOut)
-        # start = wordsOut[0][0][1]
-        # finish = wordsOut[0][len(wordsOut[0])-1][2]
-        # startRounded = round(start, 4)
-        # finishRounded = round(finish, 4)
-        # Diff = finishRounded-startRounded
-        # DiffDivided = round(Diff/0.0001, 0)
-        # print(start)
-        # print(finish)
-        # print(startRounded)
-        # print(finishRounded)
-        # print("Diff: " + str(Diff))
-        # print(DiffDivided)
-        
-        # KDSDictWordByWord = {}
-        # for y in [p/10000 for p in range(int(startRounded*10000)-1, int(finishRounded*10000))]:
-        #     KDSDictWordByWord[y] = KDS(y, wordsOut[0], 4)
-        
-        # print(KDSDictWordByWord)   
-        # plt.plot(KDSDictWordByWord.keys(), KDSDictWordByWord.values())
-        # plt.title("KDS For the first word")
-        # plt.show()
         KDSOutput = {}
         WordByWord = []
         for i in range(0, len(wordsOut)):
             for x in range(int(wordsOut[i][0][1]*10000), int(wordsOut[i][len(wordsOut[i])-1][2]*10000)+1):
                 KDSOutput[x/10000] = KDS(x/10000, wordsOut[i], 4) 
-            WordByWord.append(KDSOutput)
-        print(WordByWord)
-    
-    
+            WordByWord.append([i,KDSOutput])
+            KDSOutput = {}
+        
+        fig, axs = plt.subplots(2,1)
+        axs[0].plot(WordByWord[0][1].keys(), WordByWord[0][1].values())
+        axs[0].grid(True)
+        axs[0].set_title("BEFORE DTW: 1")
+            
+        axs[1].plot(WordByWord[1][1].keys(), WordByWord[1][1].values())
+        axs[1].grid(True)
+        axs[1].set_title("BEFORE DTW: 2")
+            
+        plt.show()
+
 """ 
 TODO:
 - Second stage of algorithm
