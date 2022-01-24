@@ -1,3 +1,4 @@
+from cProfile import label
 import keyboard
 import sqlite3 as sq
 import time
@@ -18,9 +19,13 @@ def words(pairs):
         if i[0] not in [',','!','space', 'enter', ';',"'",'(',')', ',']:
             if i[0] == 'backspace':
                 currentWord.pop(len(currentWord)-1)
+            elif i[0] == pairs[len(pairs)-1][0]:
+                output.append(currentWord)
+                currentWord = []
             else:
                 currentWord.append(i)
         else:
+            print(currentWord)
             output.append(currentWord)
             currentWord = []
     return output
@@ -176,84 +181,121 @@ def KDS(time, keysArray, roundValue):
         sum += heaviside(time, round(keysArray[i][1], roundValue)) - heaviside(time, round(keysArray[i][2], roundValue))
     return sum
 
+def KDSWordByWord(wordsOut, roundValue):
+    KDSOutput = {}
+    WordByWord = []
+    for i in range(0, len(wordsOut)):
+        for x in range(int(wordsOut[i][0][1]*10000), int(wordsOut[i][len(wordsOut[i])-1][2]*10000)+1):
+            KDSOutput[x/10000] = KDS(x/10000, wordsOut[i], roundValue) 
+        WordByWord.append([i,KDSOutput])
+        KDSOutput = {}
+    return WordByWord
+
 if __name__ == "__main__":
     interval = 60.0
     
-    infile = open("60SecondTestData",'rb')
-    processed = pickle.load(infile)
+    infile = open("Hello1",'rb')
+    processed1 = pickle.load(infile)
+    infile.close()
+    
+    infile = open("Hello2",'rb')
+    processed2 = pickle.load(infile)
+    infile.close()
+    
+    infile = open("Imposter",'rb')
+    processed3 = pickle.load(infile)
     infile.close()
     
     for x in range(1):
-        start = time.time()
-        # rawData = record(interval)
-        print("Processed:")
-        #processed = process(start, rawData)
-        for x in processed:
-            print(x)
-            
-        rawPairsOut = rawPairs(processed)
-        print("Raw Pairs:")
-        for x in rawPairsOut:
-            print("Key: " + x[0] + " Down: " + str(x[1]) + " Up: " + str(x[2]))
-
-        #holdTimes = holdTime(rawPairsOut)
-        # print("Hold times")
-        # for y in holdTimes:
-        #     for i in range(1, len(y)):
-                
-        #         print("Key: " + y[0] + " Hold time = " + str(y[i]))
-            
-        # avgHoldTimes = avgHoldTime(holdTimes)
-        # print("Average Hold Times for each key")
-        # for q in avgHoldTimes:
-        #     print("Key: " + q[0] + " Average hold time: " + str(q[1]))
-            
-        # floattimes = floatTime(processed)
-        # print("Floattime - wip")
-        # for a in floattimes:
-        #     print("Key1: " + a[0] + " Key2: " + a[1] + " Float time = " + str(a[2]))
+        rawPairsOut = rawPairs(processed1)
+        rawPairsOut1 = rawPairs(processed2)
+        rawPairsOut2 = rawPairs(processed3)
         
-        word = ""
-        wordsTest = []
-        #print(words(rawPairsOut))
-        # for i, j in enumerate(words(rawPairsOut)):
-        #     for x in j:
-        #         word += x[0]
-        #     wordsTest.append(word)
-        #     word = ""
-        # for x in wordsTest:
-        #     print(x)
-            
-        # storeallData(processed, holdTimes, avgHoldTimes, floattimes)
+        wordsOut = KDSWordByWord(words(rawPairsOut), 4)
+        wordsOut1 = KDSWordByWord(words(rawPairsOut1), 4)
+        wordsOut2 = KDSWordByWord(words(rawPairsOut2), 4)
         
-        # # KDS FOR WHOLE SAMPLE
-        # KDSDictWhole = {}
-        # for y in [p/100 for p in range(0, int(interval*100)+1)]:
-        #     KDSDictWhole[y] = KDS(y, rawPairsOut,2)
-            
-        # #print(KDSDict)
-        # plt.plot(KDSDictWhole.keys(), KDSDictWhole.values())
-        # plt.show()
+        first = np.array(list(wordsOut[0][1].values()))
+        second = np.array(list(wordsOut1[0][1].values()))
+        third = np.array(list(wordsOut2[0][1].values()))
         
-        wordsOut = words(rawPairsOut)
-        KDSOutput = {}
-        WordByWord = []
-        for i in range(0, len(wordsOut)):
-            for x in range(int(wordsOut[i][0][1]*10000), int(wordsOut[i][len(wordsOut[i])-1][2]*10000)+1):
-                KDSOutput[x/10000] = KDS(x/10000, wordsOut[i], 4) 
-            WordByWord.append([i,KDSOutput])
-            KDSOutput = {}
+        distance, path = fastdtw(first, second, dist=euclidean)
+        distance2, path2 = fastdtw(first, third, dist=euclidean)
         
-        fig, axs = plt.subplots(2,1)
-        axs[0].plot(WordByWord[0][1].keys(), WordByWord[0][1].values())
-        axs[0].grid(True)
-        axs[0].set_title("BEFORE DTW: 1")
+        print("Distance between 1 and 2 is " + str(distance))
+        print("Distance between 1 and 3 is " + str(distance2))
+        
+        f_path, s_path = zip(*path)
+        f_path = np.asarray(f_path)
+        s_path = np.asarray(s_path)
+        f_warped = first[f_path]
+        s_warped = second[s_path]
+        
+        f_path2, t_path2 = zip(*path)
+        f_path2 = np.asarray(f_path2)
+        t_path2 = np.asarray(t_path2)
+        f_warped2 = first[f_path2]
+        t_warped2 = third[t_path2]
+        
+        print(len(f_warped), len(np.array(list(wordsOut[0][1].keys()))))
+        print(len(s_warped), len(np.array(list(wordsOut1[0][1].keys()))))
+        print(len(t_warped2), len(np.array(list(wordsOut2[0][1].keys()))))
+        
+        warpedKeys = [i/10000 for i in range(1, len(f_warped)+1)]
+        
+        corr = np.corrcoef(f_warped, s_warped)
+        corr2 = np.corrcoef(f_warped2, t_warped2)
+        
+        print("High is good, a value above 0.4 means a strong positive while a value of 1 means a perfect strong positive correlation")
+        print("0.00 means no correlation - e.g. not the same user")
+        # http://academic.brooklyn.cuny.edu/soc/courses/712/chap18.html
+        print(corr[0,1], corr2[0,1])
+        
+        fig, axs = plt.subplots(3,2)
+        axs[0, 0].plot(wordsOut[0][1].keys(), wordsOut[0][1].values(), color="blue")
+        axs[0, 0].grid(True)
+        axs[0, 0].set_title("BEFORE DTW: 1")
             
-        axs[1].plot(WordByWord[1][1].keys(), WordByWord[1][1].values())
-        axs[1].grid(True)
-        axs[1].set_title("BEFORE DTW: 2")
+        axs[1, 0].plot(wordsOut1[0][1].keys(), wordsOut1[0][1].values(), color="orange")
+        axs[1, 0].grid(True)
+        axs[1, 0].set_title("BEFORE DTW: 2")
+        
+        axs[2, 0].plot(wordsOut2[0][1].keys(), wordsOut2[0][1].values(), color="purple")
+        axs[2, 0].grid(True)
+        axs[2, 0].set_title("BEFORE DTW: 3")
+        
+        axs[0, 1].plot(warpedKeys,f_warped, color="blue")
+        axs[0, 1].grid(True)
+        axs[0, 1].set_title("After DTW: 1")
             
+        axs[1, 1].plot(warpedKeys,s_warped, color="orange")
+        axs[1, 1].grid(True)
+        axs[1, 1].set_title("After DTW: 2")
+        
+        axs[2, 1].plot(warpedKeys,t_warped2, color="purple")
+        axs[2, 1].grid(True)
+        axs[2, 1].set_title("After DTW: 3")
+        
         plt.show()
+        
+        fig, ax = plt.subplots(2, 1)
+        ax[0].plot(wordsOut[0][1].keys(), wordsOut[0][1].values(), color="orange", label="Genuine")
+        ax[0].plot(wordsOut1[0][1].keys(), wordsOut1[0][1].values(), color="blue", label="Genuine")
+        ax[0].plot(wordsOut2[0][1].keys(), wordsOut2[0][1].values(), color="purple", label="Imposter")
+        ax[0].grid(True)
+        ax[0].legend(loc=5)
+        ax[0].set_title("Pre-DTW")
+        
+        ax[1].plot(warpedKeys,f_warped, color="blue", label="Genuine")
+        ax[1].plot(warpedKeys,s_warped, color="orange", label="Genuine")
+        ax[1].plot(warpedKeys,t_warped2, color="purple", label="Imposter")
+        ax[1].grid(True)
+        ax[1].legend(loc=5)
+        ax[1].set_title("Post-DTW")
+        
+        plt.show()
+        
+        
 
 """ 
 TODO:
