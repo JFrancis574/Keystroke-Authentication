@@ -39,8 +39,6 @@ for i in range(0, len(intervalOut)):
     for x in words(rawPairs(intervalData))[i]:
         word+= x[0]
     fileName = word +'.json'
-    if os.path.exists(os.getcwd()+'/TestData/'+fileName):
-        fileName = word+str(1)+'.json'
     with open("TestData/"+fileName, 'w') as write_file:
         json.dump(intervalOut[i][1], write_file)
     write_file.close()
@@ -57,13 +55,15 @@ for y in range(0, len(KDSignalWord)):
         with open("TestData/"+inFileName, 'r') as read_file:
             dataIn = json.load(read_file)
         read_file.close()
-        fromFile = np.array(list(KDSignalWord[y][1].values()))
-        readIn = np.array(list(dataIn.values()))
+        inInterval = np.array(list(KDSignalWord[y][1].values()))
+        fromFile = np.array(list(dataIn.values()))
         print(word)
-        print(fromFile[-1], readIn[-1])
-        print(len(fromFile), len(readIn))
+        print(fromFile[-1], inInterval[-1])
+        print(len(fromFile), len(inInterval))
+        print(fromFile == inInterval)
+        print(np.array_equiv(inInterval, fromFile))
         
-        distance, path = fastdtw(fromFile, readIn, dist=euclidean)
+        distance, path = fastdtw(fromFile, inInterval, dist=euclidean)
         print(distance)
         
 
