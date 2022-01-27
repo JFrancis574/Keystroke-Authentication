@@ -44,5 +44,6 @@ for y in range(0, len(KDSignalWord)):
             json.dump(KDSignalWord[y][1], write_file)
         write_file.close()
 
-        
 print(distances)
+
+

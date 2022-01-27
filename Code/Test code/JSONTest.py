@@ -15,7 +15,7 @@ try:
 except FileExistsError:
     pass
 
-infile = open("60SecondTestData",'rb')  
+infile = open("60SecondTestDataToBeChecked.p",'rb')  
 intervalData = pickle.load(infile)
 infile.close()
 
@@ -31,39 +31,42 @@ with open("TestData/JSONTestFile.json", 'w') as write_file:
 
 write_file.close()
 
-with open("TestData/JSONTestFile.json", "r") as read_file:
-    data = json.load(read_file)
+# with open("TestData/JSONTestFile.json", "r") as read_file:
+#     data = json.load(read_file)
 
 for i in range(0, len(intervalOut)):
     word = ""
     for x in words(rawPairs(intervalData))[i]:
         word+= x[0]
     fileName = word +'.json'
-    with open("TestData/"+fileName, 'w') as write_file:
-        json.dump(intervalOut[i][1], write_file)
-    write_file.close()
+    if os.path.exists(os.getcwd()+'/TestData/'+fileName):
+        pass
+    else:
+        with open("TestData/"+fileName, 'w') as write_file:
+            json.dump(intervalOut[i][1], write_file)
+        write_file.close()
 
-chosen = wordChoose(words(rawPairs(intervalData)),4)
-KDSignalWord = KDSWordByWord(chosen,4)
+# chosen = wordChoose(words(rawPairs(intervalData)),4)
+# KDSignalWord = KDSWordByWord(chosen,4)
 
-for y in range(0, len(KDSignalWord)):
-    word = ""
-    for x in chosen[y]:
-        word+=x[0]
-    inFileName = word+'.json'
-    if os.path.exists(os.getcwd()+'/TestData/'+inFileName):
-        with open("TestData/"+inFileName, 'r') as read_file:
-            dataIn = json.load(read_file)
-        read_file.close()
-        inInterval = np.array(list(KDSignalWord[y][1].values()))
-        fromFile = np.array(list(dataIn.values()))
-        print(word)
-        print(fromFile[-1], inInterval[-1])
-        print(len(fromFile), len(inInterval))
-        print(fromFile == inInterval)
-        print(np.array_equiv(inInterval, fromFile))
+# for y in range(0, len(KDSignalWord)):
+#     word = ""
+#     for x in chosen[y]:
+#         word+=x[0]
+#     inFileName = word+'.json'
+#     if os.path.exists(os.getcwd()+'/TestData/'+inFileName):
+#         with open("TestData/"+inFileName, 'r') as read_file:
+#             dataIn = json.load(read_file)
+#         read_file.close()
+#         inInterval = np.array(list(KDSignalWord[y][1].values()))
+#         fromFile = np.array(list(dataIn.values()))
+#         print(word)
+#         print(fromFile[-1], inInterval[-1])
+#         print(len(fromFile), len(inInterval))
+#         print(fromFile == inInterval)
+#         print(np.array_equiv(inInterval, fromFile))
         
-        distance, path = fastdtw(fromFile, inInterval, dist=euclidean)
-        print(distance)
+#         distance, path = fastdtw(fromFile, inInterval, dist=euclidean)
+#         print(distance)
         
 
