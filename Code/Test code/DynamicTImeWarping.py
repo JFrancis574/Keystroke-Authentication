@@ -9,8 +9,46 @@ y = np.array([1, 2, 2, 2, 2, 2, 2, 4])
 # https://towardsdatascience.com/dynamic-time-warping-3933f25fcdd
 # The distance between a and b is the last element of the matrix. In this case it is 2
 
+def compute_euclidean_distance_matrix(x, y):
+    """Calculate distance matrix
+    This method calcualtes the pairwise Euclidean distance between two sequences.
+    The sequences can have different lengths.
+    """
+    dist = np.zeros((len(y), len(x)))
+    for i in range(len(y)):
+        for j in range(len(x)):
+            dist[i,j] = (x[j]-y[i])**2
+    return dist
+
+
+def compute_accumulated_cost_matrix(x, y):
+    """Compute accumulated cost matrix for warp path using Euclidean distance
+    """
+    distances = compute_euclidean_distance_matrix(x, y)
+
+    # Initialization
+    cost = np.zeros((len(y), len(x)))
+    cost[0,0] = distances[0,0]
+    
+    for i in range(1, len(y)):
+        cost[i, 0] = distances[i, 0] + cost[i-1, 0]  
+        
+    for j in range(1, len(x)):
+        cost[0, j] = distances[0, j] + cost[0, j-1]  
+
+    # Accumulated warp path cost
+    for i in range(1, len(y)):
+        for j in range(1, len(x)):
+            cost[i, j] = min(
+                cost[i-1, j],    # insertion
+                cost[i, j-1],    # deletion
+                cost[i-1, j-1]   # match
+            ) + distances[i, j] 
+            
+    return cost
+
+
 def dynamicTimeWarping(s, t):
-    path = []
     n, m = len(s), len(t)
     matrix = np.zeros((n+1, m+1))
     for i in range(n+1):
@@ -53,6 +91,8 @@ y_warped = y[y_path]
 corr2 = np.corrcoef(x_warped, y_warped)
 print(corr2[0,1])
 print(f'Correlation after DTW: {corr2[0, 1]:.4f}')
+
+print(compute_euclidean_distance_matrix(x, y))
 
 fig, ax = plt.subplots(2, 1)
 ax[0].plot(x, color="orange") #KDS1

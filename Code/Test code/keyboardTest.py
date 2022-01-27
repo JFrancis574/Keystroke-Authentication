@@ -266,7 +266,7 @@ if __name__ == "__main__":
         wordsOut = KDSWordByWord(words(rawPairsOut), 4)
         wordsOut1 = KDSWordByWord(words(rawPairsOut1), 4)
         wordsOut2 = KDSWordByWord(words(rawPairsOut2), 4)
-        
+
         first = np.array(list(wordsOut[0][1].values()))
         second = np.array(list(wordsOut1[0][1].values()))
         third = np.array(list(wordsOut2[0][1].values()))
@@ -346,8 +346,6 @@ if __name__ == "__main__":
         ax[1].set_title("Post-DTW")
         
         plt.show()
-        
-        
 
 """ 
 TODO:
