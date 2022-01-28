@@ -7,29 +7,28 @@ from fastdtw import fastdtw
 import numpy as np
 from scipy.spatial.distance import euclidean
 
-from numpy import fromfile, int0
 from keyboardTestMac import words, rawPairs, KDSWordByWord, wordChoose
 
 try:
-    os.mkdir(os.getcwd()+'/TestData')
+    os.mkdir(os.getcwd()+'/Data/WordData')
 except FileExistsError:
     pass
 
-infile = open("60SecondTestDataToBeChecked.p",'rb')  
+infile = open(os.getcwd()+"/Data/Pickles/60SecondTestData",'rb')  
 intervalData = pickle.load(infile)
 infile.close()
 
-infile = open("Hello1",'rb')
+infile = open(os.getcwd()+"/Data/Pickles/Hello1",'rb')
 singleWord = pickle.load(infile)
 infile.close()
 
 intervalOut = KDSWordByWord(words(rawPairs(intervalData)),4)
 singleWordOut = KDSWordByWord(words(rawPairs(singleWord)),4)
 
-with open("TestData/JSONTestFile.json", 'w') as write_file:
-    json.dump(singleWordOut, write_file)
+# with open(os.getcwd()+"/Data/Pickles/JSONTestFile.json", 'w') as write_file:
+#     json.dump(singleWordOut, write_file)
 
-write_file.close()
+# write_file.close()
 
 # with open("TestData/JSONTestFile.json", "r") as read_file:
 #     data = json.load(read_file)
@@ -39,10 +38,10 @@ for i in range(0, len(intervalOut)):
     for x in words(rawPairs(intervalData))[i]:
         word+= x[0]
     fileName = word +'.json'
-    if os.path.exists(os.getcwd()+'/TestData/'+fileName):
+    if os.path.exists(os.getcwd()+"/Data/WordData/"+fileName):
         pass
     else:
-        with open("TestData/"+fileName, 'w') as write_file:
+        with open(os.getcwd()+"/Data/WordData/"+fileName, 'w') as write_file:
             json.dump(intervalOut[i][1], write_file)
         write_file.close()
 

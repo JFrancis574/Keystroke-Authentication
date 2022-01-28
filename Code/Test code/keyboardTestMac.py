@@ -1,4 +1,5 @@
 from cProfile import label
+import os
 #import keyboard
 import sqlite3 as sq
 import time
@@ -80,10 +81,11 @@ def KDSWordByWord(wordsOut, roundValue):
     KDSOutput = {}
     WordByWord = []
     for i in range(0, len(wordsOut)):
-        for x in range(int(wordsOut[i][0][1]*10000), int(wordsOut[i][len(wordsOut[i])-1][2]*10000)+1):
-            KDSOutput[x/10000] = KDS(x/10000, wordsOut[i], roundValue) 
-        WordByWord.append([i,KDSOutput])
-        KDSOutput = {}
+        if len(wordsOut) != 0:
+            for x in range(int(wordsOut[i][0][1]*10000), int(wordsOut[i][len(wordsOut[i])-1][2]*10000)+1):
+                KDSOutput[x/10000] = KDS(x/10000, wordsOut[i], roundValue) 
+            WordByWord.append([i,KDSOutput])
+            KDSOutput = {}
     return WordByWord
 
 def wordChoose(words, amountofWords, banding=0):
@@ -142,15 +144,15 @@ def wordChoose(words, amountofWords, banding=0):
 if __name__ == "__main__":
     interval = 60.0
     
-    infile = open("Hello1",'rb')
+    infile = open(os.getcwd()+"/Data/Pickles/Hello1",'rb')
     processed1 = pickle.load(infile)
     infile.close()
     
-    infile = open("Hello2",'rb')
+    infile = open(os.getcwd()+"/Data/Pickles/Hello2",'rb')
     processed2 = pickle.load(infile)
     infile.close()
     
-    infile = open("Imposter",'rb')
+    infile = open(os.getcwd()+"/Data/Pickles/Imposter",'rb')
     processed3 = pickle.load(infile)
     infile.close()
     

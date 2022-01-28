@@ -1,4 +1,5 @@
 from cProfile import label
+import os
 import keyboard
 import sqlite3 as sq
 import time
@@ -9,7 +10,6 @@ import matplotlib.pyplot as plt
 import pickle
 import numpy as np
 from fastdtw import fastdtw
-import pandas as pd
 from scipy.spatial.distance import euclidean
 
 def words(pairs):
@@ -18,7 +18,10 @@ def words(pairs):
     for i in pairs:
         if i[0] not in [',','!','space', 'enter', ';',"'",'(',')', ',']:
             if i[0] == 'backspace':
-                currentWord.pop(len(currentWord)-1)
+                if len(currentWord) != 0:
+                    currentWord.pop(len(currentWord)-1)
+                else:
+                    pass
             elif i[0] == pairs[len(pairs)-1][0]:
                 output.append(currentWord)
                 currentWord = []
@@ -184,10 +187,11 @@ def KDSWordByWord(wordsOut, roundValue):
     KDSOutput = {}
     WordByWord = []
     for i in range(0, len(wordsOut)):
-        for x in range(int(wordsOut[i][0][1]*10000), int(wordsOut[i][len(wordsOut[i])-1][2]*10000)+1):
-            KDSOutput[x/10000] = KDS(x/10000, wordsOut[i], roundValue) 
-        WordByWord.append([i,KDSOutput])
-        KDSOutput = {}
+        if len(wordsOut[i]) != 0:
+            for x in range(int(wordsOut[i][0][1]*10000), int(wordsOut[i][len(wordsOut[i])-1][2]*10000)+1):
+                KDSOutput[x/10000] = KDS(x/10000, wordsOut[i], roundValue) 
+            WordByWord.append([i,KDSOutput])
+            KDSOutput = {}
     return WordByWord
 
 def wordChoose(words, amountofWords, banding=0):
@@ -246,15 +250,15 @@ def wordChoose(words, amountofWords, banding=0):
 if __name__ == "__main__":
     interval = 60.0
     
-    infile = open("Hello1",'rb')
+    infile = open(os.getcwd()+"/Data/Pickles/Hello1",'rb')
     processed1 = pickle.load(infile)
     infile.close()
     
-    infile = open("Hello2",'rb')
+    infile = open(os.getcwd()+"/Data/Pickles/Hello2",'rb')
     processed2 = pickle.load(infile)
     infile.close()
     
-    infile = open("Imposter",'rb')
+    infile = open(os.getcwd()+"/Data/Pickles/Imposter",'rb')
     processed3 = pickle.load(infile)
     infile.close()
     

@@ -1,8 +1,10 @@
 # Data in format:
 # [key, down, up]
+import json
 import pickle as p
 import time
 from keyboardTest import *
+import os.path
 
 keysInput = [
     [
@@ -19,9 +21,36 @@ keysInput = [
     ]
 ]
 
-startTime = time.time()
-pair = process(startTime, record(60.0))
 
-outFile = open('60SecondTestDataToBeChecked.p', 'wb')
-p.dump(pair, outFile)
-outFile.close()
+startTime = time.time()
+print("Start")
+raw = record(60.0)
+print("Stop")
+processed = process(startTime, raw)
+fileName = 1
+while True:
+    if os.path.exists(os.getcwd()+'/Data/Pickles/'+str(fileName)):
+        fileName += 1
+    else:
+        with open(os.getcwd()+'/Data/Pickles/'+str(fileName), 'wb') as write_pickle:
+            p.dump(processed, write_pickle)
+        write_pickle.close()
+        break
+pairs = rawPairs(processed)
+wordsOut = words(pairs)
+KDSignal = KDSWordByWord(wordsOut, 4)
+count = 0
+for i in range(0, len(KDSignal)):
+    word = ""
+    for x in words(pairs)[i]:
+        word+= x[0]
+    fileName = word +'.json'
+    if os.path.exists(os.getcwd()+"/Data/WordData/"+fileName):
+        pass
+    else:
+        with open(os.getcwd()+"/Data/WordData/"+fileName, 'w') as write_file:
+            json.dump(KDSignal[i][1], write_file)
+        count += 1
+        write_file.close()
+
+print(len(wordsOut), count)

@@ -9,13 +9,13 @@ from scipy.spatial.distance import euclidean
 import os.path
 
 try:
-    os.mkdir(os.getcwd()+'/TestData')
+    os.mkdir(os.getcwd()+'/Data/WordData')
 except FileExistsError:
     pass
 
 
 # This is just me typing for an interval, this is meant to mimic
-infile = open("60SecondTestData",'rb')  
+infile = open(os.getcwd()+"/Data/Pickles/60SecondTestData",'rb')  
 intervalData = pickle.load(infile)
 infile.close()
 
@@ -30,8 +30,8 @@ for y in range(0, len(KDSignalWord)):
     for x in chosen[y]:
         word+=x[0]
     inFileName = word+'.json'
-    if os.path.exists(os.getcwd()+'/TestData/'+inFileName):
-        with open("TestData/"+inFileName, 'r') as read_file:
+    if os.path.exists(os.getcwd()+'/Data/WordData/'+inFileName):
+        with open(os.getcwd()+"/Data/WordData/"+inFileName, 'r') as read_file:
             dataIn = json.load(read_file)
         read_file.close()
         inInterval = np.array(list(KDSignalWord[y][1].values()))
@@ -40,7 +40,7 @@ for y in range(0, len(KDSignalWord)):
         distances.append(distance)
     else:
         # Currently just store the data
-        with open("TestData/"+inFileName, 'w') as write_file:
+        with open(os.getcwd()+"/Data/WordData/"+inFileName, 'w') as write_file:
             json.dump(KDSignalWord[y][1], write_file)
         write_file.close()
 
