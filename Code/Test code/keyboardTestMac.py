@@ -1,16 +1,13 @@
-from cProfile import label
 import os
 #import keyboard
 import sqlite3 as sq
 import time
 
-from pyparsing import Word
 from DBConnection import DBStuff
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
 from fastdtw import fastdtw
-import pandas as pd
 from scipy.spatial.distance import euclidean
 
 def words(pairs):
@@ -59,7 +56,7 @@ def rawPairs(rawKeys):
                         pairsArray.append([rawKeys[i][0], rawKeys[i][1], rawKeys[x][1]])
                         break        
         except IndexError:
-            pass;
+            pass
     return pairsArray
 
 def heaviside(x1, x2):
