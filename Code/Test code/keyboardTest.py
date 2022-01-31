@@ -1,10 +1,8 @@
-from cProfile import label
 import os
 import keyboard
 import sqlite3 as sq
 import time
 
-from pyparsing import Word
 from DBConnection import DBStuff
 import matplotlib.pyplot as plt
 import pickle
@@ -12,6 +10,16 @@ import numpy as np
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 
+from setup import setupDone
+
+def recordReg(until):
+    startTimeReg = time.time()
+    processed = process(startTimeReg, keyboard.record(until))
+    if processed == []:
+        return False
+    else:
+        return words(rawPairs(processed))
+    
 def words(pairs):
     currentWord = []
     output = []
@@ -41,6 +49,8 @@ def record(interval):
     return recorded
 
 def process(startTime, keys):
+    if len(keys) == 0:
+        return []
     rawKeys = []
     count = 0
     for record in keys:

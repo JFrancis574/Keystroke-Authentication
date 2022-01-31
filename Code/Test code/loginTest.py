@@ -1,6 +1,7 @@
-from base64 import encode
-import bcrypt
 from getpass import getpass, getuser
+
+import bcrypt
+
 from DBConnection import DBStuff as db
 
 # Get Details
