@@ -219,7 +219,9 @@ def wordChoose(words, amountofWords, banding=0):
         og = diff/amountofWords
         count = 0
         for i in range(0, wordCount):
-            if wordChooseInterval+banding >= diff:
+            if words[i] == []:
+                pass
+            elif wordChooseInterval+banding >= diff:
                 break
             elif words[i][0][1] <= (wordChooseInterval+banding) and words[i][-1][2] >= (wordChooseInterval+banding):
                 count+=1

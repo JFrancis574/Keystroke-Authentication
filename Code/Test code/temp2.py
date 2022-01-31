@@ -20,12 +20,6 @@ temp2 = {0.0001: 0.5, 0.0002: 0.5, 0.0003: 0.5, 0.0004: 1.0, 0.0005: 1, 0.0006: 
         # 0.004 : 1
         # Might as well store 0.001 -> 0.004 : 1
         # [0.001, 0.004] : 1
-# data = np.array(list(temp2.values()))
-# keys = np.array(list(temp2.keys()))
-# startValue = data[0]
-# start = keys[0]
-# endDict = {}
-
 def compress(dataIn):
     data = np.array(list(dataIn.values()))
     keys = np.array(list(dataIn.keys()))

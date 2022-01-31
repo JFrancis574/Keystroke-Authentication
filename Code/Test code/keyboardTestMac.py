@@ -16,7 +16,10 @@ def words(pairs):
     for i in pairs:
         if i[0] not in [',','!','space', 'enter', ';',"'",'(',')', ',']:
             if i[0] == 'backspace':
-                currentWord.pop(len(currentWord)-1)
+                if len(currentWord) != 0:
+                    currentWord.pop(len(currentWord)-1)
+                else:
+                    pass
             elif i[0] == pairs[len(pairs)-1][0]:
                 output.append(currentWord)
                 currentWord = []
@@ -100,7 +103,9 @@ def wordChoose(words, amountofWords, banding=0):
         og = diff/amountofWords
         count = 0
         for i in range(0, wordCount):
-            if wordChooseInterval+banding >= diff:
+            if words[i] == []:
+                pass
+            elif wordChooseInterval+banding >= diff:
                 break
             elif words[i][0][1] <= (wordChooseInterval+banding) and words[i][-1][2] >= (wordChooseInterval+banding):
                 count+=1

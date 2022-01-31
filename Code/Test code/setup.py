@@ -31,5 +31,5 @@ def getUserDataPath(username):
 def getUserTestDataPath():
     return os.getcwd()+'/Data/WordData/'
         
-def DBCreation():
-    return db.DBStuff("keyStorage.db")
+def DBCreation(name):
+    return db.DBStuff(name)

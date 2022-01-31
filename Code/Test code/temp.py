@@ -22,23 +22,23 @@ keysInput = [
     # ]
 ]
 
-KDSignal = KDSWordByWord(keysInput, 4)
-print(KDSignal)
+# KDSignal = KDSWordByWord(keysInput, 4)
+# print(KDSignal)
 
-# startTime = time.time()
-# print("Start")
-# raw = record(60.0)
-# print("Stop")
-# processed = process(startTime, raw)
-# fileName = 1
-# while True:
-#     if os.path.exists(os.getcwd()+'/Data/Pickles/'+str(fileName)):
-#         fileName += 1
-#     else:
-#         with open(os.getcwd()+'/Data/Pickles/'+str(fileName), 'wb') as write_pickle:
-#             p.dump(processed, write_pickle)
-#         write_pickle.close()
-#         break
+startTime = time.time()
+print("Start")
+raw = record(60.0)
+print("Stop")
+processed = process(startTime, raw)
+fileName = "HoeyTestData"
+while True:
+    if os.path.exists(os.getcwd()+'/Data/Pickles/'+str(fileName)):
+        fileName += str(1)
+    else:
+        with open(os.getcwd()+'/Data/Pickles/'+str(fileName), 'wb') as write_pickle:
+            p.dump(processed, write_pickle)
+        write_pickle.close()
+        break
 # pairs = rawPairs(processed)
 # wordsOut = words(pairs)
 # KDSignal = KDSWordByWord(wordsOut, 2)

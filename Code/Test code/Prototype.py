@@ -9,7 +9,7 @@ from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 
 from keyboardTestMac import KDSWordByWord, rawPairs, wordChoose, words
-from keyboardTest import recordReg
+# from keyboardTest import recordReg
 import setup as st
 
 dConn = st.DBCreation("keyStorage.db")
@@ -47,11 +47,9 @@ def storeWordData(username, words):
             write_file.close()
         
         
-    
-
-def testData():
+def testData(fileName):
     # This is just me typing for an interval, this is meant to mimic
-    infile = open(os.getcwd()+"/Data/Pickles/60SecondTestData",'rb')  
+    infile = open(os.getcwd()+"/Data/Pickles/"+fileName,'rb')  
     intervalData = pickle.load(infile)
     infile.close()
 
@@ -94,7 +92,7 @@ def distanceCalc(chosen, KDSignalWord, mode="t"):
             pass
         # Currently just store the data
             # with open(os.getcwd()+"/Data/WordData/"+inFileName, 'w') as write_file:
-            #     json.dump(KDSignalWord[y][1], write_file)
+            #      json.dump(KDSignalWord[y][1], write_file)
             # write_file.close()
     return distances
 
@@ -107,19 +105,15 @@ def validation(distances):
         # Both are inside the banding = same user
         if j[0] <= bandingEuc and j[1] >= bandingCorr:
             wordCheck.append(True)
+        # Correlation is far more important
         elif j[1] >= bandingCorr and j[0] > bandingEuc:
-            # Correlation is far more important
             wordCheck.append(True)
         else:
             wordCheck.append(False)
-    
-    for i in wordCheck:
-        if i == False:
-            return "NOT SAME"
-        else:
-           return "SAME"
+    return wordCheck
 
-chosen, KDSignalWord = testData()
+chosen, KDSignalWord = testData("HoeyTestData")
+print(chosen)
 distances = distanceCalc(chosen, KDSignalWord)
 
 print(distances)
