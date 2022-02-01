@@ -113,7 +113,7 @@ def validation(distances):
     return wordCheck
 
 chosen, KDSignalWord = testData("HoeyTestData")
-print(chosen)
+print(chosen[0])
 distances = distanceCalc(chosen, KDSignalWord)
 
 print(distances)

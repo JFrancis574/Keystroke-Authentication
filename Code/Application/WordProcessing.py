@@ -156,8 +156,8 @@ class wordProcessing:
         
     def unCompress(self, data):
         outDict = {}
-        multiplier = int(str(1) + self.interval*str(0))
-        multiplierPlus1 = int(str(11) + self.interval-1*str(0))
+        multiplier = int(str(1) + self.roundInterval*str(0))
+        multiplierPlus1 = int(str(11) + self.roundInterval-1*str(0))
         for x in data:
             print(x)
             startTime = list(x.values())[0][0]

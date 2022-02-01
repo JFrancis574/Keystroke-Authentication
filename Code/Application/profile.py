@@ -1,17 +1,18 @@
-
-class User:
+import os.path
+class Profile:
     
-    def __init__(self):
-        self.uName = ""
-        self.password = ""
-        self.registerd = False
-        self.loggedIn = False
+    def __init__(self, uName, PW):
+        self.user = uName
+        self.pw = PW
+        self.userPath = None
+        self.setup()
         
-    def login(self):
-        pass
-    
-    def register(self):
-        pass
-    
-    def logOut(self):
-        pass
+    def setup(self):
+        userPath = os.getcwd() + '/Data/uName/'
+        if os.path.exists(userPath):
+            self.userPath = userPath
+        else:
+            os.mkdir(userPath)
+            self.userPath = userPath
+        
+        
