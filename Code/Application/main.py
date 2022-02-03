@@ -2,6 +2,7 @@ import DBConnection as db
 import Utilities as util
 import Word as w
 import WordProcessing as wp
+import profile as pf
 
 inWord = [
     ['a', 1.4772429466247559, 1.5608351230621338], 
@@ -9,4 +10,4 @@ inWord = [
     ['e', 2.3532443046569824, 2.431244373321533]
 ]
 
-print(w.Word(inWord).KDSforWord)
+print(pf.Profile("Jack", "Hello").userPath)

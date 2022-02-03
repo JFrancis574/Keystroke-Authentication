@@ -1,8 +1,6 @@
-
 from fileinput import filename
 from matplotlib.font_manager import json_dump
 import numpy as np
-
 
 class Word:
     
@@ -10,17 +8,17 @@ class Word:
         self.raw = wordData
         self.roundValue = 4
         if wordData != None:
-            self.word = self.getWord()
+            self.word = self.getWordString()
+            # print("WORD")
+            # print(self.raw)
             self.start = self.raw[0][1]
             self.end = self.raw[-1][2]
-            self.KDSforWord = self.KDSWord()
         else:
             self.word = None
             self.start = None
             self.end = None
-            self.KDSforWord = None
         
-    def getWord(self):
+    def getWordString(self):
         rawWord = ""
         for x in self.raw:
             rawWord += x[0]
