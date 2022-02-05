@@ -1,4 +1,5 @@
 from fileinput import filename
+import os
 from matplotlib.font_manager import json_dump
 import numpy as np
 
@@ -9,8 +10,6 @@ class Word:
         self.roundValue = 4
         if wordData != None:
             self.word = self.getWordString()
-            # print("WORD")
-            # print(self.raw)
             self.start = self.raw[0][1]
             self.end = self.raw[-1][2]
         else:
@@ -67,9 +66,3 @@ class Word:
                 grouping = (start, keys[i])
                 endDict[grouping] = startValue
         return self.remap_keys(endDict)
-    
-    def store(self):
-        data = self.compress()
-        fileName = self.word + '.json'
-        with open(filename, 'wb') as write:
-            json_dump()

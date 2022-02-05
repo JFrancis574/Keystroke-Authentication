@@ -1,17 +1,24 @@
+import json
+import os.path
+
+import numpy as np
+from fastdtw import fastdtw
+from scipy.spatial.distance import euclidean
+
 import Word as w
 
+
 class Calculation:
-    def __init__(self, raw, startTime):
+    def __init__(self, raw, startTime, pf):
         self.raw = raw
+        self.pf = pf
         self.startTime = startTime
         self.chosenAmount = 4
         self.processed = self.process()
         self.pairs = self.rawPairs()
-        # print("CALC")
-        # print(self.pairs)
         self.wordsOut = self.words()
         self.noWords = len(self.wordsOut)
-        self.chosen = self.wordChoose()
+        self.chosen = self.wordChooseTemp()
     
     def process(self):
         if len(self.raw) == 0:
@@ -49,55 +56,118 @@ class Calculation:
                     else:
                         pass
                 elif i[0] ==  self.pairs[len(self.pairs)-1][0]:
-                    print(currentWord)
-                    output.append(w.Word(currentWord))
+                    if len(currentWord) != 0:
+                        output.append(w.Word(currentWord))
                     currentWord = []
                 else:
                     currentWord.append(i)
             else:
-                print(currentWord)
-                output.append(w.Word(currentWord))
+                if len(currentWord) != 0:
+                    output.append(w.Word(currentWord))
                 currentWord = []
-        print(output)
         return output
         
     def wordChoose(self, banding=0):
-        wordCount = len(self.wordsOut)
+        wordCount = len(self.self.wordsOutOut)
         if (wordCount == 0 or self.chosenAmount == 0):
             return []
         elif wordCount < self.chosenAmount:
             return []
         elif wordCount == self.chosenAmount:
-            return self.wordsOut
+            return self.self.wordsOutOut
         else:
-            diff = self.wordsOut[-1].end - self.wordsOut[0].start
+            diff = self.self.wordsOutOut[-1].end - self.self.wordsOutOut[0].start
             out = []
             wordChooseInterval = diff/self.chosenAmount
             og = diff/self.chosenAmount
             count = 0
             for i in range(0, wordCount):
-                if self.wordsOut[i] == []:
+                if self.self.wordsOutOut[i] == []:
                     pass
                 elif wordChooseInterval+banding >= diff:
                     break
-                elif self.wordsOut[i].start <= (wordChooseInterval+banding) and self.wordsOut[i].end >= (wordChooseInterval+banding):
+                elif self.self.wordsOutOut[i].start <= (wordChooseInterval+banding) and self.self.wordsOutOut[i].end >= (wordChooseInterval+banding):
                     count+=1
-                    out.append(self.wordsOut[i])
+                    out.append(self.self.wordsOutOut[i])
                     wordChooseInterval += og + banding
                 else:
                     pass
             if len(out) != self.chosenAmount:
                 if len(out) == self.chosenAmount-1:
                     y = int(round(len(out)/2, 0))
-                    inputWord = self.wordsOut[y]
+                    inputWord = self.self.wordsOutOut[y]
                     for x in range(0, len(out)):
                         if inputWord == out[x]:
-                            inputWord = self.wordsOut[y+1]
+                            inputWord = self.self.wordsOutOut[y+1]
                     out.append(inputWord)
                     return out
                 else:
                     return self.wordChoose(banding+0.1)
             else:
                 return out
+            
+    def wordChooseTemp(self):
+        if self.chosenAmount == len(self.wordsOut):
+            return self.self.wordsOutOut
+        elif self.chosenAmount > len(self.wordsOut):
+            return self.wordsOut
+        out = []
+        out.append(self.wordsOut[0])
+        out.append(self.wordsOut[-1])
+        self.wordsOut.pop(0)
+        self.wordsOut.pop(-1)
+
+        if len(out) != self.chosenAmount:
+            chosenAmount = self.chosenAmount-2
+            og = int(len(self.wordsOut)/chosenAmount)
+            diff = int(len(self.wordsOut)/chosenAmount)
+            for x in range(0, len(self.wordsOut)):
+                if len(out) == self.chosenAmount:
+                    break
+                if x == diff:
+                    out.append(self.wordsOut[x])
+                    diff += og
+        return out
     
-    
+    def validation(self):
+        distances = {}
+        for x in range(0, len(self.chosen)):
+            fileName = x.word+'.json'
+            if os.path.exists(self.pf.userPath+fileName):
+                with open(self.pf.userPath+fileName, 'r') as read_file:
+                    dataIn = json.load(read_file)
+                read_file.close()
+                inInterval = np.array(list(x.KDSWord().values()))
+                fromFile = np.array(list(dataIn.values()))
+                euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
+                
+                ff_path, ii_path = zip(*path)
+                ff_path = np.asarray(ff_path)
+                ii_path = np.asarray(ii_path)
+                ff_warped = fromFile[ff_path]
+                ii_warped = inInterval[ii_path]
+        
+                correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)[0,1]
+                
+                distances[x] = [euclideanDistance, correlationCoEfficant]
+            # ADD ELSE
+        bandingEuc = 10 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
+        bandingCorr = 0.5 # # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+        wordCheck = []
+        for j in list(distances.values()):
+            # Both are inside the banding = same user
+            if j[0] <= bandingEuc and j[1] >= bandingCorr:
+                wordCheck.append(True)
+            # Correlation is far more important
+            elif j[1] >= bandingCorr and j[0] > bandingEuc:
+                wordCheck.append(True)
+            else:
+                wordCheck.append(False)
+        
+        if False not in wordCheck:
+            print("Gucci")
+            return True, []
+        else:
+            print("BAD")
+            return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
+            

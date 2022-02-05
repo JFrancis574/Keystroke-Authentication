@@ -1,7 +1,7 @@
 from black import out
 import Word as w
 import keyboardTest as kt
-import Interval as i
+# import Interval as i
 import pickle
 
 def wordChoose(words, amountofWords, banding=0):
@@ -65,17 +65,38 @@ def wordsObject(pairs):
             currentWord = []
     return output
 
-infile = open("C:/Users/jackf/Documents/FinalYearProject/Code/Test Code/Data/Pickles/"+"HoeyTestData",'rb')  
-intervalData = pickle.load(infile)
-infile.close()
+# infile = open("C:/Users/jackf/Documents/FinalYearProject/Code/Test Code/Data/Pickles/"+"HoeyTestData",'rb')  
+# intervalData = pickle.load(infile)
+# infile.close()
 
 
-data, start = kt.record(10)
-# print(data)
-inter = i.Calculation(data, start)
-# print(inter.wordsOut)
+# data, start = kt.record(10)
+# # print(data)
+# inter = i.Calculation(data, start)
+# for x in inter.wordsOut:
+#     print(x.word)
 
-# for x in wordsObject(kt.rawPairs(intervalData)):
-#     print(x.raw)
-    
-# print(len(wordChoose(wordsObject(kt.rawPairs(intervalData)),4)))
+# print(inter.chosen)
+outtt = []
+wordsAmount = 8
+words = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
+outtt.append(words[0])
+outtt.append(words[-1])
+words.pop(0)
+words.pop(-1)
+
+if len(outtt) != wordsAmount:
+    wordsAmount -= 2
+    og = int(len(words)/wordsAmount)
+    diff = int(len(words)/wordsAmount)
+    print(diff)
+    for x in range(0, len(words)):
+        if len(outtt) == wordsAmount+2:
+            break
+        if x == diff:
+            outtt.append(words[x])
+            diff += og
+
+            
+print(outtt)
+print(words)

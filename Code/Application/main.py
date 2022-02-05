@@ -1,13 +1,32 @@
+import time
+
+from numpy import empty
 import DBConnection as db
 import Utilities as util
 import Word as w
 import WordProcessing as wp
 import profile as pf
+import Interval as i
+import keyboard
 
-inWord = [
-    ['a', 1.4772429466247559, 1.5608351230621338], 
-    ['g', 1.816241979598999, 1.9148550033569336], 
-    ['e', 2.3532443046569824, 2.431244373321533]
-]
+interval = 10
 
-print(pf.Profile("Jack", "Hello").userPath)
+def record(interval):
+    recorded = []
+    startTime = time.time()
+    keyBoardHook = keyboard.hook(recorded.append)
+    time.sleep(interval)
+    keyboard.unhook(keyBoardHook)
+    return recorded, startTime
+
+Upf = pf.Profile("Jack", "Pass")
+
+while True:
+    data, start = record(interval)
+    inter = i.Calculation(data, start, Upf)
+    decision, index = inter.validation()
+    if decision == False:
+        print("AHHHHHHHHHHHHHHHHHHHHHHHH")
+        print(index)
+        break
+        
