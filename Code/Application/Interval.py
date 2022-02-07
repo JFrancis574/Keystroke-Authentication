@@ -95,10 +95,10 @@ class Calculation:
             if len(out) != self.chosenAmount:
                 if len(out) == self.chosenAmount-1:
                     y = int(round(len(out)/2, 0))
-                    inputWord = self.self.wordsOutOut[y]
+                    inputWord = self.wordsOut[y]
                     for x in range(0, len(out)):
                         if inputWord == out[x]:
-                            inputWord = self.self.wordsOutOut[y+1]
+                            inputWord = self.wordsOut[y+1]
                     out.append(inputWord)
                     return out
                 else:
@@ -108,12 +108,10 @@ class Calculation:
             
     def wordChooseTemp(self):
         if self.chosenAmount == len(self.wordsOut):
-            return self.self.wordsOutOut
+            return self.wordsOut
         elif self.chosenAmount > len(self.wordsOut):
             return self.wordsOut
-        out = []
-        out.append(self.wordsOut[0])
-        out.append(self.wordsOut[-1])
+        out = [self.wordsOut[0], self.wordsOut[-1]]
         self.wordsOut.pop(0)
         self.wordsOut.pop(-1)
 
@@ -135,7 +133,7 @@ class Calculation:
             fileName = x.word+'.json'
             if os.path.exists(self.pf.userPath+fileName):
                 with open(self.pf.userPath+fileName, 'r') as read_file:
-                    dataIn = json.load(read_file)
+                    dataIn = self.decompress(json.load(read_file))
                 read_file.close()
                 inInterval = np.array(list(x.KDSWord().values()))
                 fromFile = np.array(list(dataIn.values()))
@@ -152,7 +150,7 @@ class Calculation:
                 distances[x] = [euclideanDistance, correlationCoEfficant]
             # ADD ELSE
         bandingEuc = 10 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-        bandingCorr = 0.5 # # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+        bandingCorr = 0.5 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
         wordCheck = []
         for j in list(distances.values()):
             # Both are inside the banding = same user
@@ -165,9 +163,21 @@ class Calculation:
                 wordCheck.append(False)
         
         if False not in wordCheck:
-            print("Gucci")
             return True, []
         else:
-            print("BAD")
             return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
+
+    def decompess(self, data):
+        outDict = {}
+        multiplier = int(str(1) + self.roundInterval*str(0))
+        multiplierPlus1 = int(str(11) + self.roundInterval-1*str(0))
+        for x in data:
+            print(x)
+            startTime = list(x.values())[0][0]
+            endTime = list(x.values())[0][1]
+            value = list(x.values())[1]
+            print(startTime, endTime, value)
+            for x in range(int(startTime*multiplier), int(endTime*multiplierPlus1)+1):
+                outDict[x/multiplier] = value
+        return outDict
             
