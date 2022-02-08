@@ -75,15 +75,15 @@ class Calculation:
         return output
         
     def wordChoose(self, banding=0):
-        wordCount = len(self.self.wordsOutOut)
+        wordCount = len(self.wordsOut)
         if (wordCount == 0 or self.chosenAmount == 0):
             return []
         elif wordCount < self.chosenAmount:
             return []
         elif wordCount == self.chosenAmount:
-            return self.self.wordsOutOut
+            return self.wordsOut
         else:
-            diff = self.self.wordsOutOut[-1].end - self.self.wordsOutOut[0].start
+            diff = self.WordsOut[-1].end - self.wordsOut[0].start
             out = []
             wordChooseInterval = diff/self.chosenAmount
             og = diff/self.chosenAmount
@@ -95,7 +95,7 @@ class Calculation:
                     break
                 elif self.self.wordsOutOut[i].start <= (wordChooseInterval+banding) and self.self.wordsOutOut[i].end >= (wordChooseInterval+banding):
                     count+=1
-                    out.append(self.self.wordsOutOut[i])
+                    out.append(self.wordsOut[i])
                     wordChooseInterval += og + banding
                 else:
                     pass
