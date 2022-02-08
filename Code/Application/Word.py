@@ -49,8 +49,9 @@ class Word:
         return [{'key':k, 'value': v} for k, v in mapping.items()]
     
     def compress(self):
-        data = np.array(list(self.KDSforWord.values()))
-        keys = np.array(list(self.KDSforWord.keys()))
+        allData = self.KDSWord()
+        data = np.array(list(allData.values()))
+        keys = np.array(list(allData.keys()))
         startValue = data[0]
         start = keys[0]
         endDict = {}
@@ -66,3 +67,6 @@ class Word:
                 grouping = (start, keys[i])
                 endDict[grouping] = startValue
         return self.remap_keys(endDict)
+    
+    def toString(self):
+        return self.word + ' ' + str(self.start) + ' ' + str(self.end)

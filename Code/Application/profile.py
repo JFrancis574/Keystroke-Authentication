@@ -8,8 +8,10 @@ class Profile:
         self.setup()
     
     def setup(self):
+        parent = os.getcwd()
+        newDirectory = 'Data/'+self.user+'/'
         try:
-            os.mkdir(self.userPath)
+            os.mkdir(os.path.join(parent,'Data'))
+            os.mkdir(os.path.join(parent,newDirectory))
         except FileExistsError:
             pass
-        

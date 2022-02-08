@@ -20,13 +20,20 @@ def record(interval):
     return recorded, startTime
 
 Upf = pf.Profile("Jack", "Pass")
+print(Upf.userPath)
 
 while True:
+    print("RECORDING")
     data, start = record(interval)
-    inter = i.Calculation(data, start, Upf)
-    decision, index = inter.validation()
-    if decision == False:
-        print("AHHHHHHHHHHHHHHHHHHHHHHHH")
-        print(index)
-        break
+    print("NOT RECORDING")
+    if len(data) != 0:
+        inter = i.Calculation(data, start, Upf)
+        print(inter.toString())
+        decision, index = inter.validation(mode='t')
+        print("CALC DONE")
+        print(decision, index)
+        if decision == False:
+            print("AHHHHHHHHHHHHHHHHHHHHHHHH")
+            print(index)
+            break
         

@@ -1,4 +1,5 @@
 import json
+import math
 import os.path
 
 import numpy as np
@@ -55,10 +56,16 @@ class Calculation:
                         currentWord.pop(len(currentWord)-1)
                     else:
                         pass
-                elif i[0] ==  self.pairs[len(self.pairs)-1][0]:
+                        # currentWord = output[-1].raw
+                        # output.pop(-1)
+                        # currentWord.pop(-1)
+                elif i == self.pairs[-1]:
+                    currentWord.append(i)
                     if len(currentWord) != 0:
                         output.append(w.Word(currentWord))
                     currentWord = []
+                elif i[0] in ['shift', 'ctrl']:
+                    pass
                 else:
                     currentWord.append(i)
             else:
@@ -127,46 +134,70 @@ class Calculation:
                     diff += og
         return out
     
-    def validation(self):
+    def validation(self, mode='r'):
+        # r = real t = test
         distances = {}
-        for x in range(0, len(self.chosen)):
-            fileName = x.word+'.json'
-            if os.path.exists(self.pf.userPath+fileName):
-                with open(self.pf.userPath+fileName, 'r') as read_file:
-                    dataIn = self.decompress(json.load(read_file))
-                read_file.close()
-                inInterval = np.array(list(x.KDSWord().values()))
-                fromFile = np.array(list(dataIn.values()))
-                euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
-                
-                ff_path, ii_path = zip(*path)
-                ff_path = np.asarray(ff_path)
-                ii_path = np.asarray(ii_path)
-                ff_warped = fromFile[ff_path]
-                ii_warped = inInterval[ii_path]
-        
-                correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)[0,1]
-                
-                distances[x] = [euclideanDistance, correlationCoEfficant]
-            # ADD ELSE
-        bandingEuc = 10 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-        bandingCorr = 0.5 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
-        wordCheck = []
-        for j in list(distances.values()):
-            # Both are inside the banding = same user
-            if j[0] <= bandingEuc and j[1] >= bandingCorr:
-                wordCheck.append(True)
-            # Correlation is far more important
-            elif j[1] >= bandingCorr and j[0] > bandingEuc:
-                wordCheck.append(True)
+        if mode == 'r':
+            for x in range(0, len(self.chosen)):
+                fileName = self.chosen[x].word+'.json'
+                if os.path.exists(self.pf.userPath+fileName):
+                    with open(self.pf.userPath+fileName, 'r') as read_file:
+                        dataIn = json.load(read_file)
+                    read_file.close()
+                    inInterval = np.array(list(x.KDSWord().values()))
+                    fromFile = np.array(list(dataIn.values()))
+                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
+                    
+                    ff_path, ii_path = zip(*path)
+                    ff_path = np.asarray(ff_path)
+                    ii_path = np.asarray(ii_path)
+                    ff_warped = fromFile[ff_path]
+                    ii_warped = inInterval[ii_path]
+            
+                    # correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)[0,1]
+                    cov = 0
+                    for i in range(len(ff_warped)):
+                        cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
+                    
+                    XSum = 0
+                    YSum = 0
+                    for i in range(len(ff_warped)):
+                        XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
+                        YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)
+                    
+                    correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
+                    distances[x] = [euclideanDistance, correlationCoEfficant]
+                # ADD ELSE
+            bandingEuc = 10 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
+            bandingCorr = 0.5 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+            wordCheck = []
+            for j in list(distances.values()):
+                # Both are inside the banding = same user
+                if j[0] <= bandingEuc and j[1] >= bandingCorr:
+                    wordCheck.append(True)
+                # Correlation is far more important
+                elif j[1] >= bandingCorr and j[0] > bandingEuc:
+                    wordCheck.append(True)
+                else:
+                    wordCheck.append(False)
+            
+            if False not in wordCheck:
+                return True, []
             else:
-                wordCheck.append(False)
-        
-        if False not in wordCheck:
-            return True, []
+                return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
         else:
-            return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
-
+            # TEMP  - WILL NEED IMPROV
+            for x in range(0, len(self.chosen)):
+                fileName = self.chosen[x].word+'.json'
+                Kds = self.chosen[x].compress()
+                print(self.pf.userPath)
+                if os.path.exists(self.pf.userPath+fileName):
+                    pass
+                else:
+                    with open(self.pf.userPath+fileName, 'w') as write_file:
+                        json.dump(Kds, write_file)
+                    write_file.close()
+            return True, []
     def decompess(self, data):
         outDict = {}
         multiplier = int(str(1) + self.roundInterval*str(0))
@@ -180,4 +211,14 @@ class Calculation:
             for x in range(int(startTime*multiplier), int(endTime*multiplierPlus1)+1):
                 outDict[x/multiplier] = value
         return outDict
+    
+    def toString(self):
+        out = "Words: "
+        for x in self.wordsOut:
+            out += "\n"+x.toString()
+        out += "\nChosen: "
+        for i in self.chosen:
+            out += "\n"+i.toString()
+        return out
+            
             
