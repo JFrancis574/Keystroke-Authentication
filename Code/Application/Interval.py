@@ -1,6 +1,7 @@
 import json
 import math
 import os.path
+import string
 
 import numpy as np
 from fastdtw import fastdtw
@@ -47,18 +48,18 @@ class Calculation:
         return pairsArray
     
     def words(self):
+        bannedPunc = ['space', 'enter','play/pause media','alttab', 'eqdown', 'right', 'left', 'up', 'down', 'tab','alt']
         currentWord = []
         output = []
-        for i in self.pairs:
-            if i[0] not in [',','!','space', 'enter', ';',"'",'(',')', ',']:
+        for j, i in enumerate(self.pairs):
+            if i[0] not in bannedPunc or string.punctuation:
                 if i[0] == 'backspace':
                     if len(currentWord) != 0:
                         currentWord.pop(len(currentWord)-1)
                     else:
-                        pass
-                        # currentWord = output[-1].raw
-                        # output.pop(-1)
-                        # currentWord.pop(-1)
+                        currentWord = output[-1].raw
+                        output.pop(-1)
+                        currentWord.pop(-1)
                 elif i == self.pairs[-1]:
                     currentWord.append(i)
                     if len(currentWord) != 0:
@@ -69,9 +70,25 @@ class Calculation:
                 else:
                     currentWord.append(i)
             else:
-                if len(currentWord) != 0:
-                    output.append(w.Word(currentWord))
-                currentWord = []
+                if i[0] in ['space', '.', 'enter', ',',':',';']:
+                    if len(currentWord) != 0:
+                        output.append(w.Word(currentWord))
+                    currentWord = []
+                elif i[0] == "'" or i[0] == '-':
+                    if len(currentWord) == 0:
+                        pass
+                    else:
+                        try:
+                            if currentWord[-1].isalpha() and self.pairs[j+1][0].isalpha():
+                                currentWord.append(i)
+                            else:
+                                output.append(w.Word(currentWord))
+                                currentWord = []
+                        except IndexError:
+                            output.append(w.Word(currentWord))
+                            currentWord = []
+                else:
+                    pass
         return output
         
     def wordChoose(self, banding=0):
@@ -142,7 +159,7 @@ class Calculation:
                 fileName = self.chosen[x].word+'.json'
                 if os.path.exists(self.pf.userPath+fileName):
                     with open(self.pf.userPath+fileName, 'r') as read_file:
-                        dataIn = json.load(read_file)
+                        dataIn = self.decompess(json.load(read_file))
                     read_file.close()
                     inInterval = np.array(list(x.KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
