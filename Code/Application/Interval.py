@@ -48,25 +48,25 @@ class Calculation:
         return pairsArray
     
     def words(self):
-        bannedPunc = ['space', 'enter','play/pause media','alttab', 'eqdown', 'right', 'left', 'up', 'down', 'tab','alt']
+        bannedPunc = ['space', 'enter','play/pause media','alttab', 'eqdown', 'right', 'left', 'up', 'down', 'tab','alt', 'shift', 'ctrl']
         currentWord = []
         output = []
         for j, i in enumerate(self.pairs):
-            if i[0] not in bannedPunc or string.punctuation:
+            if i[0] not in bannedPunc and i[0] not in string.punctuation:
                 if i[0] == 'backspace':
                     if len(currentWord) != 0:
-                        currentWord.pop(len(currentWord)-1)
-                    else:
-                        currentWord = output[-1].raw
-                        output.pop(-1)
                         currentWord.pop(-1)
+                        if i == self.pairs[-1]:
+                            output.append(w.Word(currentWord))
+                            currentWord = []
+                    else:
+                        if len(output) != 0:
+                            currentWord = output.pop(-1).raw
                 elif i == self.pairs[-1]:
                     currentWord.append(i)
                     if len(currentWord) != 0:
                         output.append(w.Word(currentWord))
                     currentWord = []
-                elif i[0] in ['shift', 'ctrl']:
-                    pass
                 else:
                     currentWord.append(i)
             else:
@@ -79,7 +79,7 @@ class Calculation:
                         pass
                     else:
                         try:
-                            if currentWord[-1].isalpha() and self.pairs[j+1][0].isalpha():
+                            if currentWord[-1][0].isalpha() and self.pairs[j+1][0].isalpha():
                                 currentWord.append(i)
                             else:
                                 output.append(w.Word(currentWord))

@@ -12,6 +12,9 @@ class Profile:
         newDirectory = 'Data/'+self.user+'/'
         try:
             os.mkdir(os.path.join(parent,'Data'))
+        except FileExistsError:
+            pass
+        try:
             os.mkdir(os.path.join(parent,newDirectory))
         except FileExistsError:
             pass
