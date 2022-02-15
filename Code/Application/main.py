@@ -1,6 +1,5 @@
 import time
 
-from numpy import empty
 import DBConnection as db
 import Utilities as util
 import Word as w

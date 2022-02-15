@@ -101,17 +101,17 @@ class Calculation:
         elif wordCount == self.chosenAmount:
             return self.wordsOut
         else:
-            diff = self.WordsOut[-1].end - self.wordsOut[0].start
+            diff = self.wordsOut[-1].end - self.wordsOut[0].start
             out = []
             wordChooseInterval = diff/self.chosenAmount
             og = diff/self.chosenAmount
             count = 0
             for i in range(0, wordCount):
-                if self.self.wordsOutOut[i] == []:
+                if self.wordsOut[i] == []:
                     pass
                 elif wordChooseInterval+banding >= diff:
                     break
-                elif self.self.wordsOutOut[i].start <= (wordChooseInterval+banding) and self.self.wordsOutOut[i].end >= (wordChooseInterval+banding):
+                elif self.wordsOut[i].start <= (wordChooseInterval+banding) and self.wordsOut[i].end >= (wordChooseInterval+banding):
                     count+=1
                     out.append(self.wordsOut[i])
                     wordChooseInterval += og + banding

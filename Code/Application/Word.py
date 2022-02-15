@@ -1,6 +1,3 @@
-from fileinput import filename
-import os
-from matplotlib.font_manager import json_dump
 import numpy as np
 
 class Word:
