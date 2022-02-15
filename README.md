@@ -17,6 +17,7 @@ The program has only been tested on Windows 10 with the following packages requi
 - sqlite3
 - json
 - keyboard
+- bcrypt
 
 The program will 100% not work on any device with an m1 chip running Big Sur or above due to issues within the keyboard libary. The program also requires root access to be able to monitor keystrokes and to create directories.
  
