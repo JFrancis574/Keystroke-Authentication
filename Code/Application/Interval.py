@@ -14,6 +14,7 @@ class Calculation:
     def __init__(self, raw, startTime, pf):
         self.raw = raw
         self.pf = pf
+        self.roundInterval = 4
         self.startTime = startTime
         self.chosenAmount = 4
         self.processed = self.process()
@@ -158,11 +159,16 @@ class Calculation:
             for x in range(0, len(self.chosen)):
                 fileName = self.chosen[x].word+'.json'
                 if os.path.exists(self.pf.userPath+fileName):
+                    # Loading in the data from the word files
                     with open(self.pf.userPath+fileName, 'r') as read_file:
                         dataIn = self.decompess(json.load(read_file))
                     read_file.close()
-                    inInterval = np.array(list(x.KDSWord().values()))
+                    
+                    # Beautifying the data and forming the correct data
+                    inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
+                    
+                    # Euciladitan and fastdtw
                     euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
                     
                     ff_path, ii_path = zip(*path)
@@ -171,6 +177,8 @@ class Calculation:
                     ff_warped = fromFile[ff_path]
                     ii_warped = inInterval[ii_path]
             
+                    
+                    # CorrelationCoefficant
                     # correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)[0,1]
                     cov = 0
                     for i in range(len(ff_warped)):
@@ -184,11 +192,24 @@ class Calculation:
                     
                     correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
                     distances[x] = [euclideanDistance, correlationCoEfficant]
-                # ADD ELSE
-            bandingEuc = 10 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-            bandingCorr = 0.5 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+                else:
+                    pass
+                    # ADD ELSE
+                    # NOTES FOR ELSE: If the file doesn't already exist, so need to verify if same user, 
+                    # Option:
+                    # 1. Could just choose another word until find one that does work
+                    # 2. If all others check out then, just add this generate and save the data
+                    # 3. Ask user to re-authenticate
+                    # Code to lock pc
+                    #   import subprocess
+                    #   cmd='rundll32.exe user32.dll, LockWorkStation'
+                    #   subprocess.call(cmd)
+                
+            bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
+            bandingCorr = 0.80 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
             wordCheck = []
             for j in list(distances.values()):
+                print(j)
                 # Both are inside the banding = same user
                 if j[0] <= bandingEuc and j[1] >= bandingCorr:
                     wordCheck.append(True)
@@ -203,10 +224,11 @@ class Calculation:
             else:
                 return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
         else:
+            # Current reg system, just generate and save KDS for every word
             # TEMP  - WILL NEED IMPROV
-            for x in range(0, len(self.chosen)):
-                fileName = self.chosen[x].word+'.json'
-                Kds = self.chosen[x].compress()
+            for x in range(0, len(self.wordsOut)):
+                fileName = self.wordsOut[x].word+'.json'
+                Kds = self.wordsOut[x].compress()
                 print(self.pf.userPath)
                 if os.path.exists(self.pf.userPath+fileName):
                     pass
@@ -215,16 +237,15 @@ class Calculation:
                         json.dump(Kds, write_file)
                     write_file.close()
             return True, []
+        
     def decompess(self, data):
         outDict = {}
         multiplier = int(str(1) + self.roundInterval*str(0))
-        multiplierPlus1 = int(str(11) + self.roundInterval-1*str(0))
+        multiplierPlus1 = int(str('11') + str(int(self.roundInterval-1)*'0'))
         for x in data:
-            print(x)
             startTime = list(x.values())[0][0]
             endTime = list(x.values())[0][1]
             value = list(x.values())[1]
-            print(startTime, endTime, value)
             for x in range(int(startTime*multiplier), int(endTime*multiplierPlus1)+1):
                 outDict[x/multiplier] = value
         return outDict
@@ -237,5 +258,15 @@ class Calculation:
         for i in self.chosen:
             out += "\n"+i.toString()
         return out
-            
-            
+    
+    def update(self, index):
+        intruderWords = [self.chosen[i] for i in range(len(index)) if index[i][1] == False]
+        for x in intruderWords:
+            fileName = x.word+'.json'
+            Kds = x.compress()
+            if os.path.exists(self.pf.userPath+fileName):
+                with open(self.pf.userPath+fileName, 'w') as write_file:
+                    json.dump(Kds, write_file)
+            else:
+                return False
+        return True     

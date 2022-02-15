@@ -4,12 +4,14 @@ from numpy import empty
 import DBConnection as db
 import Utilities as util
 import Word as w
-import WordProcessing as wp
 import profile as pf
 import Interval as i
 import keyboard
 
 interval = 10
+
+Upf = pf.Profile("Jack", "Pass")
+print(Upf.userPath)
 
 def record(interval):
     recorded = []
@@ -19,9 +21,6 @@ def record(interval):
     keyboard.unhook(keyBoardHook)
     return recorded, startTime
 
-Upf = pf.Profile("Jack", "Pass")
-print(Upf.userPath)
-
 while True:
     print("RECORDING")
     data, start = record(interval)
@@ -29,11 +28,19 @@ while True:
     if len(data) != 0:
         inter = i.Calculation(data, start, Upf)
         print(inter.toString())
-        decision, index = inter.validation(mode='t')
+        decision, index = inter.validation(mode='r')
         print("CALC DONE")
         print(decision, index)
         if decision == False:
             print("AHHHHHHHHHHHHHHHHHHHHHHHH")
-            print(index)
+            # IMPLEMENT LOCKOUT
+            # Call update function from inter if authentication successful
+            # Check if user wants to update word before doing so
+            # e.g inter.update(index)
+            # Also need an add keyboard func 
+            #   - maybe user be able to name?
+            #   - In same profile - Different keyboard class 
+            # 
+            
             break
         
