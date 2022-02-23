@@ -206,7 +206,7 @@ class Calculation:
                     #   subprocess.call(cmd)
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-            bandingCorr = 0.80 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+            bandingCorr = 0.85 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
             wordCheck = []
             for j in list(distances.values()):
                 print(j)
