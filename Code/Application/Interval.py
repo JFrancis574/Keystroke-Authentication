@@ -1,3 +1,4 @@
+import getpass
 import json
 import math
 import os.path
@@ -161,7 +162,7 @@ class Calculation:
                 if os.path.exists(self.pf.userPath+fileName):
                     # Loading in the data from the word files
                     with open(self.pf.userPath+fileName, 'r') as read_file:
-                        dataIn = self.decompess(json.load(read_file))
+                        dataIn = self.decompress(json.load(read_file))
                     read_file.close()
                     
                     # Beautifying the data and forming the correct data
@@ -193,17 +194,7 @@ class Calculation:
                     correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
                     distances[x] = [euclideanDistance, correlationCoEfficant]
                 else:
-                    pass
-                    # ADD ELSE
-                    # NOTES FOR ELSE: If the file doesn't already exist, so need to verify if same user, 
-                    # Option:
-                    # 1. Could just choose another word until find one that does work
-                    # 2. If all others check out then, just add this generate and save the data
-                    # 3. Ask user to re-authenticate
-                    # Code to lock pc
-                    #   import subprocess
-                    #   cmd='rundll32.exe user32.dll, LockWorkStation'
-                    #   subprocess.call(cmd)
+                    distances[x] = [None, None]
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
             bandingCorr = 0.85 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
@@ -216,11 +207,42 @@ class Calculation:
                 # Correlation is far more important
                 elif j[1] >= bandingCorr and j[0] > bandingEuc:
                     wordCheck.append(True)
+                elif j[0] == None:
+                    wordCheck.append(None)
                 else:
                     wordCheck.append(False)
-            
-            if False not in wordCheck:
+                    
+            if False not in wordCheck and None not in wordCheck:
                 return True, []
+            elif False not in wordCheck and None in wordCheck:
+                self.update([i for i, j  in enumerate(wordCheck) if j == None])
+                return True, []
+            elif False in wordCheck and None in wordCheck:
+                # ADD ELSE
+                    # NOTES FOR ELSE: If the file doesn't already exist, so need to verify if same user, 
+                    # Option:
+                    # 1. Could just choose another word until find one that does work
+                    # 2. If all others check out then, just add this generate and save the data
+                    # 3. Ask user to re-authenticate
+                    
+                    # Code to lock pc
+                    # import subprocess
+                    # cmd='rundll32.exe user32.dll, LockWorkStation'
+                    # subprocess.call(cmd)
+                    # The user then re-authenticates
+                    # Create new profile and repeatedly lock??? 
+                # Lock the pc and then update the word
+                # Code to lock pc
+                # import subprocess
+                # cmd='rundll32.exe user32.dll, LockWorkStation'
+                # subprocess.call(cmd)
+                # The user then re-authenticates
+                pass
+                if getpass.getuser() == self.pf.user:
+                    self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                    return True, []
+                else:
+                    return 'New', []
             else:
                 return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
         else:
@@ -238,7 +260,7 @@ class Calculation:
                     write_file.close()
             return True, []
         
-    def decompess(self, data):
+    def decompress(self, data):
         outDict = {}
         multiplier = int(str(1) + self.roundInterval*str(0))
         multiplierPlus1 = int(str('11') + str(int(self.roundInterval-1)*'0'))
@@ -259,14 +281,11 @@ class Calculation:
             out += "\n"+i.toString()
         return out
     
-    def update(self, index):
-        intruderWords = [self.chosen[i] for i in range(len(index)) if index[i][1] == False]
+    def update(self, indexes):
+        intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
         for x in intruderWords:
             fileName = x.word+'.json'
             Kds = x.compress()
-            if os.path.exists(self.pf.userPath+fileName):
-                with open(self.pf.userPath+fileName, 'w') as write_file:
-                    json.dump(Kds, write_file)
-            else:
-                return False
-        return True     
+            with open(self.pf.userPath+fileName, 'w') as write_file:
+                json.dump(Kds, write_file)
+            write_file.close()   
