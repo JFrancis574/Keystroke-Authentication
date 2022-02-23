@@ -62,10 +62,25 @@
 # cmd='rundll32.exe user32.dll, LockWorkStation'
 # subprocess.call(cmd)
 
+import ctypes
 import time
-import win32com.client
+user32 = ctypes.windll.User32
+time.sleep(5)
+#
+print(user32.GetForegroundWindow())
+#
 
-wmi = win32com.client.GetObject ("winmgmts:")
-for usb in wmi.InstancesOf ("Win32_USBHub"):
-    print(usb.DeviceID)
-    print(usb.name)
+if (user32.GetForegroundWindow() % 10 == 0): print('Locked')
+# 10553666 - return code for unlocked workstation1
+# 0 - return code for locked workstation1
+#
+# 132782 - return code for unlocked workstation2
+# 67370 -  return code for locked workstation2
+#
+# 3216806 - return code for unlocked workstation3
+# 1901390 - return code for locked workstation3
+#
+# 197944 - return code for unlocked workstation4
+# 0 -  return code for locked workstation4
+#
+else: print('Unlocked')

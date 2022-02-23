@@ -3,6 +3,7 @@ import json
 import math
 import os.path
 import string
+import ctypes
 
 import numpy as np
 from fastdtw import fastdtw
@@ -218,30 +219,21 @@ class Calculation:
                 self.update([i for i, j  in enumerate(wordCheck) if j == None])
                 return True, []
             elif False in wordCheck and None in wordCheck:
-                # ADD ELSE
-                    # NOTES FOR ELSE: If the file doesn't already exist, so need to verify if same user, 
-                    # Option:
-                    # 1. Could just choose another word until find one that does work
-                    # 2. If all others check out then, just add this generate and save the data
-                    # 3. Ask user to re-authenticate
-                    
-                    # Code to lock pc
-                    # import subprocess
-                    # cmd='rundll32.exe user32.dll, LockWorkStation'
-                    # subprocess.call(cmd)
-                    # The user then re-authenticates
-                    # Create new profile and repeatedly lock??? 
-                # Lock the pc and then update the word
                 # Code to lock pc
                 # import subprocess
                 # cmd='rundll32.exe user32.dll, LockWorkStation'
                 # subprocess.call(cmd)
                 # The user then re-authenticates
-                pass
+                # Check if user re-authenticates successfully
+                while True:
+                   if self.checkLocked():
+                       break
+                # If the same user,
                 if getpass.getuser() == self.pf.user:
                     self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
                     return True, []
                 else:
+                    # Otherwise, set up a new profile
                     return 'New', []
             else:
                 return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
@@ -288,4 +280,11 @@ class Calculation:
             Kds = x.compress()
             with open(self.pf.userPath+fileName, 'w') as write_file:
                 json.dump(Kds, write_file)
-            write_file.close()   
+            write_file.close()
+            
+    def checkLocked(self):
+        user32 = ctypes.windll.User32
+        if (user32.GetForegroundWindow() % 10 != 0):
+            return False
+        else:
+            return True
