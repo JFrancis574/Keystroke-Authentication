@@ -21,7 +21,7 @@ class Calculation:
         self.pairs = self.rawPairs()
         self.wordsOut = self.words()
         self.noWords = len(self.wordsOut)
-        self.chosen = self.wordChooseTemp()
+        self.chosen = self.choose()
     
     def process(self):
         if len(self.raw) == 0:
@@ -92,44 +92,19 @@ class Calculation:
                     pass
         return output
         
-    def wordChoose(self, banding=0):
-        wordCount = len(self.wordsOut)
-        if (wordCount == 0 or self.chosenAmount == 0):
-            return []
-        elif wordCount < self.chosenAmount:
-            return []
-        elif wordCount == self.chosenAmount:
+    def choose(self):
+        out = []
+        if len(self.wordsOut) <= self.chosenAmount:
             return self.wordsOut
-        else:
-            diff = self.wordsOut[-1].end - self.wordsOut[0].start
-            out = []
-            wordChooseInterval = diff/self.chosenAmount
-            og = diff/self.chosenAmount
-            count = 0
-            for i in range(0, wordCount):
-                if self.wordsOut[i] == []:
-                    pass
-                elif wordChooseInterval+banding >= diff:
-                    break
-                elif self.wordsOut[i].start <= (wordChooseInterval+banding) and self.wordsOut[i].end >= (wordChooseInterval+banding):
-                    count+=1
-                    out.append(self.wordsOut[i])
-                    wordChooseInterval += og + banding
-                else:
-                    pass
-            if len(out) != self.chosenAmount:
-                if len(out) == self.chosenAmount-1:
-                    y = int(round(len(out)/2, 0))
-                    inputWord = self.wordsOut[y]
-                    for x in range(0, len(out)):
-                        if inputWord == out[x]:
-                            inputWord = self.wordsOut[y+1]
-                    out.append(inputWord)
-                    return out
-                else:
-                    return self.wordChoose(banding+0.1)
-            else:
+        elif self.chosenAmount == 1:
+            return [self.wordsOut[len(self.wordsOut//2)]]
+        
+        tempWords = self.wordsOut
+        while True:
+            if len(out) == self.chosenAmount or len(tempWords) == 1:
                 return out
+            mid = len(tempWords)//2
+            out.append(tempWords.pop(mid))
             
     def wordChooseTemp(self):
         if self.chosenAmount == len(self.wordsOut):
@@ -161,7 +136,7 @@ class Calculation:
                 if os.path.exists(self.pf.userPath+fileName):
                     # Loading in the data from the word files
                     with open(self.pf.userPath+fileName, 'r') as read_file:
-                        dataIn = self.decompess(json.load(read_file))
+                        dataIn = self.decompress(json.load(read_file))
                     read_file.close()
                     
                     # Beautifying the data and forming the correct data
@@ -238,7 +213,7 @@ class Calculation:
                     write_file.close()
             return True, []
         
-    def decompess(self, data):
+    def decompress(self, data):
         outDict = {}
         multiplier = int(str(1) + self.roundInterval*str(0))
         multiplierPlus1 = int(str('11') + str(int(self.roundInterval-1)*'0'))
