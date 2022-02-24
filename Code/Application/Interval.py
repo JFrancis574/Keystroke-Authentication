@@ -161,7 +161,7 @@ class Calculation:
                 if os.path.exists(self.pf.userPath+fileName):
                     # Loading in the data from the word files
                     with open(self.pf.userPath+fileName, 'r') as read_file:
-                        dataIn = self.decompess(json.load(read_file))
+                        dataIn = self.decompress(json.load(read_file))
                     read_file.close()
                     
                     # Beautifying the data and forming the correct data
@@ -181,14 +181,12 @@ class Calculation:
                     # CorrelationCoefficant
                     # correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)[0,1]
                     cov = 0
-                    for i in range(len(ff_warped)):
-                        cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
-                    
                     XSum = 0
                     YSum = 0
                     for i in range(len(ff_warped)):
+                        cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
                         XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
-                        YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)
+                        YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)   
                     
                     correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
                     distances[x] = [euclideanDistance, correlationCoEfficant]
@@ -238,7 +236,7 @@ class Calculation:
                     write_file.close()
             return True, []
         
-    def decompess(self, data):
+    def decompress(self, data):
         outDict = {}
         multiplier = int(str(1) + self.roundInterval*str(0))
         multiplierPlus1 = int(str('11') + str(int(self.roundInterval-1)*'0'))
