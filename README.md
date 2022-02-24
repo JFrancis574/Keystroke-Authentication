@@ -39,3 +39,13 @@ Once these words have been chosen, the program first checks if it has seen this 
 
 If the word has never been seen before, the program will first check all other words in the chosen, if all of these match then the program will just add some new word data. Occaisonally, the program will not do this and instead select a different word instead from the sample. If this fails to validate then the program will lock the user out.
 
+### Algorithms in use
+These are the algorithms in use which take the raw key data into the final result. These all feed into one another and are in order here:
+
+1. The key data is converted into pairs and outputted with the format the first value is the key, the second is the down time and the last the up time. This is done in the interval class using the rawpairs function.
+```python
+[['h', 1, 2], ['i', 2,1]]
+```
+2. The raw pairs are then put into words using a complicated set of rules in the word() function inside the calculation class. These form word objects.
+3. The calculation class then will choose words from the interval and generate the KD signal for this word
+4. This value is then fed into the distance calculations which are euclidean distance and the correlation co-efficant.
