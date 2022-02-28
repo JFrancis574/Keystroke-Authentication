@@ -1,11 +1,11 @@
+import getpass
 import os.path
 import time
 from KeyboardClass import Keyboard
 
 class Profile:
-    def __init__(self, uName, PW):
-        self.user = uName
-        self.pw = PW
+    def __init__(self):
+        self.user = getpass.getuser()
         self.userPath = os.getcwd() + '/Data/'+self.user+'/'
         self.setup()
         self.keyboards = []

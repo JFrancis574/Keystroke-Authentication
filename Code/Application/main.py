@@ -1,3 +1,4 @@
+from getpass import getuser
 import time
 
 import DBConnection as db
@@ -9,7 +10,7 @@ import keyboard
 
 interval = 10
 
-Upf = pf.Profile("Jack", "Pass")
+Upf = pf.Profile()
 print(Upf.userPath)
 
 def record(interval):
@@ -26,7 +27,7 @@ while True:
     print("NOT RECORDING")
     if len(data) != 0:
         inter = i.Calculation(data, start, Upf)
-        print(inter.toString())
+        print(inter)
         decision, index = inter.validation(mode='r')
         print("CALC DONE")
         print(decision, index)
@@ -40,6 +41,8 @@ while True:
             #   - maybe user be able to name?
             #   - In same profile - Different keyboard class 
             # 
-            
             break
+        elif decision == 'New':
+            Upf = pf.Profile(getuser())
+
         

@@ -1,7 +1,10 @@
+import getpass
 import json
 import math
 import os.path
 import string
+import ctypes
+import subprocess
 
 import numpy as np
 from fastdtw import fastdtw
@@ -139,7 +142,7 @@ class Calculation:
                         dataIn = self.decompress(json.load(read_file))
                     read_file.close()
                     
-                    # Beautifying the data and forming the correct data
+                    # Beautifying and forming the correct data
                     inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
                     
@@ -166,36 +169,76 @@ class Calculation:
                     correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
                     distances[x] = [euclideanDistance, correlationCoEfficant]
                 else:
-                    pass
-                    # ADD ELSE
-                    # NOTES FOR ELSE: If the file doesn't already exist, so need to verify if same user, 
-                    # Option:
-                    # 1. Could just choose another word until find one that does work
-                    # 2. If all others check out then, just add this generate and save the data
-                    # 3. Ask user to re-authenticate
-                    # Code to lock pc
-                    #   import subprocess
-                    #   cmd='rundll32.exe user32.dll, LockWorkStation'
-                    #   subprocess.call(cmd)
+                    distances[x] = [None, None]
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-            bandingCorr = 0.85 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+            bandingCorr = 0.99 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
             wordCheck = []
             for j in list(distances.values()):
-                print(j)
+                print("j: ", j)
+                if j[0] == None:
+                    wordCheck.append(None)
                 # Both are inside the banding = same user
-                if j[0] <= bandingEuc and j[1] >= bandingCorr:
+                elif j[0] <= bandingEuc and j[1] >= bandingCorr:
                     wordCheck.append(True)
                 # Correlation is far more important
                 elif j[1] >= bandingCorr and j[0] > bandingEuc:
                     wordCheck.append(True)
                 else:
                     wordCheck.append(False)
-            
-            if False not in wordCheck:
-                return True, []
+        
+            print(wordCheck)
+            if len(wordCheck) != 1:
+                if False not in wordCheck and None not in wordCheck:
+                    return True, []
+                elif False not in wordCheck and None in wordCheck:
+                    self.update([i for i, j  in enumerate(wordCheck) if j == None])
+                    return True, []
+                elif False in wordCheck and None in wordCheck:
+                    # Code to lock pc
+                    self.lockPc()
+                    # The user then re-authenticates
+                    # Check if user re-authenticates successfully
+                    while True:
+                        if self.checkLocked():
+                            break
+                        # If the same user,
+                    if getpass.getuser() == self.pf.user:
+                        self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                        return True, []
+                    else:
+                        # Otherwise, set up a new profile
+                        return 'New', []
+                else:
+                    return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
             else:
-                return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
+                if True in wordCheck:
+                    return True, []
+                elif False in wordCheck:
+                    self.lockPc()
+                    while True:
+                        if self.checkLocked():
+                            break
+                        # If the same user,
+                    if getpass.getuser() == self.pf.user:
+                        self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                        return True, []
+                    else:
+                        # Otherwise, set up a new profile
+                        return 'New', []
+                elif None in wordCheck:
+                    self.lockPc()
+                    while True:
+                        if self.checkLocked():
+                            break
+                        # If the same user,
+                    if getpass.getuser() == self.pf.user:
+                        self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                        return True, []
+                    else:
+                        # Otherwise, set up a new profile
+                        return 'New', []
+                        
         else:
             # Current reg system, just generate and save KDS for every word
             # TEMP  - WILL NEED IMPROV
@@ -223,7 +266,7 @@ class Calculation:
                 outDict[x/multiplier] = value
         return outDict
     
-    def toString(self):
+    def __str__(self):
         out = "Words: "
         for x in self.wordsOut:
             out += "\n"+x.toString()
@@ -232,14 +275,22 @@ class Calculation:
             out += "\n"+i.toString()
         return out
     
-    def update(self, index):
-        intruderWords = [self.chosen[i] for i in range(len(index)) if index[i][1] == False]
+    def update(self, indexes):
+        intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
         for x in intruderWords:
             fileName = x.word+'.json'
             Kds = x.compress()
-            if os.path.exists(self.pf.userPath+fileName):
-                with open(self.pf.userPath+fileName, 'w') as write_file:
-                    json.dump(Kds, write_file)
-            else:
-                return False
-        return True     
+            with open(self.pf.userPath+fileName, 'w') as write_file:
+                json.dump(Kds, write_file)
+            write_file.close()
+            
+    def lockPc(self):
+        cmd='rundll32.exe user32.dll, LockWorkStation'
+        subprocess.call(cmd)
+            
+    def checkLocked(self):
+        user32 = ctypes.windll.User32
+        if (user32.GetForegroundWindow() % 10 != 0):
+            return False
+        else:
+            return True
