@@ -166,7 +166,7 @@ class Calculation:
                         dataIn = self.decompress(json.load(read_file))
                     read_file.close()
                     
-                    # Beautifying the data and forming the correct data
+                    # Beautifying and forming the correct data
                     inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
                     
@@ -183,12 +183,10 @@ class Calculation:
                     # CorrelationCoefficant
                     # correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)[0,1]
                     cov = 0
-                    for i in range(len(ff_warped)):
-                        cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
-                    
                     XSum = 0
                     YSum = 0
                     for i in range(len(ff_warped)):
+                        cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
                         XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
                         YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)
                     
