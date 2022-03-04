@@ -21,7 +21,14 @@ def record(interval):
     keyboard.unhook(keyBoardHook)
     return recorded, startTime
 
+def recordUntil(untilKey):
+    startTime = time.time()
+    recorded = keyboard.record(until=untilKey)
+    return recorded, startTime
+
 while True:
+    if Upf.newUser == True:
+        
     print("RECORDING")
     data, start = record(interval)
     print("NOT RECORDING")

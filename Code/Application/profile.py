@@ -10,6 +10,7 @@ class Profile:
         self.setup()
         self.keyboards = []
         self.currentKeyboard = None
+        self.newUser = None
     
     def setup(self):
         parent = os.getcwd()
@@ -20,8 +21,9 @@ class Profile:
             pass
         try:
             os.mkdir(os.path.join(parent,newDirectory))
+            self.newUser = True
         except FileExistsError:
-            pass
+            self.newUser = False
         
     def addKeyboard(self, vendorDeets, name):
         pluggedTime = time.time()
