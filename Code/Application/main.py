@@ -8,7 +8,7 @@ import Training as t
 
 interval = 10
 
-Upf = pf.Profile()
+Upf = pf.Profile('Keyboard1 ')
 print(Upf.userPath)
 
 def record(interval):
@@ -25,7 +25,6 @@ def recordUntil(untilKey):
     return recorded, startTime
 
 while True:
-    print(Upf.newUser)
     if Upf.newUser == True:
         print("Recording Training: ")
         dt, startTrain = recordUntil('esc')
@@ -33,7 +32,8 @@ while True:
         t.Training(dt, startTrain, Upf)
         print("Training DONE")
         Upf.setNew(False)
-    
+        Upf.addKeyboard(input("Keyboard Name: "))
+        
     print("RECORDING")
     data, start = record(interval)
     print("NOT RECORDING")

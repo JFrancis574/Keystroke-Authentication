@@ -1,16 +1,15 @@
 import getpass
 import os.path
-import time
-from KeyboardClass import Keyboard
+from KeyboardClass import Keyboard as k
 
 class Profile:
-    def __init__(self):
+    def __init__(self, keyName):
         self.user = getpass.getuser()
         self.userPath = os.getcwd() + '/Data/'+self.user+'/'
         self.newUser = self.checkNew()
         self.setup()
         self.keyboards = []
-        self.currentKeyboard = None
+        self.currentKeyboard = self.addKeyboard(keyName +" "+self.user)
     
     def setup(self):
         parent = os.getcwd()
@@ -24,11 +23,10 @@ class Profile:
         except FileExistsError:
             pass
         
-    def addKeyboard(self, vendorDeets, name):
-        pluggedTime = time.time()
-        newKeyboard = Keyboard(pluggedTime, vendorDeets, name)
+    def addKeyboard(self, name):
+        newKeyboard = k(name, self.userPath)
         self.keyboards.append(newKeyboard)
-        self.currentKeyboard = newKeyboard
+        return newKeyboard
         
     def changeKeyboard(self, name):
         for x in self.keyboards:
@@ -44,4 +42,8 @@ class Profile:
         parent = os.getcwd()
         newDirectory = '/Data/'+self.user+'/'
         return not os.path.exists(parent+newDirectory)
+    
+    def getKeyboardPath(self):
+        return self.currentKeyboard.getPath()
+    
         

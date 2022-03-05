@@ -22,7 +22,7 @@ class Calculation:
         self.chosenAmount = 4
         self.processed = self.process()
         self.pairs = self.rawPairs()
-        self.wordsOut = self.words()
+        self.wordsOut, self.semantics = self.words()
         self.noWords = len(self.wordsOut)
         self.chosen = self.choose()
     
@@ -55,9 +55,11 @@ class Calculation:
         bannedPunc = ['space', 'enter','play/pause media','alttab', 'eqdown', 'right', 'left', 'up', 'down', 'tab','alt', 'shift', 'ctrl']
         currentWord = []
         output = []
+        out = {}
         for j, i in enumerate(self.pairs):
-            print(i[0])
-            if i[0] not in bannedPunc and i[0] not in string.punctuation:
+            if i[0] in ['alt', 'shift', 'ctrl', 'caps lock']:
+                out[i[0]] = 1
+            elif i[0] not in bannedPunc and i[0] not in string.punctuation:
                 if i[0] == 'backspace':
                     if len(currentWord) != 0:
                         currentWord.pop(-1)
@@ -94,7 +96,7 @@ class Calculation:
                             currentWord = []
                 else:
                     pass
-        return output
+        return output, out
         
     def choose(self):
         out = []
@@ -137,9 +139,9 @@ class Calculation:
         if mode == 'r':
             for x in range(0, len(self.chosen)):
                 fileName = self.chosen[x].word+'.json'
-                if os.path.exists(self.pf.userPath+fileName):
+                if os.path.exists(self.pf.getKeyboardPath()+fileName):
                     # Loading in the data from the word files
-                    with open(self.pf.userPath+fileName, 'r') as read_file:
+                    with open(self.pf.getKeyboardPath()+fileName, 'r') as read_file:
                         dataIn = self.decompress(json.load(read_file))
                     read_file.close()
                     
@@ -175,8 +177,11 @@ class Calculation:
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
             bandingCorr = 0.99 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
             wordCheck = []
+            loadIn = self.validationSemantics()
+            # diff = max(len(self.semantics),loadIn) - min(len(self.semantics), loadIn)
+            if loadIn != -1 and loadIn >= len(self.semantics):
+                bandingCorr = bandingCorr - 0.05
             for j in list(distances.values()):
-                print("j: ", j)
                 if j[0] == None:
                     wordCheck.append(None)
                 # Both are inside the banding = same user
@@ -188,7 +193,6 @@ class Calculation:
                 else:
                     wordCheck.append(False)
         
-            print(wordCheck)
             if len(wordCheck) != 1:
                 if False not in wordCheck and None not in wordCheck:
                     return True, []
@@ -206,6 +210,7 @@ class Calculation:
                         # If the same user,
                     if getpass.getuser() == self.pf.user:
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                        self.updateSemantics()
                         return True, []
                     else:
                         # Otherwise, set up a new profile
@@ -220,6 +225,7 @@ class Calculation:
                         # If the same user,
                     if getpass.getuser() == self.pf.user:
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                        self.updateSemantics()
                         return True, []
                     else:
                         # Otherwise, set up a new profile
@@ -237,6 +243,7 @@ class Calculation:
                         # If the same user,
                     if getpass.getuser() == self.pf.user:
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                        self.updateSemantics()
                         return True, []
                     else:
                         # Otherwise, set up a new profile
@@ -249,6 +256,7 @@ class Calculation:
                         # If the same user,
                     if getpass.getuser() == self.pf.user:
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                        self.updateSemantics()
                         return True, []
                     else:
                         # Otherwise, set up a new profile
@@ -260,8 +268,7 @@ class Calculation:
             for x in range(0, len(self.wordsOut)):
                 fileName = self.wordsOut[x].word+'.json'
                 Kds = self.wordsOut[x].compress()
-                print(self.pf.userPath)
-                if os.path.exists(self.pf.userPath+fileName):
+                if os.path.exists(self.pf.getKeyboardPath()+fileName):
                     pass
                 else:
                     with open(self.pf.userPath+fileName, 'w') as write_file:
@@ -295,7 +302,7 @@ class Calculation:
         for x in intruderWords:
             fileName = x.word+'.json'
             Kds = x.compress()
-            with open(self.pf.userPath+fileName, 'w') as write_file:
+            with open(self.pf.getKeyboardPath()+'/'+fileName, 'w') as write_file:
                 json.dump(Kds, write_file)
             write_file.close()
             
@@ -309,3 +316,21 @@ class Calculation:
             return False
         else:
             return True
+        
+    def validationSemantics(self):
+        if len(self.semantics) == 0:
+            return -1
+        if os.path.exists(self.pf.getKeyboardPath()+'/Semantics.json'):
+            with open(self.pf.getKeyboardPath()+'/Semantics.json', 'r') as read_file:
+                dataIn = json.load(read_file)
+            read_file.close()
+            return len(dataIn)
+        else:
+            return -1
+        
+    def updateSemantics(self):
+        if len(self.semantics) == 0:
+            return
+        with open(self.pf.getKeyboardPath()+'/Semantics.json', 'w') as write_file:
+            json.dump(self.semantics, write_file)
+        write_file.close()
