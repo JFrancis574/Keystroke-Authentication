@@ -56,6 +56,7 @@ class Calculation:
         currentWord = []
         output = []
         for j, i in enumerate(self.pairs):
+            print(i[0])
             if i[0] not in bannedPunc and i[0] not in string.punctuation:
                 if i[0] == 'backspace':
                     if len(currentWord) != 0:
@@ -191,11 +192,25 @@ class Calculation:
             if len(wordCheck) != 1:
                 if False not in wordCheck and None not in wordCheck:
                     return True, []
-                elif False not in wordCheck and None in wordCheck:
+                elif True in wordCheck and None in wordCheck:
                     self.update([i for i, j  in enumerate(wordCheck) if j == None])
                     return True, []
                 elif False in wordCheck and None in wordCheck:
                     # Code to lock pc
+                    self.lockPc()
+                    # The user then re-authenticates
+                    # Check if user re-authenticates successfully
+                    while True:
+                        if self.checkLocked():
+                            break
+                        # If the same user,
+                    if getpass.getuser() == self.pf.user:
+                        self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                        return True, []
+                    else:
+                        # Otherwise, set up a new profile
+                        return 'New', []
+                elif True not in wordCheck and False not in wordCheck and None in wordCheck:
                     self.lockPc()
                     # The user then re-authenticates
                     # Check if user re-authenticates successfully

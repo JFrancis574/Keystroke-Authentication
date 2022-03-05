@@ -1,12 +1,10 @@
 from getpass import getuser
 import time
 
-import DBConnection as db
-import Utilities as util
-import Word as w
 import profile as pf
 import Interval as i
 import keyboard
+import Training as t
 
 interval = 10
 
@@ -21,7 +19,21 @@ def record(interval):
     keyboard.unhook(keyBoardHook)
     return recorded, startTime
 
+def recordUntil(untilKey):
+    startTime = time.time()
+    recorded = keyboard.record(until=untilKey)
+    return recorded, startTime
+
 while True:
+    print(Upf.newUser)
+    if Upf.newUser == True:
+        print("Recording Training: ")
+        dt, startTrain = recordUntil('esc')
+        print("NOT Recording Training: ")
+        t.Training(dt, startTrain, Upf)
+        print("Training DONE")
+        Upf.setNew(False)
+    
     print("RECORDING")
     data, start = record(interval)
     print("NOT RECORDING")

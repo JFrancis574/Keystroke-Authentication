@@ -7,6 +7,7 @@ class Profile:
     def __init__(self):
         self.user = getpass.getuser()
         self.userPath = os.getcwd() + '/Data/'+self.user+'/'
+        self.newUser = self.checkNew()
         self.setup()
         self.keyboards = []
         self.currentKeyboard = None
@@ -35,5 +36,12 @@ class Profile:
                 self.currentKeyboard = x
                 return True
         return False
-            
+    
+    def setNew(self, Bool):
+        self.newUser = Bool
+        
+    def checkNew(self):
+        parent = os.getcwd()
+        newDirectory = '/Data/'+self.user+'/'
+        return not os.path.exists(parent+newDirectory)
         
