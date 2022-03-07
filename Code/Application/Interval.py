@@ -12,9 +12,17 @@ from scipy.spatial.distance import euclidean
 
 import Word as w
 
-
 class Calculation:
+    """Calculation class that literally does everything
+    """
     def __init__(self, raw, startTime, pf):
+        """Preparing the class
+
+        Args:
+            raw (array): The raw data fed in, typically consists of a lot of keyboard events
+            startTime (float): The starttime of the interval
+            pf (Profile): The users profile
+        """
         self.raw = raw
         self.pf = pf
         self.roundInterval = 4
@@ -25,24 +33,37 @@ class Calculation:
         self.wordsOut, self.semantics = self.words()
         self.noWords = len(self.wordsOut)
         self.chosen = self.choose()
-    
+        
     def process(self):
+        """
+        Converts the raw keystroke data into a pair consisting of both the up and down actions.
+
+        Returns:
+            2D array: 2 dimensional array consisting of a seperate array for each key action. Converts the time into one that can actually be used.
+        """
         if len(self.raw) == 0:
             return []
         rawKeys = []
-        count = 0
         for record in self.raw:
-            count += 1
             rawKeys.append([record.name, (record.time - self.startTime), record.event_type])
         return rawKeys
     
     def rawPairs(self):
+        """
+        Converts the array from the process function into key pairs
+
+        Returns:
+            2D array: Consisting of a pair of actions from the array above.
+        """
         pairsArray = []
         for i in range(len(self.processed)):
             try:
+                
                 if (self.processed[i][2] == 'down' and self.processed[i+1][2] == 'up' and self.processed[i][0].lower() == self.processed[i+1][0].lower()):
+                    # If the next value in the array is the up action
                     pairsArray.append([self.processed[i][0], self.processed[i][1], self.processed[i+1][1]])
                 else:
+                    # Otherwise, search for the next opposing action and pair them up
                     for x in range(i, len(self.processed)):
                         if (self.processed[x][0].lower() == self.processed[i][0].lower() and self.processed[x][2] == 'up' and self.processed[i][2] == 'down'):
                             pairsArray.append([self.processed[i][0], self.processed[i][1], self.processed[x][1]])
@@ -52,14 +73,20 @@ class Calculation:
         return pairsArray
     
     def words(self):
+        """Converts the raw pairs into "words" using rules. A word is defined as all pairs that occur up until either a punctuation pair (e.g. space, !, etc)
+
+        Returns:
+            list: A list of word objects
+        """
         bannedPunc = ['space', 'enter','play/pause media','alttab', 'eqdown', 'right', 'left', 'up', 'down', 'tab','alt', 'shift', 'ctrl']
         currentWord = []
         output = []
-        out = {}
+        semantics = {} # This is used to store details on whether the user uses caps lock or shift. Essentially another security method
         for j, i in enumerate(self.pairs):
-            if i[0] in ['alt', 'shift', 'ctrl', 'caps lock']:
-                out[i[0]] = 1
+            if i[0] in ['shift', 'caps lock']:
+                semantics[i[0]] = 1
             elif i[0] not in bannedPunc and i[0] not in string.punctuation:
+                # If there is a backspace pair, remove the last character pair
                 if i[0] == 'backspace':
                     if len(currentWord) != 0:
                         currentWord.pop(-1)
@@ -68,8 +95,10 @@ class Calculation:
                             currentWord = []
                     else:
                         if len(output) != 0:
+                            # If there is no word currently being stored, remove the last one and remove the last character pair.
                             currentWord = output.pop(-1).raw
                 elif i == self.pairs[-1]:
+                    # If i is the last pair
                     currentWord.append(i)
                     if len(currentWord) != 0:
                         output.append(w.Word(currentWord))
@@ -77,6 +106,7 @@ class Calculation:
                 else:
                     currentWord.append(i)
             else:
+                # Punctuation handling, this deals with words such as didn't and user-generated
                 if i[0] in ['space', '.', 'enter', ',',':',';']:
                     if len(currentWord) != 0:
                         output.append(w.Word(currentWord))
@@ -96,13 +126,20 @@ class Calculation:
                             currentWord = []
                 else:
                     pass
-        return output, out
+        return output, semantics
         
     def choose(self):
+        """Chooses x amount of words from all the words the user types in the interval. The x is set by the self.chosenAmount attribute. O(n)
+
+        Returns:
+            list: list of word objects
+        """
         out = []
+        # Base cases
         if len(self.wordsOut) <= self.chosenAmount:
             return self.wordsOut
         elif self.chosenAmount == 1:
+            # Just selects the middle word
             return [self.wordsOut[len(self.wordsOut//2)]]
         
         tempWords = self.wordsOut
@@ -111,32 +148,20 @@ class Calculation:
                 return out
             mid = len(tempWords)//2
             out.append(tempWords.pop(mid))
-            
-    def wordChooseTemp(self):
-        if self.chosenAmount == len(self.wordsOut):
-            return self.wordsOut
-        elif self.chosenAmount > len(self.wordsOut):
-            return self.wordsOut
-        out = [self.wordsOut[0], self.wordsOut[-1]]
-        self.wordsOut.pop(0)
-        self.wordsOut.pop(-1)
-
-        if len(out) != self.chosenAmount:
-            chosenAmount = self.chosenAmount-2
-            og = int(len(self.wordsOut)/chosenAmount)
-            diff = int(len(self.wordsOut)/chosenAmount)
-            for x in range(0, len(self.wordsOut)):
-                if len(out) == self.chosenAmount:
-                    break
-                if x == diff:
-                    out.append(self.wordsOut[x])
-                    diff += og
-        return out
     
     def validation(self, mode='r'):
-        # r = real t = test
+        """The big boi. This essentially decided whether to accept the user or to kick the user out. Also handles the security aspect
+
+        Args:
+            mode (str, optional): This chooses whether this function is in test mode or not. Defaults to 'r'. r = real t = test
+
+        Returns:
+            Bool: If the user has been validated or not
+            list: All the words chosen that have failes
+        """
         distances = {}
         if mode == 'r':
+            # For every word that has been chosen.
             for x in range(0, len(self.chosen)):
                 fileName = self.chosen[x].word+'.json'
                 if os.path.exists(self.pf.getKeyboardPath()+fileName):
@@ -149,7 +174,7 @@ class Calculation:
                     inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
                     
-                    # Euciladitan and fastdtw
+                    # Euclidean and fastdtw
                     euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
                     
                     ff_path, ii_path = zip(*path)
@@ -160,7 +185,6 @@ class Calculation:
             
                     
                     # CorrelationCoefficant
-                    # correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)[0,1]
                     cov = 0
                     XSum = 0
                     YSum = 0
@@ -172,15 +196,28 @@ class Calculation:
                     correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
                     distances[x] = [euclideanDistance, correlationCoEfficant]
                 else:
+                    # If the word has never been seen before
                     distances[x] = [None, None]
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
             bandingCorr = 0.99 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
-            wordCheck = []
+            bandingChange = 0.02 # The decrease for correct semantics. SUBJECT TO CHANGE
+            
+            # Semantics stuff, currently a semantics match in terms of shift and caps lock will lead to the correlation banding being shorter
             loadIn = self.validationSemantics()
-            # diff = max(len(self.semantics),loadIn) - min(len(self.semantics), loadIn)
-            if loadIn != -1 and loadIn >= len(self.semantics):
-                bandingCorr = bandingCorr - 0.05
+            if loadIn != -1:
+                if 'shift' in loadIn and 'shift' in self.semantics and 'caps lock' not in self.semantics and 'caps lock' not in loadIn:
+                    bandingCorr = bandingCorr - bandingChange
+                elif 'shift' not in loadIn and 'shift' not in self.semantics and 'caps lock' in self.semantics and 'caps lock' in loadIn:
+                    bandingCorr = bandingCorr - bandingChange
+                elif ('shift' in loadIn and 'shift' not in self.semantics and 'caps lock' in self.semantics and 'caps lock' not in loadIn) or ('shift' not in loadIn and 'shift' in self.semantics and 'caps lock' in self.semantics and 'caps lock' not in loadIn):
+                    if bandingCorr + bandingChange > 0.99:
+                        pass
+                    else:
+                        bandingCorr = bandingCorr + bandingChange
+                else:
+                    pass 
+            wordCheck = []
             for j in list(distances.values()):
                 if j[0] == None:
                     wordCheck.append(None)
@@ -207,8 +244,9 @@ class Calculation:
                     while True:
                         if self.checkLocked():
                             break
-                        # If the same user,
+                    # If the same user,
                     if getpass.getuser() == self.pf.user:
+                        # Update the relevant words and the semantics stored
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
                         self.updateSemantics()
                         return True, []
@@ -222,8 +260,9 @@ class Calculation:
                     while True:
                         if self.checkLocked():
                             break
-                        # If the same user,
+                    # If the same user,
                     if getpass.getuser() == self.pf.user:
+                        # Update the relevant words and the semantics stored
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
                         self.updateSemantics()
                         return True, []
@@ -240,8 +279,9 @@ class Calculation:
                     while True:
                         if self.checkLocked():
                             break
-                        # If the same user,
+                    # If the same user,
                     if getpass.getuser() == self.pf.user:
+                        # Update the relevant words and the semantics stored
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
                         self.updateSemantics()
                         return True, []
@@ -253,8 +293,9 @@ class Calculation:
                     while True:
                         if self.checkLocked():
                             break
-                        # If the same user,
+                    # If the same user,
                     if getpass.getuser() == self.pf.user:
+                        # Update the relevant words and the semantics stored
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
                         self.updateSemantics()
                         return True, []
@@ -263,6 +304,7 @@ class Calculation:
                         return 'New', []
                         
         else:
+            # Only in use in test mode
             # Current reg system, just generate and save KDS for every word
             # TEMP  - WILL NEED IMPROV
             for x in range(0, len(self.wordsOut)):
@@ -277,6 +319,14 @@ class Calculation:
             return True, []
         
     def decompress(self, data):
+        """Used to decompress the data that is stored in and convert it into the required dictionary
+
+        Args:
+            data (dictionary): The compressed data
+
+        Returns:
+            dict: The uncompressed data, very large
+        """
         outDict = {}
         multiplier = int(str(1) + self.roundInterval*str(0))
         multiplierPlus1 = int(str('11') + str(int(self.roundInterval-1)*'0'))
@@ -289,6 +339,11 @@ class Calculation:
         return outDict
     
     def __str__(self):
+        """Simple display of all words and all chosen words
+
+        Returns:
+            string: Nicely formatted string
+        """
         out = "Words: "
         for x in self.wordsOut:
             out += "\n"+x.toString()
@@ -298,6 +353,11 @@ class Calculation:
         return out
     
     def update(self, indexes):
+        """Used to update word files with new data. Used typically after the user has re-authenticated
+
+        Args:
+            indexes (array): The indexes of the words that need updating in the chosen list
+        """
         intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
         for x in intruderWords:
             fileName = x.word+'.json'
@@ -307,10 +367,17 @@ class Calculation:
             write_file.close()
             
     def lockPc(self):
+        """Used to lock the pc
+        """
         cmd='rundll32.exe user32.dll, LockWorkStation'
         subprocess.call(cmd)
             
     def checkLocked(self):
+        """Check if the pc is locked using ctypes. PAINFUL
+
+        Returns:
+            bool: False if locked, true otherwise
+        """
         user32 = ctypes.windll.User32
         if (user32.GetForegroundWindow() % 10 != 0):
             return False
@@ -318,17 +385,24 @@ class Calculation:
             return True
         
     def validationSemantics(self):
+        """Grabs the semantics data.
+
+        Returns:
+            int or dictionary: -1 if no semantics data exists, or the data if it does.
+        """
         if len(self.semantics) == 0:
             return -1
         if os.path.exists(self.pf.getKeyboardPath()+'/Semantics.json'):
             with open(self.pf.getKeyboardPath()+'/Semantics.json', 'r') as read_file:
                 dataIn = json.load(read_file)
             read_file.close()
-            return len(dataIn)
+            return dataIn
         else:
             return -1
         
     def updateSemantics(self):
+        """Used to update the semantics
+        """
         if len(self.semantics) == 0:
             return
         with open(self.pf.getKeyboardPath()+'/Semantics.json', 'w') as write_file:
