@@ -15,13 +15,14 @@ import Word as w
 class Calculation:
     """Calculation class that literally does everything
     """
-    def __init__(self, raw, startTime, pf):
+    def __init__(self, raw, startTime, pf, semanticsCheck):
         """Preparing the class
 
         Args:
             raw (array): The raw data fed in, typically consists of a lot of keyboard events
             startTime (float): The starttime of the interval
             pf (Profile): The users profile
+            semanticsCheck (int): Used to determine whether the semantics check is used
         """
         self.raw = raw
         self.pf = pf
@@ -33,6 +34,7 @@ class Calculation:
         self.wordsOut, self.semantics = self.words()
         self.noWords = len(self.wordsOut)
         self.chosen = self.choose()
+        self.semanticsCheck = semanticsCheck
         
     def process(self):
         """
@@ -164,9 +166,9 @@ class Calculation:
             # For every word that has been chosen.
             for x in range(0, len(self.chosen)):
                 fileName = self.chosen[x].word+'.json'
-                if os.path.exists(self.pf.getKeyboardPath()+fileName):
+                if os.path.exists(self.pf.getKeyboardPath()+'/'+fileName):
                     # Loading in the data from the word files
-                    with open(self.pf.getKeyboardPath()+fileName, 'r') as read_file:
+                    with open(self.pf.getKeyboardPath()+'/'+fileName, 'r') as read_file:
                         dataIn = self.decompress(json.load(read_file))
                     read_file.close()
                     
@@ -182,8 +184,7 @@ class Calculation:
                     ii_path = np.asarray(ii_path)
                     ff_warped = fromFile[ff_path]
                     ii_warped = inInterval[ii_path]
-            
-                    
+
                     # CorrelationCoefficant
                     cov = 0
                     XSum = 0
@@ -198,25 +199,28 @@ class Calculation:
                 else:
                     # If the word has never been seen before
                     distances[x] = [None, None]
+                print(distances)
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
             bandingCorr = 0.99 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
             bandingChange = 0.02 # The decrease for correct semantics. SUBJECT TO CHANGE
             
             # Semantics stuff, currently a semantics match in terms of shift and caps lock will lead to the correlation banding being shorter
-            loadIn = self.validationSemantics()
-            if loadIn != -1:
-                if 'shift' in loadIn and 'shift' in self.semantics and 'caps lock' not in self.semantics and 'caps lock' not in loadIn:
-                    bandingCorr = bandingCorr - bandingChange
-                elif 'shift' not in loadIn and 'shift' not in self.semantics and 'caps lock' in self.semantics and 'caps lock' in loadIn:
-                    bandingCorr = bandingCorr - bandingChange
-                elif ('shift' in loadIn and 'shift' not in self.semantics and 'caps lock' in self.semantics and 'caps lock' not in loadIn) or ('shift' not in loadIn and 'shift' in self.semantics and 'caps lock' in self.semantics and 'caps lock' not in loadIn):
-                    if bandingCorr + bandingChange > 0.99:
-                        pass
+            if self.semanticsCheck != 0:
+                loadIn = self.validationSemantics()
+                if loadIn != -1 and len(self.semantics) != 0:
+                    if 'shift' in loadIn and 'shift' in self.semantics and 'caps lock' not in self.semantics and 'caps lock' not in loadIn:
+                        bandingCorr = bandingCorr - bandingChange
+                    elif 'shift' not in loadIn and 'shift' not in self.semantics and 'caps lock' in self.semantics and 'caps lock' in loadIn:
+                        bandingCorr = bandingCorr - bandingChange
+                    elif ('shift' in loadIn and 'shift' not in self.semantics and 'caps lock' in self.semantics and 'caps lock' not in loadIn) or ('shift' not in loadIn and 'shift' in self.semantics and 'caps lock' in self.semantics and 'caps lock' not in loadIn):
+                        if bandingCorr + bandingChange > 0.99:
+                            pass
+                        else:
+                            bandingCorr = bandingCorr + bandingChange
                     else:
-                        bandingCorr = bandingCorr + bandingChange
-                else:
-                    pass 
+                        pass
+            
             wordCheck = []
             for j in list(distances.values()):
                 if j[0] == None:
@@ -229,7 +233,7 @@ class Calculation:
                     wordCheck.append(True)
                 else:
                     wordCheck.append(False)
-        
+            
             if len(wordCheck) != 1:
                 if False not in wordCheck and None not in wordCheck:
                     return True, []

@@ -36,9 +36,12 @@ while True:
         
     print("RECORDING")
     data, start = record(interval)
+    print(data)
+    for x in data:
+        print(x.time)
     print("NOT RECORDING")
     if len(data) != 0:
-        inter = i.Calculation(data, start, Upf)
+        inter = i.Calculation(data, start, Upf, 1)
         print(inter)
         decision, index = inter.validation(mode='r')
         print("CALC DONE")
