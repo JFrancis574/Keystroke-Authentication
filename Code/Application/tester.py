@@ -3,17 +3,18 @@ import os
 import time as t
 import keyboard as k
 from Interval import Calculation
+import timeit
 
-def testerDataFormer(string, holdTime, floatTime, file='N'):
+def testerDataFormer(string, holdTime, floatTime, file=0, variable=0):
     output = []
-    if file == 'N':
+    if file == 0:
         data = string
     else:
         if os.path.exists(os.getcwd()+string):
             data = open(string, 'r')
         else:
             return
-        
+    
     if isinstance(holdTime, float) and isinstance(floatTime, float):
         time = t.time()
         for x in data:
@@ -55,25 +56,72 @@ def testerDataFormer(string, holdTime, floatTime, file='N'):
                 output.append(k.KeyboardEvent('up', 99, name=data[i], time=time))
                 time += floatTime[i]
             return output
-                      
+        
+def multipleTestRunner(Teststring, iterations, imposterCount, genuineHoldData, genuineFloatData, imposterHoldData, imposterFloatData, benchmark=0):
+    if iterations == 0 or Teststring == "":
+        return
+    pf = p.Profile('Test')
+    
+    if benchmark == 0:
+         # No benchmark exists
+        print("Creating Benchmark")
+        # iterations -= 1
+        startCount = 1
+       
+        if isinstance(Teststring, str):
+            start = t.time()
+            data = testerDataFormer(Teststring, genuineHoldData[0], genuineFloatData[0], 0, 0)
+        else:
+            start = t.time()
+            data = testerDataFormer(Teststring[0], genuineHoldData[0], genuineFloatData[0], 0, 0)
 
-start = t.time()
-pf = p.Profile('temp')
-dt = testerDataFormer("Hello", [0.1, 0.2, 0.1, 0.3, 0.1], [3.0, 2.0, 1.5, 1.9, 2.9])
-# Both floatime and holdTime need to be in second. e.g one minute between presses would be 60. 1 second would be 1. A tenth of a second, 0.1 e.g. 
-# Examples
-# Simple string with 2 floats
-# print("FLOATS: ")
-# for x in dt:
-#     print(x.name, x.time)
-    
-# print("Arrays: ")
-# for x in testerDataFormer("Hello", [0.1, 0.2, 0.1, 0.3, 0.1], [1.0, 2.0, 0.5, 1.0, 0.9]):
-#     print(x.name, x.time)
-    
-    
-inter = Calculation(dt, start, pf, 0)
-print(inter.noWords)
-decision, index = inter.validation(mode='r')
-print(decision, index)
-    
+        bench, index = Calculation(data, start, pf, 1).validation(mode='t')
+        if bench != "Bench Created":
+            return     
+    else:
+        startCount = 0   
+         
+    count = 0
+    output = {}
+    for i in range(startCount, iterations):
+        print("Doing Test: ", i)
+        start_time = timeit.default_timer()
+        if count < imposterCount:
+            if isinstance(Teststring, str):
+                start = t.time()
+                data = testerDataFormer(Teststring, imposterHoldData[i], imposterFloatData[i], 0, 0)
+                type = False
+                count +=1
+            else:
+                start = t.time()
+                data = testerDataFormer(Teststring[i], imposterHoldData[i], imposterFloatData[i], 0, 0)
+                type = False
+                count +=1
+            print("Hold, Float: ", imposterHoldData[i], imposterFloatData[i])
+        else:
+            if isinstance(Teststring, str):
+                start = t.time()
+                data = testerDataFormer(Teststring, genuineHoldData[i],genuineFloatData[i], 0, 0)
+                type = True
+            else:
+                start = t.time()
+                data = testerDataFormer(Teststring[i], genuineHoldData[i],genuineFloatData[i], 0, 0)
+                type = True
+            print("Hold, Float: ", genuineHoldData[i],genuineFloatData[i])
+            
+        inter = Calculation(data, start, pf, 1)
+        decision, index = inter.validation(mode='rnl')
+        if decision == type:
+            print(i, "Expected Result: " + str(type) + ". Actual Result: " +  str(decision) + ". Test passed!")
+            output[i] = type, True
+        else:
+            print(i, "Expected Result: " +  str(type) + ". Actual Result: " +  str(decision) + ". Test Failed!")
+            print(i, "Values Failed: ", index)
+            output[i] = type, False
+        print(i, " took ", timeit.default_timer() - start_time)
+    return output
+            
+out = multipleTestRunner("geographically", 10, 0, [0.1, 0.1, 0.15, 0.125, 0.12, 0.11, 0.09, 0.1, 0.099, 0.1], [0.01, 0.015, 0.02, 0.012, 0.013, 0.014, 0.013, 0.011, 0.02, 0.02], [1.0, 1.0, 3.0, 5.0, 6.0, 9.0, 3.0, 2.0, 2.0, 5.0], [0.1, 0.5, 0.2, 0.1, 0.25, 0.2, 0.2, 0.1, 0.7, 0.34], 0)           
+print("Stats:")
+for i in range(len(list(out.keys()))):
+    print(list(out.keys())[i], list(out.values())[i])

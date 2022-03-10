@@ -5,6 +5,7 @@ import os.path
 import string
 import ctypes
 import subprocess
+import timeit
 
 import numpy as np
 from fastdtw import fastdtw
@@ -155,14 +156,14 @@ class Calculation:
         """The big boi. This essentially decided whether to accept the user or to kick the user out. Also handles the security aspect
 
         Args:
-            mode (str, optional): This chooses whether this function is in test mode or not. Defaults to 'r'. r = real t = test
+            mode (str, optional): This chooses whether this function is in test mode or not. Defaults to 'r'. r = real t = test, rnl = real no lock
 
         Returns:
             Bool: If the user has been validated or not
             list: All the words chosen that have failes
         """
         distances = {}
-        if mode == 'r':
+        if mode in ['r', 'rnl']:
             # For every word that has been chosen.
             for x in range(0, len(self.chosen)):
                 fileName = self.chosen[x].word+'.json'
@@ -175,9 +176,10 @@ class Calculation:
                     # Beautifying and forming the correct data
                     inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
-                    
+                    start_time = timeit.default_timer()
                     # Euclidean and fastdtw
-                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
+                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=None)
+                    print("DTW Time: ", timeit.default_timer() - start_time)
                     
                     ff_path, ii_path = zip(*path)
                     ff_path = np.asarray(ff_path)
@@ -189,24 +191,27 @@ class Calculation:
                     cov = 0
                     XSum = 0
                     YSum = 0
-                    for i in range(len(ff_warped)):
-                        cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
-                        XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
-                        YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)   
                     
-                    correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
-                    distances[x] = [euclideanDistance, correlationCoEfficant]
+                    # for i in range(len(ff_warped)):
+                    #     cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
+                    #     XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
+                    #     YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)
+                    
+                    
+                    # correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
+                    correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)
+                    distances[x] = [euclideanDistance, correlationCoEfficant[0][1]]
                 else:
                     # If the word has never been seen before
                     distances[x] = [None, None]
                 print(distances)
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-            bandingCorr = 0.99 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+            bandingCorr = 0.90 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
             bandingChange = 0.02 # The decrease for correct semantics. SUBJECT TO CHANGE
             
             # Semantics stuff, currently a semantics match in terms of shift and caps lock will lead to the correlation banding being shorter
-            if self.semanticsCheck != 0:
+            if self.semanticsCheck != 0 or len(self.semantics) == 0:
                 loadIn = self.validationSemantics()
                 if loadIn != -1 and len(self.semantics) != 0:
                     if 'shift' in loadIn and 'shift' in self.semantics and 'caps lock' not in self.semantics and 'caps lock' not in loadIn:
@@ -242,71 +247,86 @@ class Calculation:
                     return True, []
                 elif False in wordCheck and None in wordCheck:
                     # Code to lock pc
-                    self.lockPc()
-                    # The user then re-authenticates
-                    # Check if user re-authenticates successfully
-                    while True:
-                        if self.checkLocked():
-                            break
-                    # If the same user,
-                    if getpass.getuser() == self.pf.user:
-                        # Update the relevant words and the semantics stored
-                        self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
-                        self.updateSemantics()
-                        return True, []
+                    if mode != 'rnl':
+                        self.lockPc()
+                        # The user then re-authenticates
+                        # Check if user re-authenticates successfully
+                        while True:
+                            if self.checkLocked():
+                                break
+                        # If the same user,
+                        if getpass.getuser() == self.pf.user:
+                            # Update the relevant words and the semantics stored
+                            self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                            self.updateSemantics()
+                            return True, []
+                        else:
+                            # Otherwise, set up a new profile
+                            return 'New', []
                     else:
-                        # Otherwise, set up a new profile
-                        return 'New', []
+                        return False, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
+                    
                 elif True not in wordCheck and False not in wordCheck and None in wordCheck:
-                    self.lockPc()
-                    # The user then re-authenticates
-                    # Check if user re-authenticates successfully
-                    while True:
-                        if self.checkLocked():
-                            break
-                    # If the same user,
-                    if getpass.getuser() == self.pf.user:
-                        # Update the relevant words and the semantics stored
-                        self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
-                        self.updateSemantics()
-                        return True, []
+                    if mode != 'rnl':
+                        self.lockPc()
+                        # The user then re-authenticates
+                        # Check if user re-authenticates successfully
+                        while True:
+                            if self.checkLocked():
+                                break
+                        # If the same user,
+                        if getpass.getuser() == self.pf.user:
+                            # Update the relevant words and the semantics stored
+                            self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                            self.updateSemantics()
+                            return True, []
+                        else:
+                            # Otherwise, set up a new profile
+                            return 'New', []
                     else:
-                        # Otherwise, set up a new profile
-                        return 'New', []
+                        return False, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
                 else:
                     return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
             else:
                 if True in wordCheck:
                     return True, []
                 elif False in wordCheck:
-                    self.lockPc()
-                    while True:
-                        if self.checkLocked():
-                            break
-                    # If the same user,
-                    if getpass.getuser() == self.pf.user:
-                        # Update the relevant words and the semantics stored
-                        self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
-                        self.updateSemantics()
-                        return True, []
+                    if mode != 'rnl':
+                        self.lockPc()
+                        while True:
+                            if self.checkLocked():
+                                break
+                        # If the same user,
+                        if getpass.getuser() == self.pf.user:
+                            # Update the relevant words and the semantics stored
+                            self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                            self.updateSemantics()
+                            return True, []
+                        else:
+                            # Otherwise, set up a new profile
+                            return 'New', []
                     else:
-                        # Otherwise, set up a new profile
-                        return 'New', []
+                        return False, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
+                    
                 elif None in wordCheck:
-                    self.lockPc()
-                    while True:
-                        if self.checkLocked():
-                            break
-                    # If the same user,
-                    if getpass.getuser() == self.pf.user:
-                        # Update the relevant words and the semantics stored
+                    if mode != 'rnl':
+                        self.lockPc()
+                        while True:
+                            if self.checkLocked():
+                                break
+                        # If the same user,
+                        if getpass.getuser() == self.pf.user:
+                            # Update the relevant words and the semantics stored
+                            self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                            self.updateSemantics()
+                            return True, []
+                        else:
+                            # Otherwise, set up a new profile
+                            return 'New', []
+                    else:
                         self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
                         self.updateSemantics()
-                        return True, []
-                    else:
-                        # Otherwise, set up a new profile
-                        return 'New', []
-                        
+                        return False, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
         else:
             # Only in use in test mode
             # Current reg system, just generate and save KDS for every word
@@ -314,13 +334,13 @@ class Calculation:
             for x in range(0, len(self.wordsOut)):
                 fileName = self.wordsOut[x].word+'.json'
                 Kds = self.wordsOut[x].compress()
-                if os.path.exists(self.pf.getKeyboardPath()+fileName):
+                if os.path.exists(self.pf.getKeyboardPath()+'/'+fileName):
                     pass
                 else:
-                    with open(self.pf.userPath+fileName, 'w') as write_file:
+                    with open(self.pf.getKeyboardPath()+'/'+fileName, 'w') as write_file:
                         json.dump(Kds, write_file)
                     write_file.close()
-            return True, []
+            return "Bench Created", []
         
     def decompress(self, data):
         """Used to decompress the data that is stored in and convert it into the required dictionary
@@ -362,6 +382,7 @@ class Calculation:
         Args:
             indexes (array): The indexes of the words that need updating in the chosen list
         """
+        print("HERE")
         intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
         for x in intruderWords:
             fileName = x.word+'.json'

@@ -8,7 +8,7 @@ import Training as t
 
 interval = 10
 
-Upf = pf.Profile('Keyboard1 ')
+Upf = pf.Profile('Keyboard1')
 print(Upf.userPath)
 
 def record(interval):
@@ -36,9 +36,6 @@ while True:
         
     print("RECORDING")
     data, start = record(interval)
-    print(data)
-    for x in data:
-        print(x.time)
     print("NOT RECORDING")
     if len(data) != 0:
         inter = i.Calculation(data, start, Upf, 1)

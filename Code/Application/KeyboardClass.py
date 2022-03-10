@@ -17,5 +17,5 @@ class Keyboard:
         return self.userPath+self.name
     
     def setup(self):
-        if not os.path.exists(self.userPath + self.name):
+        if not os.path.exists(self.userPath+self.name):
             os.mkdir(self.userPath+self.name)

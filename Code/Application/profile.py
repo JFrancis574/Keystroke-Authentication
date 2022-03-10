@@ -9,7 +9,7 @@ class Profile:
         self.newUser = self.checkNew()
         self.setup()
         self.keyboards = []
-        self.currentKeyboard = self.addKeyboard(keyName +" "+self.user)
+        self.currentKeyboard = self.addKeyboard(keyName)
     
     def setup(self):
         parent = os.getcwd()
