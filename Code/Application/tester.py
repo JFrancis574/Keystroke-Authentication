@@ -2,6 +2,7 @@ import profile as p
 import os
 import time as t
 import keyboard as k
+from prompt_toolkit import print_formatted_text
 from Interval import Calculation
 import timeit
 
@@ -120,8 +121,52 @@ def multipleTestRunner(Teststring, iterations, imposterCount, genuineHoldData, g
             output[i] = type, False
         print(i, " took ", timeit.default_timer() - start_time)
     return output
+
+
+def multipleTestRunnerVariable(string, midValueHold, midValueFloat, variableAmountHold, variableAmountFloat, testAmount):
+    if string == "":
+        return
+    elif midValueHold - variableAmountHold < 0 or midValueFloat - variableAmountFloat < 0:
+        return
+    
+    pf = p.Profile('Test')
+    start = t.time()
+    data = testerDataFormer(string, midValueHold, midValueFloat, 0, 0)
+    _, _ = Calculation(data, start, pf, 1).validation(mode='t')
+    
+    minValueHold, minValueFloat = midValueHold - variableAmountHold, midValueFloat - variableAmountFloat
+    maxValueHold, maxValueFloat = midValueHold + variableAmountHold, midValueFloat + variableAmountFloat
+    everyXHold, everyXFloat = (maxValueHold - minValueHold)/testAmount, (maxValueFloat - minValueFloat)/testAmount
+    output = {}
+    countHold, countFloat, count = minValueHold+everyXHold, minValueFloat+everyXFloat, 0
+    while round(countHold, 2) <= maxValueHold and round(countFloat, 2) <= maxValueFloat and count <= testAmount:
+        print("Doing test: ",count)
+        start = t.time()
+        data = testerDataFormer(string, countHold, countFloat, 0,0)
+        inter = Calculation(data, start, pf, 1)
+        decision, _ = inter.validation(mode='rnl')
+        output[count] = (countHold, countFloat, decision)
+        countHold += everyXHold
+        countFloat += everyXFloat
+        count += 1
+    return output
+        
+    
+def displayDictNice(dict, roundValue):
+    if len(list(dict.keys())) == 0:
+        return
+    print("TNO: HT: FT: D:")
+    values = list(dict.values())
+    for i in range(len(list(dict.keys()))):
+        print(i, round(values[i][0], roundValue), round(values[i][1], roundValue), values[i][2])
+    
+    
+    
             
-out = multipleTestRunner("geographically", 10, 0, [0.1, 0.1, 0.15, 0.125, 0.12, 0.11, 0.09, 0.1, 0.099, 0.1], [0.01, 0.015, 0.02, 0.012, 0.013, 0.014, 0.013, 0.011, 0.02, 0.02], [1.0, 1.0, 3.0, 5.0, 6.0, 9.0, 3.0, 2.0, 2.0, 5.0], [0.1, 0.5, 0.2, 0.1, 0.25, 0.2, 0.2, 0.1, 0.7, 0.34], 0)           
-print("Stats:")
-for i in range(len(list(out.keys()))):
-    print(list(out.keys())[i], list(out.values())[i])
+# out = multipleTestRunner("geographically", 10, 5, [0.1, 0.1, 0.15, 0.125, 0.12, 0.11, 0.09, 0.1, 0.099, 0.1], [0.01, 0.015, 0.02, 0.012, 0.013, 0.014, 0.013, 0.011, 0.02, 0.02], [1.0, 1.0, 3.0, 5.0, 6.0, 9.0, 3.0, 2.0, 2.0, 5.0], [0.1, 0.5, 0.2, 0.1, 0.25, 0.2, 0.2, 0.1, 0.7, 0.34], 0)           
+# print("Stats:")
+# for i in range(len(list(out.keys()))):
+#     print(list(out.keys())[i], list(out.values())[i])
+# MaxHold = 0.15 MaxFloat = 0.02
+displayDictNice(multipleTestRunnerVariable('geographically', 0.1, 0.01, 0.05, 0.01, 1000), 3)
+
