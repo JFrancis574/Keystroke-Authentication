@@ -1,10 +1,17 @@
 import profile as p
 import os
 import time as t
-import keyboard as k
-from prompt_toolkit import print_formatted_text
 from Interval import Calculation
 import timeit
+
+from sys import platform
+
+print(platform)
+
+if platform == 'darwin':
+    import keyboardEvent as k
+else:
+    import keyboard as k
 
 def testerDataFormer(string, holdTime, floatTime, file=0, variable=0):
     output = []
@@ -168,5 +175,5 @@ def displayDictNice(dict, roundValue):
 # for i in range(len(list(out.keys()))):
 #     print(list(out.keys())[i], list(out.values())[i])
 # MaxHold = 0.15 MaxFloat = 0.02
-displayDictNice(multipleTestRunnerVariable('geographically', 0.1, 0.01, 0.05, 0.01, 1000), 3)
+displayDictNice(multipleTestRunnerVariable('geographically', 0.1, 0.01, 0.05, 0.01, 20), 3)
 
