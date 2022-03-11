@@ -13,13 +13,13 @@ class Training(Calculation):
         for x in range(0, len(self.wordsOut)):
             fileName = self.wordsOut[x].word+'.json'
             Kds = self.wordsOut[x].compress()
-            if os.path.exists(self.pf.userPath+fileName):
+            if os.path.exists(self.pf.getKeyboardPath()+fileName):
                 pass
             else:
-                with open(self.pf.userPath+fileName, 'w') as write_file:
+                with open(self.pf.getKeyboardPath()+fileName, 'w') as write_file:
                     json.dump(Kds, write_file)
                 write_file.close()
-        with open(self.pf.userPath+'Semantics.json', 'w') as write_file:
+        with open(self.pf.getKeyboardPath()+'Semantics.json', 'w') as write_file:
                 json.dump(self.semantics, write_file)
         write_file.close()
     
