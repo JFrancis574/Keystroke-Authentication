@@ -1,4 +1,5 @@
 from getpass import getuser
+import os
 import time
 
 import profile as pf
@@ -7,9 +8,6 @@ import keyboard
 import Training as t
 
 interval = 10
-
-Upf = pf.Profile('Keyboard1')
-print(Upf.userPath)
 
 def record(interval):
     recorded = []
@@ -24,37 +22,37 @@ def recordUntil(untilKey):
     recorded = keyboard.record(until=untilKey)
     return recorded, startTime
 
-while True:
-    if Upf.newUser == True:
-        print("Recording Training: ")
-        dt, startTrain = recordUntil('esc')
-        print("NOT Recording Training: ")
-        t.Training(dt, startTrain, Upf)
-        print("Training DONE")
-        Upf.setNew(False)
-        Upf.addKeyboard(input("Keyboard Name: "))
-        
-    print("RECORDING")
-    data, start = record(interval)
-    print("NOT RECORDING")
-    if len(data) != 0:
-        inter = i.Calculation(data, start, Upf, 1)
-        print(inter)
-        decision, index = inter.validation(mode='r')
-        print("CALC DONE")
-        print(decision, index)
-        if decision == False:
-            print("AHHHHHHHHHHHHHHHHHHHHHHHH")
-            # IMPLEMENT LOCKOUT
-            # Call update function from inter if authentication successful
-            # Check if user wants to update word before doing so
-            # e.g inter.update(index)
-            # Also need an add keyboard func 
-            #   - maybe user be able to name?
-            #   - In same profile - Different keyboard class 
-            # 
-            break
-        elif decision == 'New':
-            Upf = pf.Profile(getuser())
 
+def runner(prof):
+    while True:
+        print("RECORDING")
+        data, start = record(interval)
+        print("RECORDING STOPPED")
+        if len(data) != 0:
+            inter = i.Calculation(data, start, prof, 1)
+            decision, index = inter.validation(mode='r')
+            print(decision, index)
+            if decision == False:
+                return
+        else:
+            pass
         
+ 
+training = False
+while training == False:
+    if not os.path.exists(os.getcwd() + '/Data/'+getuser()):
+        prof = pf.Profile()
+        prof.setNew(True)
+        # SHOW UI along with text HERE
+        # THEN START recording
+        dt, startTrain = recordUntil('esc')
+        train = t.Training(dt, startTrain, prof)
+        if train.success == False:
+            print("Training failed - restart")
+        else:
+            training = True
+    else:
+        prof = pf.Profile()
+        training = True
+        
+runner(prof)

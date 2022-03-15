@@ -6,8 +6,6 @@ import timeit
 
 from sys import platform
 
-print(platform)
-
 if platform == 'darwin':
     import keyboardEvent as k
 else:
@@ -175,5 +173,5 @@ def displayDictNice(dict, roundValue):
 # for i in range(len(list(out.keys()))):
 #     print(list(out.keys())[i], list(out.values())[i])
 # MaxHold = 0.15 MaxFloat = 0.02
-displayDictNice(multipleTestRunnerVariable('geographically', 0.1, 0.01, 0.05, 0.01, 20), 3)
+displayDictNice(multipleTestRunnerVariable('geographically', 0.1, 0.01, 0.05, 0.01, 2000), 3)
 

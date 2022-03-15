@@ -6,10 +6,13 @@ class Training(Calculation):
     
     def __init__(self, raw, startTime, pf):
         super().__init__(raw, startTime, pf)
+        self.wordTrainingSet = 100
         self.semantics = self.usesPunc()
-        self.genKDSAndSave()
+        self.success = self.genKDSAndSave()
     
     def genKDSAndSave(self):
+        if len(self.wordsOut) < self.wordTrainingSet:
+            return False
         for x in range(0, len(self.wordsOut)):
             fileName = self.wordsOut[x].word+'.json'
             Kds = self.wordsOut[x].compress()

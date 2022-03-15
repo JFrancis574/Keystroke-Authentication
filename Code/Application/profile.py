@@ -1,9 +1,11 @@
 import getpass
 import os.path
 from KeyboardClass import Keyboard as k
+from random import choice
+from string import ascii_lowercase
 
 class Profile:
-    def __init__(self, keyName):
+    def __init__(self, keyName=None):
         self.user = getpass.getuser()
         self.userPath = os.getcwd() + '/Data/'+self.user+'/'
         self.newUser = self.checkNew()
@@ -24,6 +26,9 @@ class Profile:
             pass
         
     def addKeyboard(self, name):
+        if name == None:
+            letters = ascii_lowercase
+            name = ''.join(choice(letters) for i in range(10))
         newKeyboard = k(name, self.userPath)
         self.keyboards.append(newKeyboard)
         return newKeyboard
