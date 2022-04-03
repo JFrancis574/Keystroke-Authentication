@@ -207,7 +207,7 @@ class Calculation:
                 print(distances)
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-            bandingCorr = 0.90 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+            bandingCorr = 0.85 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
             bandingChange = 0.02 # The decrease for correct semantics. SUBJECT TO CHANGE
             
             # Semantics stuff, currently a semantics match in terms of shift and caps lock will lead to the correlation banding being shorter
