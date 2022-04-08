@@ -385,7 +385,7 @@ class Calculation:
         """
         print("HERE")
         if indexes == self.chosen:
-            intruderWords == self.chosen
+            intruderWords = self.chosen
         else:
             intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
         for x in intruderWords:

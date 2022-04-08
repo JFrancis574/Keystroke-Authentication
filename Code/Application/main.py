@@ -1,6 +1,9 @@
+from functools import partial
 from getpass import getuser
+import multiprocessing
 import os
 import random
+import subprocess
 import time
 import tkinter
 
@@ -9,7 +12,7 @@ import Interval as i
 import keyboard
 import Training as t
 
-interval = 60
+interval = 10
 trainingIterationsAfterTrainPhase = 5
 
 def record(interval):
@@ -49,35 +52,75 @@ def runner(prof):
         else:
             pass
         
- 
-training = False
-while training == False:
-    if not os.path.exists(os.getcwd() + '/Data/'+getuser()):
-        trainReps = 2
-        prof = pf.User_Profile()
-        prof.setNew(True)
-        # SHOW UI along with text HERE
-        # THEN START recording
-        data = open('TrainingText.csv', 'r').read()
-        trainingText = random.choice(data.split('}'))
-        print(trainingText)  
-        for x in range(trainReps):
-            print("Enter the following text: After you've finished, press enter")
-            print(trainingText)
-            dt, startTrain = recordUntil()
-            if x == 1:
-                train = t.Training(dt, startTrain, prof, 1, 0)
-                if train.success == False:
-                    print("Training failed - restart")
-                else:
-                    training = True
-            else:
-                trainObject = t.Training(dt, startTrain, prof, 1, 1)
-                _, _ = trainObject.validation(mode='rnl')
-                trainObject.update(trainObject.chosen)
-        training = True  
+def threading(prof):
+    if button.cget('image') == 'pyimage2':
+        button.configure(image=imgPlay)
+        button.image = imgPlay
+        print("PAUSED")
+        cmd='rundll32.exe user32.dll, LockWorkStation'
+        subprocess.call(cmd)
+        for t in threads:
+            t.terminate()
     else:
-        prof = pf.User_Profile()
-        training = True
+        print("RESUME")
+        button.configure(image=imgPause)
+        button.image = imgPause
+        proc = multiprocessing.Process(target=runner, args=(prof,))
+        threads.append(proc)
+        proc.start()
         
-runner(prof)
+ 
+def training():
+    training = False
+    while training == False:
+        print(os.getcwd() + '/Data/'+getuser())
+        if not os.path.exists(os.getcwd() + '/Data/'+getuser()):
+            trainReps = 2
+            prof = pf.User_Profile()
+            prof.setNew(True)
+            # SHOW UI along with text HERE
+            # THEN START recording
+            data = open('TrainingText.csv', 'r').read()
+            trainingText = random.choice(data.split('}'))
+            print(trainingText)  
+            for x in range(trainReps):
+                print("Enter the following text: After you've finished, press enter")
+                print(trainingText)
+                dt, startTrain = recordUntil()
+                if x == 1:
+                    train = t.Training(dt, startTrain, prof, 1, 0)
+                    if train.success == False:
+                        print("Training failed - restart")
+                    else:
+                        training = True
+                else:
+                    trainObject = t.Training(dt, startTrain, prof, 1, 1)
+                    _, _ = trainObject.validation(mode='rnl')
+                    trainObject.update(trainObject.chosen)
+            training = True  
+        else:
+            prof = pf.User_Profile()
+            training = True
+    return prof
+
+if __name__ == '__main__':
+    prof = training()
+    threads = []
+    root = tkinter.Tk()
+    imgPause = tkinter.PhotoImage(file = os.getcwd()+'/Pause.png').subsample(3,3)
+    imgPlay = tkinter.PhotoImage(file = os.getcwd()+'/Play.png').subsample(3,3)
+    root.title("Play/Pause")
+    allowed = 10
+    if len(threads) == 0:
+        proc = multiprocessing.Process(target=runner, args=(prof,))
+        threads.append(proc)
+        proc.start()
+    startTime = time.time()
+    button = tkinter.Button(root, bg='white', fg='black', image=imgPause, command=partial(threading, prof))
+    button.pack()
+    root.mainloop()
+    if len(threads) == 0:
+        exit()
+    else:
+        for t in threads:
+            t.terminate()
