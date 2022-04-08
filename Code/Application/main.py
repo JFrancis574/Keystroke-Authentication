@@ -1,4 +1,6 @@
+from functools import partial
 from getpass import getuser
+import multiprocessing
 import os
 import random
 import time
@@ -9,7 +11,7 @@ import Interval as i
 import keyboard
 import Training as t
 
-interval = 60
+interval = 10
 trainingIterationsAfterTrainPhase = 5
 
 def record(interval):
@@ -49,35 +51,70 @@ def runner(prof):
         else:
             pass
         
- 
-training = False
-while training == False:
-    if not os.path.exists(os.getcwd() + '/Data/'+getuser()):
-        trainReps = 2
-        prof = pf.User_Profile()
-        prof.setNew(True)
-        # SHOW UI along with text HERE
-        # THEN START recording
-        data = open('TrainingText.csv', 'r').read()
-        trainingText = random.choice(data.split('}'))
-        print(trainingText)  
-        for x in range(trainReps):
-            print("Enter the following text: After you've finished, press enter")
-            print(trainingText)
-            dt, startTrain = recordUntil()
-            if x == 1:
-                train = t.Training(dt, startTrain, prof, 1, 0)
-                if train.success == False:
-                    print("Training failed - restart")
-                else:
-                    training = True
-            else:
-                trainObject = t.Training(dt, startTrain, prof, 1, 1)
-                _, _ = trainObject.validation(mode='rnl')
-                trainObject.update(trainObject.chosen)
-        training = True  
+def threading(prof):
+    if button['text'] == 'Pause':
+        button.configure(text='Play')
+        print("Paused")
+        # Authenticate here
+        for t in threads:
+            t.terminate()
     else:
-        prof = pf.User_Profile()
-        training = True
+        button.configure(text='Pause')
+        proc = multiprocessing.Process(target=runner, args=(prof,))
+        threads.append(proc)
+        proc.start()
         
-runner(prof)
+ 
+def training():
+    training = False
+    while training == False:
+        print(os.getcwd() + '/Data/'+getuser())
+        if not os.path.exists(os.getcwd() + '/Data/'+getuser()):
+            print("HERE")
+            trainReps = 2
+            prof = pf.User_Profile()
+            prof.setNew(True)
+            # SHOW UI along with text HERE
+            # THEN START recording
+            data = open('TrainingText.csv', 'r').read()
+            trainingText = random.choice(data.split('}'))
+            print(trainingText)  
+            for x in range(trainReps):
+                print("Enter the following text: After you've finished, press enter")
+                print(trainingText)
+                dt, startTrain = recordUntil()
+                if x == 1:
+                    train = t.Training(dt, startTrain, prof, 1, 0)
+                    if train.success == False:
+                        print("Training failed - restart")
+                    else:
+                        training = True
+                else:
+                    trainObject = t.Training(dt, startTrain, prof, 1, 1)
+                    _, _ = trainObject.validation(mode='rnl')
+                    trainObject.update(trainObject.chosen)
+            training = True  
+        else:
+            prof = pf.User_Profile()
+            training = True
+    return prof
+
+if __name__ == '__main__':
+    prof = training()
+    threads = []
+    root = tkinter.Tk()
+    root.title("Play/Pause")
+    allowed = 10
+    if len(threads) == 0:
+        proc = multiprocessing.Process(target=runner, args=(prof,))
+        threads.append(proc)
+        proc.start()
+    startTime = time.time()
+    button = tkinter.Button(root, text='Pause', width=14, bg='white', fg='black', command=partial(threading, prof))
+    button.pack()
+    root.mainloop()
+    if len(threads) == 0:
+        exit()
+    else:
+        for t in threads:
+            t.terminate()

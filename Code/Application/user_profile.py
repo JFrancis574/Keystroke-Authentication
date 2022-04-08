@@ -27,8 +27,12 @@ class User_Profile:
         
     def addKeyboard(self, name):
         if name == None:
-            letters = ascii_lowercase
-            name = ''.join(choice(letters) for i in range(10))
+            if len(os.listdir(self.userPath)) != 0:
+                name = os.listdir(self.userPath)[0]
+                print(name)
+            else:
+                letters = ascii_lowercase
+                name = ''.join(choice(letters) for i in range(10))
         newKeyboard = k(name, self.userPath)
         self.keyboards.append(newKeyboard)
         return newKeyboard
