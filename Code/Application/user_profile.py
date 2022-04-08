@@ -29,7 +29,6 @@ class User_Profile:
         if name == None:
             if len(os.listdir(self.userPath)) != 0:
                 name = os.listdir(self.userPath)[0]
-                print(name)
             else:
                 letters = ascii_lowercase
                 name = ''.join(choice(letters) for i in range(10))

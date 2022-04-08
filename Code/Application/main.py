@@ -3,6 +3,7 @@ from getpass import getuser
 import multiprocessing
 import os
 import random
+import subprocess
 import time
 import tkinter
 
@@ -52,14 +53,18 @@ def runner(prof):
             pass
         
 def threading(prof):
-    if button['text'] == 'Pause':
-        button.configure(text='Play')
-        print("Paused")
-        # Authenticate here
+    if button.cget('image') == 'pyimage2':
+        button.configure(image=imgPlay)
+        button.image = imgPlay
+        print("PAUSED")
+        cmd='rundll32.exe user32.dll, LockWorkStation'
+        subprocess.call(cmd)
         for t in threads:
             t.terminate()
     else:
-        button.configure(text='Pause')
+        print("RESUME")
+        button.configure(image=imgPause)
+        button.image = imgPause
         proc = multiprocessing.Process(target=runner, args=(prof,))
         threads.append(proc)
         proc.start()
@@ -70,7 +75,6 @@ def training():
     while training == False:
         print(os.getcwd() + '/Data/'+getuser())
         if not os.path.exists(os.getcwd() + '/Data/'+getuser()):
-            print("HERE")
             trainReps = 2
             prof = pf.User_Profile()
             prof.setNew(True)
@@ -103,6 +107,8 @@ if __name__ == '__main__':
     prof = training()
     threads = []
     root = tkinter.Tk()
+    imgPause = tkinter.PhotoImage(file = os.getcwd()+'/Pause.png').subsample(3,3)
+    imgPlay = tkinter.PhotoImage(file = os.getcwd()+'/Play.png').subsample(3,3)
     root.title("Play/Pause")
     allowed = 10
     if len(threads) == 0:
@@ -110,7 +116,7 @@ if __name__ == '__main__':
         threads.append(proc)
         proc.start()
     startTime = time.time()
-    button = tkinter.Button(root, text='Pause', width=14, bg='white', fg='black', command=partial(threading, prof))
+    button = tkinter.Button(root, bg='white', fg='black', image=imgPause, command=partial(threading, prof))
     button.pack()
     root.mainloop()
     if len(threads) == 0:
