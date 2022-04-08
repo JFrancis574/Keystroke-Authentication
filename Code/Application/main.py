@@ -2,6 +2,7 @@ from getpass import getuser
 import os
 import random
 import time
+import tkinter
 
 import user_profile as pf
 import Interval as i
