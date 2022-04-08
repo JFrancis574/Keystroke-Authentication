@@ -10,6 +10,7 @@ import timeit
 import numpy as np
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
+from qutip import wigner
 
 import Word as w
 
@@ -383,7 +384,10 @@ class Calculation:
             indexes (array): The indexes of the words that need updating in the chosen list
         """
         print("HERE")
-        intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
+        if indexes == self.chosen:
+            intruderWords == self.chosen
+        else:
+            intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
         for x in intruderWords:
             fileName = x.word+'.json'
             Kds = x.compress()

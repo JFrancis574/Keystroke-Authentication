@@ -1,4 +1,4 @@
-import profile as p
+import user_profile as p
 import os
 import time as t
 from Interval import Calculation
@@ -134,7 +134,7 @@ def multipleTestRunnerVariable(string, midValueHold, midValueFloat, variableAmou
     elif midValueHold - variableAmountHold < 0 or midValueFloat - variableAmountFloat < 0:
         return
     
-    pf = p.Profile('Test')
+    pf = p.User_Profile('Test')
     start = t.time()
     data = testerDataFormer(string, midValueHold, midValueFloat, 0, 0)
     _, _ = Calculation(data, start, pf, 1).validation(mode='t')

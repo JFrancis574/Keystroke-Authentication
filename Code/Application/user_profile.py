@@ -4,7 +4,7 @@ from KeyboardClass import Keyboard as k
 from random import choice
 from string import ascii_lowercase
 
-class Profile:
+class User_Profile:
     def __init__(self, keyName=None):
         self.user = getpass.getuser()
         self.userPath = os.getcwd() + '/Data/'+self.user+'/'

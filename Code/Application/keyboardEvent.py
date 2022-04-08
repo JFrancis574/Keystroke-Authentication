@@ -1,5 +1,5 @@
 class KeyboardEvent:
-    def __init__(self, event_type, scan_code, name, time) -> None:
+    def __init__(self, event_type, scan_code, name, time):
         """Used as a substitue on mac, simple class replicating the keyboard class
 
         Args:

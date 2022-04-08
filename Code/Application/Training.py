@@ -4,11 +4,14 @@ from Interval import Calculation
 
 class Training(Calculation):
     
-    def __init__(self, raw, startTime, pf):
-        super().__init__(raw, startTime, pf)
+    def __init__(self, raw, startTime, pf, semCheck, validation=0):
+        super().__init__(raw, startTime, pf, semCheck)
         self.wordTrainingSet = 100
-        self.semantics = self.usesPunc()
-        self.success = self.genKDSAndSave()
+        if validation == 0:
+            self.semantics = self.usesPunc()
+            self.success = self.genKDSAndSave()
+        else:
+            pass
     
     def genKDSAndSave(self):
         if len(self.wordsOut) < self.wordTrainingSet:
