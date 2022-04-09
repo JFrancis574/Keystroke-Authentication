@@ -14,8 +14,8 @@ class Training(Calculation):
             pass
     
     def genKDSAndSave(self):
-        if len(self.wordsOut) < self.wordTrainingSet:
-            return False
+        # if len(self.wordsOut) < self.wordTrainingSet:
+        #     return False
         for x in range(0, len(self.wordsOut)):
             fileName = self.wordsOut[x].word+'.json'
             Kds = self.wordsOut[x].compress()
@@ -28,6 +28,7 @@ class Training(Calculation):
         with open(self.pf.getKeyboardPath()+'Semantics.json', 'w') as write_file:
                 json.dump(self.semantics, write_file)
         write_file.close()
+        return True
     
     def usesPunc(self):
         out = {}
