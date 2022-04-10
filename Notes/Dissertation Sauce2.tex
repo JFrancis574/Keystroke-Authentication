@@ -25,14 +25,13 @@ Hello
 \subsection{Forming Words}
 \subsection{Data Selection}
 \section{KD Signal}
-
 Once the raw keystroke data has been formed into words, the next step is to transform this from a series of keystroke pairs into numerical data that can be used by later algorithms such as Dynamic Time Warping (DTW) and the correlation coefficient. The best way to do this is to transform the data into a measure of how many keys are being held down at a particular point in time. The resulting output is known as a key down signal (KDS).
 
 To convert a word into a key down signal, the start and end times of the word being transformed are used. Assume that \(w\) is the array of times that key actions occur in a particular word. \(w_1\) being the time of the first action and \(w_n\) being the time of the last action. This part will loop through all timestamps until it ends with the final time which is denoted by \(w_n\). The accuracy of this step is paramount as it is the level of detail that is the base accuracy for the rest of the steps. A higher accuracy means that the program will check more data points within this range at the cost of reduced performance as the level of points being checked increases. The current level of this is set to 4 decimal points which seems to provide a good balance between accuracy and performance. However this is customisable.
 \begin{equation}
 \textit{KDS}(w) = \sum^{w_n}_{i=w_1}K(w_i)
 \end{equation}
-\(K\) is the next step of the algorithm. \(n\) is the array of key presses that is used in the previous step. This step of the algorithm iterates through all the key presses and uses a modified Heaviside step function which is run twice per pair with the time input from the previous denoted as \(t\) and the 'down' action denoted as \(n_i^1\) and the 'up' denoted as \(n_i^2\). The value returned by the Heaviside step function with the 'up' action is subtracted from the value returned by the 'down' function.
+\(K\) is the next step of the algorithm. \(n\) is the array of key presses that is used in the previous step. This step of the algorithm iterates through all the key presses and uses a modified Heaviside step function denoted by \(h\) which is run twice per pair with the time input from the previous denoted as \(t\) and the 'down' action denoted as \(n_i^1\) and the 'up' denoted as \(n_i^2\). The value returned by the Heaviside step function with the 'up' action is subtracted from the value returned by the 'down' function.
 \begin{equation}
 \textit{K}(t) = \sum^{n_k}_{x=1}h(t,n_i^1)-h(t,n_i^2)
 \end{equation}
@@ -40,7 +39,7 @@ The reason for this subtraction is that the purpose of this measure is to return
 
 For every time input, each pair is checked with the sum of all the results stored in a dictionary along with the time input as the key. It's this dictionary that forms the KD signal and is used in further steps.
 
-\subsection{Heaviside Step}
+\subsection{Heaviside Step Function}
 This is the bottom layer of the KD signal algorithm. It is a modified version of the Heaviside Step function.
 \begin{equation}
 	h(x_1, x_2) = \begin{cases}
@@ -50,6 +49,10 @@ This is the bottom layer of the KD signal algorithm. It is a modified version of
 \end{cases}
 \end{equation}
 The modification done is very simple, the only change is the addition of a third case which tests if the two times are equal to one another. Due to the nature of the use case for my project, there is a relatively high chance that the two times are equal to one another. In this case this means that the user at this time is currently in the process of performing that action whether that be pressing or releasing the key.
+
+\subsection{Output}
+The resulting signal can be shown easily in graph format. fig 1.1 is the KD signal produced by a genuine user whilst fig 1.2 is the signal produced by an imposter user typing the same word.
+IMAGE GOES HERE
 
 \section{Dynamic Time Warping}
 \subsection{Path}
