@@ -4,6 +4,7 @@ import multiprocessing
 import os
 import random
 import subprocess
+import sys
 import time
 import tkinter
 
@@ -80,7 +81,7 @@ def training():
             prof.setNew(True)
             # SHOW UI along with text HERE
             # THEN START recording
-            data = open('TrainingText.csv', 'r').read()
+            data = open(resource_path('TrainingText.csv'), 'r').read()
             trainingText = random.choice(data.split('}'))
             print(trainingText)  
             for x in range(trainReps):
@@ -103,12 +104,21 @@ def training():
             training = True
     return prof
 
+
+def resource_path(relative_path):
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 if __name__ == '__main__':
     prof = training()
     threads = []
     root = tkinter.Tk()
-    imgPause = tkinter.PhotoImage(file = os.getcwd()+'/Pause.png').subsample(3,3)
-    imgPlay = tkinter.PhotoImage(file = os.getcwd()+'/Play.png').subsample(3,3)
+    imgPause = tkinter.PhotoImage(file = resource_path('Pause.png')).subsample(3,3)
+    imgPlay = tkinter.PhotoImage(file = resource_path('Play.png')).subsample(3,3)
     root.title("Play/Pause")
     allowed = 10
     if len(threads) == 0:

@@ -7,10 +7,9 @@ import ctypes
 import subprocess
 import timeit
 
-import numpy as np
+# import numpy as np
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
-from qutip import wigner
 
 import Word as w
 
@@ -175,16 +174,20 @@ class Calculation:
                     read_file.close()
                     
                     # Beautifying and forming the correct data
-                    inInterval = np.array(list(self.chosen[x].KDSWord().values()))
-                    fromFile = np.array(list(dataIn.values()))
+                    # inInterval = np.array(list(self.chosen[x].KDSWord().values()))
+                    # fromFile = np.array(list(dataIn.values()))
+                    inInterval = list(self.chosen[x].KDSWord().values())
+                    fromFile = list(dataIn.values())
                     start_time = timeit.default_timer()
                     # Euclidean and fastdtw
                     euclideanDistance, path = fastdtw(fromFile, inInterval, dist=None)
                     print("DTW Time: ", timeit.default_timer() - start_time)
                     
                     ff_path, ii_path = zip(*path)
-                    ff_path = np.asarray(ff_path)
-                    ii_path = np.asarray(ii_path)
+                    # ff_path = np.asarray(ff_path)
+                    # ii_path = np.asarray(ii_path)
+                    ff_path = list(ff_path)
+                    ii_path = list(ii_path)
                     ff_warped = fromFile[ff_path]
                     ii_warped = inInterval[ii_path]
 
@@ -193,14 +196,14 @@ class Calculation:
                     XSum = 0
                     YSum = 0
                     
-                    # for i in range(len(ff_warped)):
-                    #     cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
-                    #     XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
-                    #     YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)
+                    for i in range(len(ff_warped)):
+                         cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
+                         XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
+                         YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)
                     
                     
-                    # correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
-                    correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)
+                    correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
+                    # correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)
                     distances[x] = [euclideanDistance, correlationCoEfficant[0][1]]
                 else:
                     # If the word has never been seen before
