@@ -62,7 +62,6 @@ class Calculation:
         pairsArray = []
         for i in range(len(self.processed)):
             try:
-                
                 if (self.processed[i][2] == 'down' and self.processed[i+1][2] == 'up' and self.processed[i][0].lower() == self.processed[i+1][0].lower()):
                     # If the next value in the array is the up action
                     pairsArray.append([self.processed[i][0], self.processed[i][1], self.processed[i+1][1]])

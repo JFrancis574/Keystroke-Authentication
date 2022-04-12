@@ -137,6 +137,8 @@ def multipleTestRunnerVariable(string, midValueHold, midValueFloat, variableAmou
     pf = p.User_Profile('Test')
     start = t.time()
     data = testerDataFormer(string, midValueHold, midValueFloat, 0, 0)
+    print(data)
+    return
     _, _ = Calculation(data, start, pf, 1).validation(mode='t')
     
     minValueHold, minValueFloat = midValueHold - variableAmountHold, midValueFloat - variableAmountFloat
@@ -173,5 +175,20 @@ def displayDictNice(dict, roundValue):
 # for i in range(len(list(out.keys()))):
 #     print(list(out.keys())[i], list(out.values())[i])
 # MaxHold = 0.15 MaxFloat = 0.02
-displayDictNice(multipleTestRunnerVariable('geographically', 0.1, 0.01, 0.05, 0.01, 100), 3)
+displayDictNice(multipleTestRunnerVariable('hello', 0.1, 0.01, 0.05, 0.01, 100), 3)
+
+
+# ['down', 35,  'h', 1649693924, None, None, 'N']
+
+
+
+# data = [
+#         ['down', 'h', 0.1]
+#         ['down', 'shift', 0.11]
+#         ['up', 'shift', 0.2]
+#         ['up', 'h', 0.23]]
+
+# pairs = [['shift', 0.11, 0.2]]
+
+
 
