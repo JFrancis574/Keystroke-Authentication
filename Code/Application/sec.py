@@ -1,39 +1,84 @@
-from cryptography.fernet import Fernet
+import timeit
+import Training as t
+import Interval as i
+import user_profile as pf
+import keyboard
+import time
+import seaborn as sns
+import matplotlib as plt
 
-# key = Fernet.generate_key()
-# finKey = Fernet(key)
-# print(key)
 
-# file = open('key.key', 'wb')
-# file.write(key)
-# file.close()
+def record(interval):
+    recorded = []
+    startTime = time.time()
+    keyBoardHook = keyboard.hook(recorded.append)
+    print("RECORDING")
+    time.sleep(interval)
+    keyboard.unhook(keyBoardHook)
+    print("NOT")
+    return recorded, startTime
 
-fileName = 'Test'
-Type = '.json'
+times = {}
+data, start = record(60)
+prof = pf.User_Profile()
+presave = t.Training(data, start, prof, 1, 0)
 
-# encFile = fileName.encode()
+# 4 words chosen
+interval = i.Calculation(data, start, prof, 1)
+start = timeit.default_timer()
+_, _ = interval.validation(mode='rnl')
+times[4] = timeit.default_timer() - start
 
-# encrypted = finKey.encrypt(encFile)
-# print(str(encrypted)+'.json')
+# 6 words chosen
+interval = i.Calculation(data, start, prof, 1)
+interval.chosenAmount = 6
+interval.chosen = interval.choose()
+print(len(interval.chosen))
+start = timeit.default_timer()
+_, _ = interval.validation(mode='rnl')
+times[6] = timeit.default_timer() - start
 
-# file = open(str(encrypted)+'.json', 'w')
-# file.write("HELLO")
-# file.close()
+# 8 words chosen
+interval = i.Calculation(data, start, prof, 1)
+interval.chosenAmount = 8
+interval.chosen = interval.choose()
+print(len(interval.chosen))
+start = timeit.default_timer()
+_, _ = interval.validation(mode='rnl')
+times[8] = timeit.default_timer() - start
 
-key = open('key.key', 'rb')
-dtKey = key.read()
-key.close()
+# 10 words chosen
 
-finKey = Fernet(dtKey)
+interval = i.Calculation(data, start, prof, 1)
+interval.chosenAmount = 10
+interval.chosen = interval.choose()
+print(len(interval.chosen))
+start = timeit.default_timer()
+_, _ = interval.validation(mode='rnl')
+times[10] = timeit.default_timer() - start
 
-data = b'gAAAAABiUW37FXeZytVb6KbMnuYHFMYF0q6bVXN2R3jfFHrWkPWaMU4R-lVr2py3A6HP4j_UbletdIQkAuxkkFrMS-IM4uG0Xg=='
+# 12 words chosen
 
-# print(finKey.decrypt(data))
+interval = i.Calculation(data, start, prof, 1)
+interval.chosenAmount = 12
+interval.chosen = interval.choose()
+print(len(interval.chosen))
+start = timeit.default_timer()
+_, _ = interval.validation(mode='rnl')
+times[12] = timeit.default_timer() - start
 
-fileName = fileName.encode()
-enc = finKey.encrypt(fileName)
+print(times)
 
-file = open(str(enc)+'.json', 'r')
-print(file.read())
-file.close()
+sns.regplot(x=times.keys, y=float(times.values()), ci=None)
+plt.title("Words Chosen vs Time Taken")
+plt.xlabel("Words Chosen")
+plt.ylabel("Time Taken")
+plt.show()
+
+
+
+
+
+
+
 
