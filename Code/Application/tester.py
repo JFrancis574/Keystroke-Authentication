@@ -137,10 +137,8 @@ def multipleTestRunnerVariable(string, midValueHold, midValueFloat, variableAmou
     pf = p.User_Profile('Test')
     start = t.time()
     data = testerDataFormer(string, midValueHold, midValueFloat, 0, 0)
-    print(data)
-    return
     _, _ = Calculation(data, start, pf, 1).validation(mode='t')
-    
+    return
     minValueHold, minValueFloat = midValueHold - variableAmountHold, midValueFloat - variableAmountFloat
     maxValueHold, maxValueFloat = midValueHold + variableAmountHold, midValueFloat + variableAmountFloat
     everyXHold, everyXFloat = (maxValueHold - minValueHold)/testAmount, (maxValueFloat - minValueFloat)/testAmount
@@ -190,5 +188,7 @@ displayDictNice(multipleTestRunnerVariable('hello', 0.1, 0.01, 0.05, 0.01, 100),
 
 # pairs = [['shift', 0.11, 0.2]]
 
+
+{'shift' : 1,  'caps lock' : 0}
 
 

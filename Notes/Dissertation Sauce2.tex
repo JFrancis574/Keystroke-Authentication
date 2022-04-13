@@ -170,15 +170,20 @@ The state of the data after this section is simple. The data is an array of word
 
 \subsection{Data Selection}
 
-If the program was to go through and check every single word for similarities, the cost in terms of time would be excessive and would make the program unfit for use especially if the user typed quickly during the interval. For example, if the program checked every word and the user typed XXX words in a 60 second interval, the time taken would be XXX which while highly accurate and secure would render the program unusable as the time taken to process and perform all the similarity calculations would be in excess of the interval and as such would lead to a lower degree of accuracy and security. Furthermore, this would severely impact the performance of the users computer and as such go against one of the main aims of the project.
+If the program was to go through and check every single word for similarities, the cost in terms of time would be excessive and would make the program unfit for use especially if the user typed quickly during the interval. For example, if the program checked every word and the user typed 56 words in a 60 second interval, the time taken would be over 2 minutes as shown in figure \ref{fig:WordsvsTime} which while highly accurate and secure would render the program unusable as the time taken to process and perform all the similarity calculations would be in excess of the interval and as such would lead to a lower degree of accuracy and security. Furthermore, this would severely impact the performance of the users computer and as such go against one of the main aims of the project.
 
 As such, it is necessary to use a sampling method to choose words from the list of words chosen by the word forming function. While this is less accurate than checking every word, the performance gain over checking every word is huge with on average time saving of XX per interval. Choosing how many words were selected was the next problem I endeavoured to fix.
 
-I conducted a number of tests measuring how long the entire validation procedure took. Initially I started with 4 words chosen per interval with one chosen every quarter of the interval. I then increased the number of words chosen by two each time with the interval remaining the same. At each testing point, the interval remained the same with a word selected using the calculation if figure \ref{fig:Choose} The test data consisted of a user typing a paragraph. The same test data was used for all of the tests in order to allow a fair test to be conducted.
+I conducted a number of tests measuring how long the entire validation procedure took. Initially I started with 2 words chosen per interval with one chosen every at the start of the interval and one at the end. I then increased the number of words chosen by two each time with the interval remaining the same. At each testing point, the interval remained the same with a word selected using the calculation if figure \ref{fig:Choose} Figure \ref{fig:WordsvsTime} shows the results of such a test. The time taken to perform the calculation increases linearly as the number of words chosen increases. If the, word chosen is particularly long then the time taken increases. The test data was the same for all tests with the user typing a paragraph containing 57 words of differing lengths. Figure The test data along with the raw data collected and the code can be seen in Appendix A. 
 
-Figure XX shows the results of such a test. XXMORE HERE
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.70]{WordsChosenVsTime}
+	\caption{Comparing words chosen to time taken in seconds}
+	\label{fig:WordsvsTime}
+\end{figure}
 
-In the end I settled on 4 words chosen with a word chosen every quarter of the interval. This struck a good balance between performance and accuracy with neither being impacted too negatively.
+After performing the test, I settled on the program choosing four words per interval. Choosing four words took under 10 seconds and allowed the program to get coverage every quarter of the interval which is an acceptable level of coverage.
 
 The process to select 4 words from each interval is simple. Given the word list returned by the word former, the program performs the calculation shown in Figure \ref{fig:Choose} where \(w\) is the word list \(n\) is the number of words in the words lists returned by the word former and where \(k\) is the amount of words to be chosen.
 
@@ -223,6 +228,25 @@ IMAGE GOES HERE
 \subsection{Path}
 \subsection{Cost Matrix}
 \section{Validation Measures}
+
+Finally the data is in a state where we can compare the two signals produced. In order to improve the accuracy of the program, I use two different validation methods along with the semantics collected in the word forming stage. 
+
+The two methods I use along with the semantics are euclidean distance which is done in the dynamic time warping stage. This has secondary importance compared to the 2D correlation co-efficient. The reason for this, is that the euclidean distance is simply a measure of the distance between two points. This is not done on the warped data that is produced by the Dynamic Time Warping which contrasts to the 2D correlation co-efficient. Therefore, I use this as a rough figure and use the correlation co-efficient as the main method. 
+
+The values produced by these validation methods are then put together to form a value between 0 and 100. This is then compared against the confidence interval. The confidence interval is a integer which determines how similar the data loaded in from the file and the data collected in the interval have to be. For example, if the validation methods in the interval (Similarity Score) return a value of 0.75 and the confidence interval is 0.8, then the user is rejected and asked to re-authenticate. Only the euclidean distance and the 2D correlation go into calculate the similarity score. The semantics are used to either raise the confidence interval or lower it depending on the value returned by the semantics validation.
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\begin{center}
+		\includegraphics[width=0.38\textwidth]{SemanticsEx}
+	\end{center}
+	\caption{Example of a users semantics file}
+	\label{fig:sem}
+\end{wrapfigure}
+
+The semantics validation is very simple. In the words step of the validation procedure, the semantics of the data input is collected and stored in the class. Each user will also have a semantics file stored in their data directory. An example of a users semantics file is shown in figure \ref{fig:sem}. The data stored in the file and the data collected for that interval are then compared against one another. If for example, the user in the past has used the shift key and in this interval has also done so, then the confidence interval is lowered by 0.02. However, if the user in the past has always used the caps lock key and never shift then they don't match and the confidence interval is raised by 0.02. The reason of such a small change in the confidence interval is that users habits regarding this XXXXXX.  MORE
+
+
+
 \begin{itemize}
 	\item Talk about selecting values
 	\item What effect does semantics have?
@@ -248,6 +272,54 @@ IMAGE GOES HERE
 	\item Update everything
 \end{itemize}
 \section{Storage}
+
+In order for this project to work correctly, it is essential that the program has a way of storing how users type certain words. It is necessary to build up a storage of the words that the user has typed in the past. In my project this is done by storing the KDS generated in the KD step and storing it in a json file. Each file is named after the word contained and represented by the KD signal inside. For example, if the word was "hello" the file would be named hello.json. Storing it this way ensured easy access to the data within and simple identification of which data belonged to which individual. Storing just the KD signal as opposed to storing the pairs or the raw keystroke data collected in the first place has many advantages. The first major advantage in storing just the KDS is that a malicious user cannot easily read how a user types just by looking at the files. Secondly, this type of data is easy to read by the program. Thirdly it stops the program having to perform the KDS element of the validation procedure every time is loads in a file resulting in less performance impact. Simply loading in and comparing is far easier than processing all of the data again and then comparing it. Figure \ref{fig:uncomp} shows a small excerpt of one of these word files.
+
+The main problem with storing the data this way is that file sizes can become a problem. Generating a KD signal generates a lot of data points and when these are all stored, the size of each individual word file starts to become an issue. Users also tend to use a lot of words and once the user has been using the program long enough, the size of the users directory can become huge. One way to fix this would be to reduce the amount of data points being generated for each word. Unfortunately this isn't feasible as accuracy is negatively impacted. Therefore the solution it to compress the data points when they are saved to the file and then decompress them when they are loaded back in.
+
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\begin{center}
+		\includegraphics[width=0.38\textwidth]{UncompressedData}
+	\end{center}
+	\caption{A sample of an uncompressed word storage file}
+	\label{fig:uncomp}
+\end{wrapfigure}
+
+Figure \ref{fig:uncomp} shows a sample of the representation of the data stored without compression whilst figure \ref{fig:compression} shows the same data after compression. Due to the way the KD signal is generated, there are a large amount of duplicate values. My compression algorithm works by storing the range in values at which the KD signal is the same. In figure \ref{fig:compression} you can quiet clearly see that between the timestamps of 1.5649 and 1.6368 the value did not change from 1. Previously all of the timestamps between these two values would have been stored leading to a bloated file size that contained a lot of unnecessary information.
+
+This type of compression makes a huge impact on the file sizes. For example, the file storing the data in figure \ref{fig:uncomp} without compression is approximately 91 kilobytes whilst the compressed version shown in \ref{fig:compression} is approximately 735 bytes. This is a large saving in terms of space, with the compressed version being 99\% smaller than the compressed version. Whilst 91 kilobytes may not seem like a lot, when the average office worker types at approximately 30 words per minute\cite{naskar_2020} for approximately 8 hours a day leading to around 14400 words typed per day. If even a small percentage such as 10\% of these words are unique, then the resulting uncompressed word data would take up 131040 kilobytes or 131.4 megabytes worth of space. However, if the data is compressed then the same amount of words would only take up 1.05 megabytes. In this particular case this results in savings of 130 megabytes which is a huge amount.
+
+\begin{figure}[h!]
+	\begin{lstlisting}
+[
+    {"key": [1.5647, 1.5647], "value": 0.0}, 
+    {"key": [1.5648, 1.5648], "value": 0.5}, 
+    {"key": [1.5649, 1.6368], "value": 1.0}, 
+    {"key": [1.6369, 1.6369], "value": 0.5},
+    {"key": [1.637, 1.664], "value": 0.0}, 
+    {"key": [1.6641, 1.6641], "value": 0.5}, 
+    {"key": [1.6642, 1.772], "value": 1.0}, 
+    {"key": [1.7721, 1.7721], "value": 0.5}, 
+    {"key": [1.7722, 1.7955], "value": 0.0}, 
+    {"key": [1.7956, 1.7956], "value": 0.5}, 
+    {"key": [1.7957, 1.865], "value": 1.0},
+    {"key": [1.8651, 1.8651], "value": 0.5}, 
+    {"key": [1.8652, 1.9731], "value": 0.0}, 
+    {"key": [1.9732, 1.9732], "value": 0.5}, 
+    {"key": [1.9733, 2.0206], "value": 1.0}, 
+    {"key": [2.0207, 2.0207], "value": 0.5}, 
+    {"key": [2.0208, 2.1287], "value": 0.0}, 
+    {"key": [2.1288, 2.1288], "value": 0.5}, 
+    {"key": [2.1289, 2.2002], "value": 1.0}
+]
+	\end{lstlisting}
+	\caption{KD representation of a user typing hello after compression}
+	\label{fig:compression}
+\end{figure}
+
+
+
 \begin{itemize}
 	\item Compression - file sizes too large
 	\item Keyboard storage info
@@ -303,4 +375,53 @@ IMAGE GOES HERE
 \chapter{Conclusion}
 \bibliographystyle{plain}
 \bibliography{reference}
+\chapter*{Appendix A}
+
+This appendix contains the test data used in figure XX and the raw data in a table format for this test.
+
+\section*{The Test Paragraph}
+The data consisted of a user typing the following paragraph. The paragraph consists of differing lengths and multiple forms of capitalisation and punctuation.
+
+"Hello my name is Jack, I like to do lots of work and play counter strike. I am from Waterbeach although I am going to be living in Landbeach soon. This will be fun with my friend Alex and will ensure that I can relax and continue to work for Ben. I am looking forward to it."
+
+\section*{Results in Table Form}
+The results in table form are here. As you can quite clearly see the time increased linearly. The speed of this is impacted by the speed of the computer it is running on. A faster computer will mean that the results are significantly faster.
+
+\begin{center}
+	\begin{tabular}{|c|c|}
+		Number of Words Chosen & Time \\
+	\end{tabular}
+\end{center}
+
+\section*{Code Used}
+The code used to do this is below. It consists of me using running the validation method with different amounts of words chosen each time until we reach the max number of words chosen.
+
+The code here is very simple and makes use of the rest of my source code. The timeit function\cite{pythonsoftwarefoundation_2022} is part of the default python installation provides a useful function that allows me to accurately time how long functions take. 
+
+\begin{figure}[h!]
+	\begin{lstlisting}
+		times = {}
+		# The typing data is loaded in from a file
+		file = open("data.pickle", 'wb')
+		data = pickle.load(file) # And then unpacked
+		start = 1649857380.5629547 # The start time of when the data was collected in epoch time
+		prof = pf.User_Profile() # The user profile used
+		presave = t.Training(data, start, prof, 1,0) # Saving all word files immediately
+		
+		interval = i.Calculation(data, start, prof, 1)
+		for x in range(2, interval.noWords, 2):
+			print(x)
+			interval.chosenAmount = x
+			interval.chosen = interval.choose()
+			start = timeit.default_timer()
+			_, _ = interval.validation(mode='rnl') # Test mode, ensures the pc does not lock or update the data
+			times[x] = timeit.default_timer() - start
+	\end{lstlisting}
+	\caption{Word Selection Testing}
+	\label{fig:selTest}
+\end{figure}
+
+The data stored in the times dictionary is then plotted with the keys plotted against the values.
+
+
 \end{document}

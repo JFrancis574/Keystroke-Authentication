@@ -332,8 +332,9 @@ class Calculation:
             # Current reg system, just generate and save KDS for every word
             # TEMP  - WILL NEED IMPROV
             for x in range(0, len(self.wordsOut)):
-                fileName = self.wordsOut[x].word+'.json'
-                Kds = self.wordsOut[x].compress()
+                fileName = self.wordsOut[x].word+'tmp.json'
+                # Kds = self.wordsOut[x].compress()
+                Kds = self.wordsOut[x].KDSWord()
                 if os.path.exists(self.pf.getKeyboardPath()+'/'+fileName):
                     pass
                 else:

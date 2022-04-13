@@ -90,6 +90,7 @@ class Word:
             Dictionary: The compressed dictionary
         """
         allData = self.KDSWord()
+        print(allData)
         data = np.array(list(allData.values()))
         keys = np.array(list(allData.keys()))
         startValue = data[0]
