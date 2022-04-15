@@ -12,13 +12,13 @@
 \contentsline {subsection}{\numberline {3.3.1}Path}{10}{}%
 \contentsline {subsection}{\numberline {3.3.2}Cost Matrix}{10}{}%
 \contentsline {section}{\numberline {3.4}Validation Measures}{10}{}%
-\contentsline {subsection}{\numberline {3.4.1}Euclidean Distance}{11}{}%
-\contentsline {subsection}{\numberline {3.4.2}Correlation Coefficient}{11}{}%
-\contentsline {subsection}{\numberline {3.4.3}Semantics??}{11}{}%
-\contentsline {section}{\numberline {3.5}Training}{11}{}%
-\contentsline {section}{\numberline {3.6}Update}{11}{}%
-\contentsline {section}{\numberline {3.7}Storage}{11}{}%
-\contentsline {section}{\numberline {3.8}Pausing}{13}{}%
-\contentsline {chapter}{\numberline {4}Results and Discussion}{14}{}%
-\contentsline {chapter}{\numberline {5}Critical Appraisal}{15}{}%
-\contentsline {chapter}{\numberline {6}Conclusion}{16}{}%
+\contentsline {subsection}{\numberline {3.4.1}Euclidean Distance}{12}{}%
+\contentsline {subsection}{\numberline {3.4.2}Correlation Coefficient}{12}{}%
+\contentsline {subsection}{\numberline {3.4.3}Semantics??}{12}{}%
+\contentsline {section}{\numberline {3.5}Training}{12}{}%
+\contentsline {section}{\numberline {3.6}Update}{14}{}%
+\contentsline {section}{\numberline {3.7}Storage}{14}{}%
+\contentsline {section}{\numberline {3.8}Pausing}{15}{}%
+\contentsline {chapter}{\numberline {4}Results and Discussion}{17}{}%
+\contentsline {chapter}{\numberline {5}Critical Appraisal}{18}{}%
+\contentsline {chapter}{\numberline {6}Conclusion}{19}{}%

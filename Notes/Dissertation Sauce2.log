@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  13 APR 2022 18:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  14 APR 2022 18:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -311,63 +311,83 @@ File: ./Images//SemanticsEx.png Graphic file (type png)
 <use ./Images//SemanticsEx.png>
 Package pdftex.def Info: ./Images//SemanticsEx.png  used on input line 240.
 (pdftex.def)             Requested size: 131.10168pt x 18.7285pt.
- [10] [11 <./Images//SemanticsEx.png>]
-<./Images//UncompressedData.png, id=75, 347.2975pt x 820.06375pt>
+ [10]
+<./Images//DistancesDict.png, id=70, 240.9pt x 80.3pt>
+File: ./Images//DistancesDict.png Graphic file (type png)
+<use ./Images//DistancesDict.png>
+Package pdftex.def Info: ./Images//DistancesDict.png  used on input line 252.
+(pdftex.def)             Requested size: 131.10168pt x 43.70197pt.
+ [11 <./Images//SemanticsEx.png> <./Images//DistancesDict.png>]
+<./Images//WordCheck.png, id=76, 288.07625pt x 33.12375pt>
+File: ./Images//WordCheck.png Graphic file (type png)
+<use ./Images//WordCheck.png>
+Package pdftex.def Info: ./Images//WordCheck.png  used on input line 277.
+(pdftex.def)             Requested size: 288.07553pt x 33.12366pt.
+<./Images//ValidationProc.png, id=77, 1146.2825pt x 1064.97874pt>
+File: ./Images//ValidationProc.png Graphic file (type png)
+<use ./Images//ValidationProc.png>
+Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 286.
+(pdftex.def)             Requested size: 343.8874pt x 319.4961pt.
+
+[12 <./Images//WordCheck.png>] [13 <./Images//ValidationProc.png>]
+<./Images//UncompressedData.png, id=87, 347.2975pt x 820.06375pt>
 File: ./Images//UncompressedData.png Graphic file (type png)
 <use ./Images//UncompressedData.png>
-Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 283
+Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 327
 .
 (pdftex.def)             Requested size: 131.10168pt x 309.5753pt.
- [12 <./Images//UncompressedData.png>] [13]
+ [14 <./Images//UncompressedData.png>] [15] [16]
 Chapter 4.
-[14
+[17
 
 ]
 Chapter 5.
-[15
+[18
 
 ]
 Chapter 6.
-(./Dissertation Sauce2.bbl [16
+(./Dissertation Sauce2.bbl [19
 
-]) [17
+]) [20
 
 ]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[18
+[21
 
-] [19] (./Dissertation Sauce2.aux) ) 
+] [22] [23
+
+] (./Dissertation Sauce2.aux) ) 
 Here is how much of TeX's memory you used:
- 5600 strings out of 478268
- 83738 string characters out of 5846347
+ 5637 strings out of 478268
+ 84701 string characters out of 5846347
  622869 words of memory out of 5000000
- 23754 multiletter control sequences out of 15000+600000
+ 23791 multiletter control sequences out of 15000+600000
  480179 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,9n,62p,1328b,1319s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/e
-nc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmtt9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm
-1000.pfb>
-Output written on "Dissertation Sauce2.pdf" (22 pages, 374552 bytes).
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dv
+ips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+sy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt
+9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.
+pfb>
+Output written on "Dissertation Sauce2.pdf" (26 pages, 485584 bytes).
 PDF statistics:
- 166 PDF objects out of 1000 (max. 8388607)
- 97 compressed objects within 1 object stream
+ 186 PDF objects out of 1000 (max. 8388607)
+ 106 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

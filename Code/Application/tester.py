@@ -191,4 +191,12 @@ displayDictNice(multipleTestRunnerVariable('hello', 0.1, 0.01, 0.05, 0.01, 100),
 
 {'shift' : 1,  'caps lock' : 0}
 
+distances = {1 : [0.0, 1.0], 
+            2 : [340, 0.84], 
+            3 : [1000, 0.74], 
+            4 : [None, None]}
+
+
+wordCheck = [True, True, False, None]
+
 
