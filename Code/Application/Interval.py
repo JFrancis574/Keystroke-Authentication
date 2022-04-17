@@ -176,6 +176,9 @@ class Calculation:
                     # Beautifying and forming the correct data
                     inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
+                    print("File")
+                    print(np.array_equal(inInterval, fromFile))
+                    
                     start_time = timeit.default_timer()
                     # Euclidean and fastdtw
                     euclideanDistance, path = fastdtw(fromFile, inInterval, dist=None)
@@ -191,13 +194,17 @@ class Calculation:
                     cov = 0
                     XSum = 0
                     YSum = 0
+                    # Xmean = np.mean(ff_warped)
+                    # Ymean = np.mean(ii_warped)
+                    Xmean = sum(ff_warped)/len(ff_warped)
+                    Ymean = sum(ii_warped)/len(ii_warped)
                     
                     # for i in range(len(ff_warped)):
-                    #     cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
-                    #     XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
-                    #     YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)
+                    #     cov += (ff_warped[i] - Xmean)*(ii_warped[i] - Ymean)
+                    #     XSum += math.pow(ff_warped[i]-Xmean, 2)
+                    #     YSum += math.pow(ii_warped[i]-Ymean, 2)
                     
-                    
+                
                     # correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
                     correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)
                     distances[x] = [euclideanDistance, correlationCoEfficant[0][1]]
@@ -332,9 +339,9 @@ class Calculation:
             # Current reg system, just generate and save KDS for every word
             # TEMP  - WILL NEED IMPROV
             for x in range(0, len(self.wordsOut)):
-                fileName = self.wordsOut[x].word+'tmp.json'
-                # Kds = self.wordsOut[x].compress()
-                Kds = self.wordsOut[x].KDSWord()
+                fileName = self.wordsOut[x].word+'.json'
+                Kds = self.wordsOut[x].compress()
+                # Kds = self.wordsOut[x].KDSWord()
                 if os.path.exists(self.pf.getKeyboardPath()+'/'+fileName):
                     pass
                 else:
@@ -353,14 +360,19 @@ class Calculation:
             dict: The uncompressed data, very large
         """
         outDict = {}
-        multiplier = int(str(1) + self.roundInterval*str(0))
-        multiplierPlus1 = int(str('11') + str(int(self.roundInterval-1)*'0'))
         for x in data:
-            startTime = list(x.values())[0][0]
-            endTime = list(x.values())[0][1]
-            value = list(x.values())[1]
-            for x in range(int(startTime*multiplier), int(endTime*multiplierPlus1)+1):
-                outDict[x/multiplier] = value
+            start = float(list(x.values())[0][0])
+            end = float(list(x.values())[0][1])
+            value = float(list(x.values())[1])
+
+            start10x = int(start*10000)
+            end10x = int(round(end*10000,0))+1
+            for x in range(start10x, end10x):
+                if start != end:
+                    outDict[x/10000] = value
+                else:
+                    outDict[start] = value
+                    outDict[end] = value
         return outDict
     
     def __str__(self):
@@ -383,7 +395,6 @@ class Calculation:
         Args:
             indexes (array): The indexes of the words that need updating in the chosen list
         """
-        print("HERE")
         if indexes == self.chosen:
             intruderWords = self.chosen
         else:

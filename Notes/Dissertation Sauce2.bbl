@@ -1,5 +1,9 @@
 \begin{thebibliography}{1}
 
+\bibitem{subprocess}
+Python~Software Foundation.
+\newblock Timeit - measure execution time of small code snippets, Apr 2022.
+
 \bibitem{pythonsoftwarefoundation_2022}
 Python~Software Foundation.
 \newblock Timeit - measure execution time of small code snippets, Apr 2022.
