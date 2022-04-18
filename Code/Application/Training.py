@@ -14,18 +14,16 @@ class Training(Calculation):
             pass
     
     def genKDSAndSave(self):
-        # if len(self.wordsOut) < self.wordTrainingSet:
-        #     return False
         for x in range(0, len(self.wordsOut)):
             fileName = self.wordsOut[x].word+'.json'
             Kds = self.wordsOut[x].compress()
-            if os.path.exists(self.pf.getKeyboardPath()+fileName):
+            if os.path.exists(self.pf.getKeyboardPath()+'/'+fileName):
                 pass
             else:
-                with open(self.pf.getKeyboardPath()+fileName, 'w') as write_file:
+                with open(self.pf.getKeyboardPath()+'/'+fileName, 'w') as write_file:
                     json.dump(Kds, write_file)
                 write_file.close()
-        with open(self.pf.getKeyboardPath()+'Semantics.json', 'w') as write_file:
+        with open(self.pf.getKeyboardPath()+'/Semantics.json', 'w') as write_file:
                 json.dump(self.semantics, write_file)
         write_file.close()
         return True
