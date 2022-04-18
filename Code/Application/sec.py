@@ -1,50 +1,57 @@
-# from cryptography.fernet import Fernet
+import pickle
+import timeit
+import Training as t
+import Interval as i
+import user_profile as pf
+import keyboard
+import time
+import seaborn as sns
+from matplotlib import pyplot as plt
 
-# # key = Fernet.generate_key()
-# # finKey = Fernet(key)
-# # print(key)
 
-# # file = open('key.key', 'wb')
-# # file.write(key)
-# # file.close()
+def record(interval):
+    recorded = []
+    startTime = time.time()
+    keyBoardHook = keyboard.hook(recorded.append)
+    print("RECORDING")
+    time.sleep(interval)
+    keyboard.unhook(keyBoardHook)
+    print("NOT")
+    return recorded, startTime
 
-# fileName = 'Test'
-# Type = '.json'
+times = {}
+# data, start = record(60)
+# print(start)
 
-# # encFile = fileName.encode()
+file = open("data.pickle", 'rb')
+data = pickle.load(file)
+start = 1649857380.5629547
+prof = pf.User_Profile()
+presave = t.Training(data, start, prof, 1, 0)
 
-# # encrypted = finKey.encrypt(encFile)
-# # print(str(encrypted)+'.json')
-
-# # file = open(str(encrypted)+'.json', 'w')
-# # file.write("HELLO")
-# # file.close()
-
-# key = open('key.key', 'rb')
-# dtKey = key.read()
-# key.close()
-
-# finKey = Fernet(dtKey)
-
-# data = b'gAAAAABiUW37FXeZytVb6KbMnuYHFMYF0q6bVXN2R3jfFHrWkPWaMU4R-lVr2py3A6HP4j_UbletdIQkAuxkkFrMS-IM4uG0Xg=='
-
-# # print(finKey.decrypt(data))
-
-# fileName = fileName.encode()
-# enc = finKey.encrypt(fileName)
-
-# file = open(str(enc)+'.json', 'r')
-# print(file.read())
+# file = open("data.pickle", 'wb')
+# pickle.dump(data, file)
 # file.close()
+  
+interval = i.Calculation(data, start, prof, 1)
+for x in range(2, interval.noWords, 2):
+    print(x)
+    interval.chosenAmount = x
+    interval.chosen = interval.choose()
+    start = timeit.default_timer()
+    _, _ = interval.validation(mode='rnl')
+    times[x] = timeit.default_timer() - start
+
+sns.regplot(x=list(times.keys()), y=list(times.values()), ci=None)
+plt.title("Words Chosen vs Time Taken")
+plt.xlabel("Words Chosen")
+plt.ylabel("Time Taken")
+plt.show()
 
 
-start = 2.0001
-end = 2.9999
-start10x = int(start*10000)
-end10x = int(end*10000)+1
-print(start, end, start10x, end10x)
 
-for x in range(start10x, end10x+1):
-    if x > 29000:
-        print(x)
+
+
+
+
 
