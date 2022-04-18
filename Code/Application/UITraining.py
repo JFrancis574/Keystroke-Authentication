@@ -1,4 +1,5 @@
 from getpass import getuser
+import os
 from os.path import exists
 from os import getcwd
 from random import choice
@@ -28,7 +29,7 @@ def getInp():
         root.destroy()
         
 if __name__ == '__main__':
-    if not exists(getcwd() + '/Data/'+getuser()):
+    if not os.path.exists(getcwd() + '/Data/'+getuser()):
         prof = pf.User_Profile()
         prof.setNew(True)
         file = open('TrainingText.csv')
@@ -46,7 +47,7 @@ if __name__ == '__main__':
         inpText.pack()
         button.pack()
         root.mainloop()
-        
+        keyboardHook
         root = tk.Tk()
         root.title("TRAINING") 
         pb = ttk.Progressbar(root, orient='horizontal', mode='indeterminate', length=280)

@@ -10,7 +10,6 @@ import timeit
 import numpy as np
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
-from qutip import wigner
 
 import Word as w
 
