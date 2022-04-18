@@ -1,9 +1,12 @@
 import json
+
+from matplotlib import pyplot as plt
 import user_profile as p
 import os
 import time as t
 from Interval import Calculation
 import timeit
+import seaborn as sns
 
 from sys import platform
 
@@ -194,7 +197,7 @@ def decompress(data):
 #     print(list(out.keys())[i], list(out.values())[i])
 # MaxHold = 0.15 MaxFloat = 0.02
 # displayDictNice(multipleTestRunnerVariable('hello', 0.1, 0.01, 0.05, 0.01, 100), 3)
-displayDictNice(multipleTestRunnerVariable("geographically", 1.0,1.0,0.5,0.5,10),3)
+# displayDictNice(multipleTestRunnerVariable("geographically", 1.0,1.0,0.5,0.5,10),3)
 
 
 
@@ -206,5 +209,28 @@ data1 = testerDataFormer("hello", 1.0,1.0,0,0)
 
 # i = Calculation(data1, start, p.User_Profile("Test"), 0)
 # make = i.validation(mode='rnl')
+
+start = t.time()
+data1 = testerDataFormer("hello", 1.0, 1.0, 0,0)
+start2 = t.time()
+data2 = testerDataFormer("hello", 1.5,1.5,0,0)
+
+inter1 = Calculation(data1, start, p.User_Profile("Test"), 0)
+data1KDS = inter1.chosen[0].KDSWord()
+inter2 = Calculation(data2, start2, p.User_Profile("Test"), 0)
+data2KDS = inter2.chosen[0].KDSWord()
+
+print(data1KDS)
+print(list(data1KDS.keys()))
+
+fig, axs = plt.subplots(1,2)
+
+sns.barplot(x=list(data1KDS.keys()), y=list(data1KDS.values()), ax=axs[0])
+sns.barplot(x=list(data2KDS.keys()), y=list(data2KDS.values()), ax=axs[1])
+
+axs[0].set_title("KDS Sample 1")
+axs[1].set_title("KDS Sample 2")
+plt.show()
+
 
 
