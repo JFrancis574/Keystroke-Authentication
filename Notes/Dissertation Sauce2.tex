@@ -282,9 +282,7 @@ Transforming the data this way allows the order of the data to be preserved. Fur
 
 The "wordCheck" array shown in \ref{fig:wordCheck} is then used in the next step in order to finally perform an action based on the data. Despite what happens next only three outcome occur. Figure \ref{fig:If1} showcases what happens if only one word is in chosen and an output returned to it. If the word is true, then the person checks out and the program moves on to the next interval. However, if the word doesn't pass the validation checks or has never been seen before, then further processing has to be done. 
 
-This is very complex. If the user fails validation then their pc is locked and they are forced to re-authenticate. At the start of my project, I was planning on creating a separate register and login system however I dismissed due to the fact that users don't want another login system and that the default windows login screen does everything to a greater standard than I ever could. In order to perform this action, I load in the default python library sub process \cite{subprocess} which I then use to call the windows lock dll file. This enables me to lock the user out of the computer easily and efficiently without much wasted code or overhead in terms of performance. If the user has changed when the user does re-authenticate, then 'New' is returned. This tells my main body of the program that it is a new user and as such a new keyboard is created for that user. Keyboards and user storage are explained in \ref{sssec:Storage}. If the opposite happens and the user is re-authenticated successfully, then the word files and semantics are updated and the program returns true.
-
-The validation function can take in as a parameter a 'mode'. This determines what happens should validation fail. The default mode is 'r' which stands for real. This allows the program to do the entire process including locking the users computer if validation fails. 'rnl' stands for real no lock which is mainly used for testing and demonstration purposes because it stops the users pc locking and just returns false. A 't' flag also exists, this indicates that the program is in test mode and when in test mode the program will simply save every word. 
+This is very complex. If the user fails validation then their pc is locked and they are forced to re-authenticate. At the start of my project, I was planning on creating a separate register and login system however I dismissed due to the fact that users don't want another login system and that the default windows login screen does everything to a greater standard than I ever could. In order to perform this action, I load in the default python library sub process \cite{subprocess} which I then use to call the windows lock dll file. This enables me to lock the user out of the computer easily and efficiently without much wasted code or overhead in terms of performance. If the user has changed when the user does re-authenticate, then 'New' is returned. This tells my main body of the program that it is a new user and as such a new keyboard is created for that user. Keyboards and user storage are explained in \ref{sssec:Storage}. If the opposite happens and the user is re-authenticated successfully, then the word files and semantics are updated and the program returns true. The update process is explained in \ref{sssec:update}.
 
 \begin{figure}[h]
 	\centering
@@ -293,12 +291,35 @@ The validation function can take in as a parameter a 'mode'. This determines wha
 	\label{fig:If1}
 \end{figure}
 
+The validation function can take in as a parameter a 'mode'. This determines what happens should validation fail. The default mode is 'r' which stands for real. This allows the program to do the entire process including locking the users computer if validation fails. 'rnl' stands for real no lock which is mainly used for testing and demonstration purposes because it stops the users pc locking and just returns false. A 't' flag also exists, this indicates that the program is in test mode and when in test mode the program will simply save every word.
+
+Typically the user will type multiple words in an interval. This also needs to be handled correctly. For example, determine what needs to happen if the user types one word correctly, one incorrectly and the program has never seen another word before is no easy task. As the result outputted above from the wordCheck can take any one of three values for each word, there are plenty of variations. These are all explained below.
+
+Possibility 1: All words pass Validation and wordCheck consists of just True values
+The simplest validation result. True and an empty array are returned. The runner which runs the validation process then continues on to the next interval.
+
+Possibility 2: Some words pass validation and some words have never been seen before.
+Another simple result. This results in the program creating word files for those which have not been seen for using the update function which is detailed in \ref{sssec:update}. True and an empty array is then returned and the program as a whole moves onto the next interval.
+
+Possibility 3: All words have never been seen before or fail validation
+When a combination of never seen before and failing validation is detected, then the program has no confidence that the user is genuine, therefore it starts the re-authentication procedure which consists of locking the computer. If the user re-authenticates successfully then the program has confidence in the user, and all the words are then updated in the update function. However, if the user authenticates as a different user, then the 'New' is returned which instructs the rest of the program to create a new user.
+
+Possibility 4: The chosen only consists of words which the program has never been seen before.
+
+Much like possibility 3, the program has no way of knowing whether the user is genuine or not. Therefore it takes the safest course of action and forces the user to re-authenticate. It then does the exact same as possibility 3 does.
+
+Possibility 5: All words fail validation
+
+If all words fail validation, then the program is confident that an imposter is attempting to use the computer. The function then returns False. FIX XXXXXXX
+
+No matter what happens, two values are returned to the main program body.
+
 \begin{itemize}
-	\item Talk about selecting values
-	\item What effect does semantics have?
-	\item Weighting of Euclidean vs correlation
-	\item Chosen auth method
-	\item In all cases what happens?
+	\item Talk about selecting values Done
+	\item What effect does semantics have? Done
+	\item Weighting of Euclidean vs correlation Done
+	\item Chosen auth method Done
+	\item In all cases what happens? Done
 	\begin{itemize}
 		\item If not seen word before
 		\item If all validated
@@ -357,6 +378,7 @@ The code is self-explanatory, with the Xmean and Ymean variables simply calculat
 	\item first x vs ded training
 \end{itemize}
 \section{Update}
+\label{sssec:update}
 \begin{itemize}
 	\item Update everything
 \end{itemize}

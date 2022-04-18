@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  16 APR 2022 16:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  18 APR 2022 16:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -323,30 +323,29 @@ File: ./Images//WordCheck.png Graphic file (type png)
 <use ./Images//WordCheck.png>
 Package pdftex.def Info: ./Images//WordCheck.png  used on input line 276.
 (pdftex.def)             Requested size: 288.07553pt x 33.12366pt.
-
-[12 <./Images//WordCheck.png>]
-<./Images//IfLen1.png, id=81, 596.2275pt x 628.3475pt>
+<./Images//IfLen1.png, id=77, 596.2275pt x 628.3475pt>
 File: ./Images//IfLen1.png Graphic file (type png)
 <use ./Images//IfLen1.png>
-Package pdftex.def Info: ./Images//IfLen1.png  used on input line 291.
+Package pdftex.def Info: ./Images//IfLen1.png  used on input line 289.
 (pdftex.def)             Requested size: 238.48677pt x 251.33455pt.
-<./Images//EucVs2D.png, id=82, 185.19188pt x 272.51813pt>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[12 <./Images//WordCheck.png>] [13 <./Images//IfLen1.png>]
+<./Images//EucVs2D.png, id=86, 185.19188pt x 272.51813pt>
 File: ./Images//EucVs2D.png Graphic file (type png)
 <use ./Images//EucVs2D.png>
-Package pdftex.def Info: ./Images//EucVs2D.png  used on input line 316.
+Package pdftex.def Info: ./Images//EucVs2D.png  used on input line 337.
 (pdftex.def)             Requested size: 131.10168pt x 192.92369pt.
- [13 <./Images//IfLen1.png>] [14 <./Images//EucVs2D.png>]
-<./Images//UncompressedData.png, id=92, 347.2975pt x 820.06375pt>
+ [14 <./Images//EucVs2D.png>] [15]
+<./Images//UncompressedData.png, id=95, 347.2975pt x 820.06375pt>
 File: ./Images//UncompressedData.png Graphic file (type png)
 <use ./Images//UncompressedData.png>
-Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 372
+Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 394
 .
 (pdftex.def)             Requested size: 131.10168pt x 309.5753pt.
- [15 <./Images//UncompressedData.png>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[16] [17]
+ [16 <./Images//UncompressedData.png>] [17]
 Chapter 4.
 [18
 
@@ -370,16 +369,16 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <./Images//ValidationProc.png, id=123, 1146.2825pt x 1064.97874pt>
 File: ./Images//ValidationProc.png Graphic file (type png)
 <use ./Images//ValidationProc.png>
-Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 523.
+Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 545.
 (pdftex.def)             Requested size: 343.8874pt x 319.4961pt.
  [24
 
 ] [25 <./Images//ValidationProc.png>] (./Dissertation Sauce2.aux) ) 
 Here is how much of TeX's memory you used:
- 5675 strings out of 478268
- 85373 string characters out of 5846347
+ 5676 strings out of 478268
+ 85387 string characters out of 5846347
  622869 words of memory out of 5000000
- 23829 multiletter control sequences out of 15000+600000
+ 23830 multiletter control sequences out of 15000+600000
  480179 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,9n,62p,1328b,1319s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -400,7 +399,7 @@ st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2022/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2022/texmf-dist/f
 onts/type1/public/cm-super/sfrm1000.pfb>
-Output written on "Dissertation Sauce2.pdf" (28 pages, 532659 bytes).
+Output written on "Dissertation Sauce2.pdf" (28 pages, 534603 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
  110 compressed objects within 2 object streams
