@@ -12,13 +12,13 @@
 \contentsline {subsection}{\numberline {3.3.1}Path}{10}{}%
 \contentsline {subsection}{\numberline {3.3.2}Cost Matrix}{10}{}%
 \contentsline {section}{\numberline {3.4}Validation Measures}{10}{}%
-\contentsline {subsection}{\numberline {3.4.1}Euclidean Distance}{13}{}%
-\contentsline {subsection}{\numberline {3.4.2}Correlation Coefficient}{13}{}%
+\contentsline {subsection}{\numberline {3.4.1}Euclidean Distance}{14}{}%
+\contentsline {subsection}{\numberline {3.4.2}Correlation Coefficient}{14}{}%
 \contentsline {subsection}{\numberline {3.4.3}Semantics??}{15}{}%
 \contentsline {section}{\numberline {3.5}Training}{15}{}%
 \contentsline {section}{\numberline {3.6}Update}{15}{}%
-\contentsline {section}{\numberline {3.7}Storage}{15}{}%
-\contentsline {section}{\numberline {3.8}Pausing}{16}{}%
+\contentsline {section}{\numberline {3.7}Storage}{16}{}%
+\contentsline {section}{\numberline {3.8}Pausing}{17}{}%
 \contentsline {chapter}{\numberline {4}Results and Discussion}{18}{}%
 \contentsline {chapter}{\numberline {5}Critical Appraisal}{19}{}%
 \contentsline {chapter}{\numberline {6}Conclusion}{20}{}%
