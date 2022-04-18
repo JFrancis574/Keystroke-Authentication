@@ -1,3 +1,4 @@
+import pickle
 import timeit
 import Training as t
 import Interval as i
@@ -5,7 +6,7 @@ import user_profile as pf
 import keyboard
 import time
 import seaborn as sns
-import matplotlib as plt
+from matplotlib import pyplot as plt
 
 
 def record(interval):
@@ -19,57 +20,29 @@ def record(interval):
     return recorded, startTime
 
 times = {}
-data, start = record(60)
+# data, start = record(60)
+# print(start)
+
+file = open("data.pickle", 'rb')
+data = pickle.load(file)
+start = 1649857380.5629547
 prof = pf.User_Profile()
 presave = t.Training(data, start, prof, 1, 0)
 
-# 4 words chosen
+# file = open("data.pickle", 'wb')
+# pickle.dump(data, file)
+# file.close()
+  
 interval = i.Calculation(data, start, prof, 1)
-start = timeit.default_timer()
-_, _ = interval.validation(mode='rnl')
-times[4] = timeit.default_timer() - start
+for x in range(2, interval.noWords, 2):
+    print(x)
+    interval.chosenAmount = x
+    interval.chosen = interval.choose()
+    start = timeit.default_timer()
+    _, _ = interval.validation(mode='rnl')
+    times[x] = timeit.default_timer() - start
 
-# 6 words chosen
-interval = i.Calculation(data, start, prof, 1)
-interval.chosenAmount = 6
-interval.chosen = interval.choose()
-print(len(interval.chosen))
-start = timeit.default_timer()
-_, _ = interval.validation(mode='rnl')
-times[6] = timeit.default_timer() - start
-
-# 8 words chosen
-interval = i.Calculation(data, start, prof, 1)
-interval.chosenAmount = 8
-interval.chosen = interval.choose()
-print(len(interval.chosen))
-start = timeit.default_timer()
-_, _ = interval.validation(mode='rnl')
-times[8] = timeit.default_timer() - start
-
-# 10 words chosen
-
-interval = i.Calculation(data, start, prof, 1)
-interval.chosenAmount = 10
-interval.chosen = interval.choose()
-print(len(interval.chosen))
-start = timeit.default_timer()
-_, _ = interval.validation(mode='rnl')
-times[10] = timeit.default_timer() - start
-
-# 12 words chosen
-
-interval = i.Calculation(data, start, prof, 1)
-interval.chosenAmount = 12
-interval.chosen = interval.choose()
-print(len(interval.chosen))
-start = timeit.default_timer()
-_, _ = interval.validation(mode='rnl')
-times[12] = timeit.default_timer() - start
-
-print(times)
-
-sns.regplot(x=times.keys, y=float(times.values()), ci=None)
+sns.regplot(x=list(times.keys()), y=list(times.values()), ci=None)
 plt.title("Words Chosen vs Time Taken")
 plt.xlabel("Words Chosen")
 plt.ylabel("Time Taken")

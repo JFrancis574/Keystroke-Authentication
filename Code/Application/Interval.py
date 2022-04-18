@@ -150,7 +150,7 @@ class Calculation:
             if len(out) == self.chosenAmount or len(tempWords) == 1:
                 return out
             mid = len(tempWords)//2
-            out.append(tempWords.pop(mid))
+            out.append(tempWords[mid])
     
     def validation(self, mode='r'):
         """The big boi. This essentially decided whether to accept the user or to kick the user out. Also handles the security aspect
@@ -178,7 +178,7 @@ class Calculation:
                     fromFile = np.array(list(dataIn.values()))
                     start_time = timeit.default_timer()
                     # Euclidean and fastdtw
-                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=None)
+                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
                     print("DTW Time: ", timeit.default_timer() - start_time)
                     
                     ff_path, ii_path = zip(*path)
@@ -186,6 +186,8 @@ class Calculation:
                     ii_path = np.asarray(ii_path)
                     ff_warped = fromFile[ff_path]
                     ii_warped = inInterval[ii_path]
+                    
+                    print(ff_warped)
 
                     # CorrelationCoefficant
                     cov = 0
@@ -204,7 +206,7 @@ class Calculation:
                 else:
                     # If the word has never been seen before
                     distances[x] = [None, None]
-                print(distances)
+            print(distances)
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
             bandingCorr = 0.85 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
