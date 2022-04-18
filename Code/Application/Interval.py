@@ -10,6 +10,7 @@ import timeit
 import numpy as np
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
+from qutip import wigner
 
 import Word as w
 
@@ -61,7 +62,6 @@ class Calculation:
         pairsArray = []
         for i in range(len(self.processed)):
             try:
-                
                 if (self.processed[i][2] == 'down' and self.processed[i+1][2] == 'up' and self.processed[i][0].lower() == self.processed[i+1][0].lower()):
                     # If the next value in the array is the up action
                     pairsArray.append([self.processed[i][0], self.processed[i][1], self.processed[i+1][1]])
@@ -150,7 +150,7 @@ class Calculation:
             if len(out) == self.chosenAmount or len(tempWords) == 1:
                 return out
             mid = len(tempWords)//2
-            out.append(tempWords[mid])
+            out.append(tempWords.pop(mid))
     
     def validation(self, mode='r'):
         """The big boi. This essentially decided whether to accept the user or to kick the user out. Also handles the security aspect
@@ -176,9 +176,12 @@ class Calculation:
                     # Beautifying and forming the correct data
                     inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
+                    print("File")
+                    print(np.array_equal(inInterval, fromFile))
+                    
                     start_time = timeit.default_timer()
                     # Euclidean and fastdtw
-                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
+                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=None)
                     print("DTW Time: ", timeit.default_timer() - start_time)
                     
                     ff_path, ii_path = zip(*path)
@@ -186,27 +189,29 @@ class Calculation:
                     ii_path = np.asarray(ii_path)
                     ff_warped = fromFile[ff_path]
                     ii_warped = inInterval[ii_path]
-                    
-                    print(ff_warped)
 
                     # CorrelationCoefficant
                     cov = 0
                     XSum = 0
                     YSum = 0
+                    # Xmean = np.mean(ff_warped)
+                    # Ymean = np.mean(ii_warped)
+                    Xmean = sum(ff_warped)/len(ff_warped)
+                    Ymean = sum(ii_warped)/len(ii_warped)
                     
                     # for i in range(len(ff_warped)):
-                    #      cov += (ff_warped[i] - np.mean(ff_warped))*(ii_warped[i] - np.mean(ii_warped))
-                    #      XSum += math.pow(ff_warped[i]-np.mean(ff_warped), 2)
-                    #      YSum += math.pow(ii_warped[i]-np.mean(ii_warped), 2)
+                    #     cov += (ff_warped[i] - Xmean)*(ii_warped[i] - Ymean)
+                    #     XSum += math.pow(ff_warped[i]-Xmean, 2)
+                    #     YSum += math.pow(ii_warped[i]-Ymean, 2)
                     
-                    
+                
                     # correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
                     correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)
                     distances[x] = [euclideanDistance, correlationCoEfficant[0][1]]
                 else:
                     # If the word has never been seen before
                     distances[x] = [None, None]
-            print(distances)
+                print(distances)
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
             bandingCorr = 0.85 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
@@ -336,6 +341,7 @@ class Calculation:
             for x in range(0, len(self.wordsOut)):
                 fileName = self.wordsOut[x].word+'.json'
                 Kds = self.wordsOut[x].compress()
+                # Kds = self.wordsOut[x].KDSWord()
                 if os.path.exists(self.pf.getKeyboardPath()+'/'+fileName):
                     pass
                 else:
@@ -354,14 +360,19 @@ class Calculation:
             dict: The uncompressed data, very large
         """
         outDict = {}
-        multiplier = int(str(1) + self.roundInterval*str(0))
-        multiplierPlus1 = int(str('11') + str(int(self.roundInterval-1)*'0'))
         for x in data:
-            startTime = list(x.values())[0][0]
-            endTime = list(x.values())[0][1]
-            value = list(x.values())[1]
-            for x in range(int(startTime*multiplier), int(endTime*multiplierPlus1)+1):
-                outDict[x/multiplier] = value
+            start = float(list(x.values())[0][0])
+            end = float(list(x.values())[0][1])
+            value = float(list(x.values())[1])
+
+            start10x = int(start*10000)
+            end10x = int(round(end*10000,0))+1
+            for x in range(start10x, end10x):
+                if start != end:
+                    outDict[x/10000] = value
+                else:
+                    outDict[start] = value
+                    outDict[end] = value
         return outDict
     
     def __str__(self):
@@ -384,7 +395,6 @@ class Calculation:
         Args:
             indexes (array): The indexes of the words that need updating in the chosen list
         """
-        print("HERE")
         if indexes == self.chosen:
             intruderWords = self.chosen
         else:

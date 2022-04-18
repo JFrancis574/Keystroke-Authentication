@@ -1,3 +1,4 @@
+import json
 import user_profile as p
 import os
 import time as t
@@ -133,12 +134,11 @@ def multipleTestRunnerVariable(string, midValueHold, midValueFloat, variableAmou
         return
     elif midValueHold - variableAmountHold < 0 or midValueFloat - variableAmountFloat < 0:
         return
-    
     pf = p.User_Profile('Test')
     start = t.time()
     data = testerDataFormer(string, midValueHold, midValueFloat, 0, 0)
+    print(midValueHold, midValueFloat)
     _, _ = Calculation(data, start, pf, 1).validation(mode='t')
-    
     minValueHold, minValueFloat = midValueHold - variableAmountHold, midValueFloat - variableAmountFloat
     maxValueHold, maxValueFloat = midValueHold + variableAmountHold, midValueFloat + variableAmountFloat
     everyXHold, everyXFloat = (maxValueHold - minValueHold)/testAmount, (maxValueFloat - minValueFloat)/testAmount
@@ -167,11 +167,44 @@ def displayDictNice(dict, roundValue):
     
     
     
+
+def decompress(data):
+        """Used to decompress the data that is stored in and convert it into the required dictionary
+
+        Args:
+            data (dictionary): The compressed data
+
+        Returns:
+            dict: The uncompressed data, very large
+        """
+        outDict = {}
+        multiplier = int(str(1) + 4*str(0))
+        multiplierPlus1 = int(str('11') + str(int(4-1)*'0'))
+        for x in data:
+            startTime = list(x.values())[0][0]
+            endTime = list(x.values())[0][1]
+            value = list(x.values())[1]
+            for x in range(int(startTime*multiplier), int(endTime*multiplierPlus1)+1):
+                outDict[x/multiplier] = value
+        return outDict
             
 # out = multipleTestRunner("geographically", 10, 5, [0.1, 0.1, 0.15, 0.125, 0.12, 0.11, 0.09, 0.1, 0.099, 0.1], [0.01, 0.015, 0.02, 0.012, 0.013, 0.014, 0.013, 0.011, 0.02, 0.02], [1.0, 1.0, 3.0, 5.0, 6.0, 9.0, 3.0, 2.0, 2.0, 5.0], [0.1, 0.5, 0.2, 0.1, 0.25, 0.2, 0.2, 0.1, 0.7, 0.34], 0)           
 # print("Stats:")
 # for i in range(len(list(out.keys()))):
 #     print(list(out.keys())[i], list(out.values())[i])
 # MaxHold = 0.15 MaxFloat = 0.02
-displayDictNice(multipleTestRunnerVariable('geographically', 0.1, 0.01, 0.05, 0.01, 10), 3)
+# displayDictNice(multipleTestRunnerVariable('hello', 0.1, 0.01, 0.05, 0.01, 100), 3)
+displayDictNice(multipleTestRunnerVariable("geographically", 1.0,1.0,0.5,0.5,10),3)
+
+
+
+start = t.time()
+data1 = testerDataFormer("hello", 1.0,1.0,0,0)
+
+# i = Calculation(data1, start, p.User_Profile("Test"), 0)
+# make = i.validation(mode='t')
+
+# i = Calculation(data1, start, p.User_Profile("Test"), 0)
+# make = i.validation(mode='rnl')
+
 

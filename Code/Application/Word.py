@@ -38,7 +38,7 @@ class Word:
         multiplier = int(str(1) + self.roundValue*str(0))
         if len(self.raw) != 0:
             for x in range(int(self.raw[0][1]*multiplier), int(self.raw[len(self.raw)-1][2]*multiplier)+1):
-                KDSOutput[x/multiplier] = self.KDS(x/multiplier)
+                KDSOutput[x/multiplier] = float(self.KDS(x/multiplier))
         return KDSOutput
     
     def heaviside(self, x1, x2):
@@ -96,16 +96,20 @@ class Word:
         start = keys[0]
         endDict = {}
         for i, j in enumerate(data):
-            if j == startValue:
+            if i == len(data)-1:
+                grouping = (start, keys[i])
+                endDict[grouping] = startValue
+                if data[i] != startValue:
+                    grouping = (keys[i], keys[i])
+                    endDict[grouping] = data[i]
+            elif j == startValue:
                 grouping = (start, keys[i])
             else:
                 endDict[grouping] = startValue
                 startValue = data[i]
                 start = keys[i]
                 grouping = (start, keys[i])
-            if i == len(data)-1:
-                grouping = (start, keys[i])
-                endDict[grouping] = startValue
+                
         return self.remap_keys(endDict)
     
     def toString(self):
