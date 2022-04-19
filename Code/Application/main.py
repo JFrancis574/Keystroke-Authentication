@@ -12,7 +12,7 @@ import Interval as i
 import Training as t
 from user_profile import User_Profile
 
-interval = 5
+interval = 60
 trainingItersYN = False
 trainingIters = 5
 
@@ -97,7 +97,7 @@ def training():
     if not os.path.exists(os.getcwd() + '/Data/'+getuser()):
         prof = User_Profile()
         prof.setNew(True)
-        file = open('TrainingText.csv')
+        file = open(resource_path('TrainingText.csv'))
         content = file.read()
         file.close()
         recorded = []
