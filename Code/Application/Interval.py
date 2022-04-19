@@ -394,7 +394,7 @@ class Calculation:
         Args:
             indexes (array): The indexes of the words that need updating in the chosen list
         """
-        if indexes == self.chosen:
+        if len(indexes) == len(self.chosen):
             intruderWords = self.chosen
         else:
             intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]

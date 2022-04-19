@@ -223,13 +223,20 @@ data2KDS = inter2.chosen[0].KDSWord()
 print(data1KDS)
 print(list(data1KDS.keys()))
 
+
+KDS1 = {0.1 : 1, 0.2 : 2, 0.3 : 3, 0.4 : 3, 0.5 : 2, 0.6 : 2, 0.7 : 1, 0.8 : 0, 0.9 : 1}
+KDS2 = {0.1 : 1, 0.2 : 2, 0.3 : 2, 0.4 : 2, 0.5 : 2, 0.6 : 2, 0.7 : 2, 0.8 : 4}
+
 fig, axs = plt.subplots(1,2)
 
-sns.barplot(x=list(data1KDS.keys()), y=list(data1KDS.values()), ax=axs[0])
-sns.barplot(x=list(data2KDS.keys()), y=list(data2KDS.values()), ax=axs[1])
+axs[0] = plt.plot(list(KDS1.keys()), list(KDS1.values()))
+axs[1] = plt.plot(list(KDS2.keys()), list(KDS2.values()))
 
-axs[0].set_title("KDS Sample 1")
-axs[1].set_title("KDS Sample 2")
+# sns.scatterplot(x=list(KDS1.keys()), y=list(KDS1.values()), ax=axs[0])
+# sns.scatterplot(x=list(KDS2.keys()), y=list(KDS2.values()), ax=axs[1])
+
+# axs[0].title("KDS Sample 1")
+# axs[1].title("KDS Sample 2")
 plt.show()
 
 
