@@ -1,5 +1,9 @@
 \begin{thebibliography}{1}
 
+\bibitem{getuser}
+Python~Software Foundation.
+\newblock Getpass - portable password input, Apr 2022.
+
 \bibitem{subprocess}
 Python~Software Foundation.
 \newblock Timeit - measure execution time of small code snippets, Apr 2022.

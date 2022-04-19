@@ -9,6 +9,8 @@
 \graphicspath{{./Images/}}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -327,9 +329,11 @@ No matter what happens, two values are returned to the main program body.
 		\item etc
 	\end{itemize}
 \end{itemize}
+
 \subsection{Euclidean Distance}
 
 The first validation method used is the
+
 \subsection{Correlation Coefficient}
 
 \begin{wrapfigure}{l}{0.4\textwidth}
@@ -372,22 +376,48 @@ Figure \ref{fig:corrco} shows the equation that my implementation is based upon 
 
 The code is self-explanatory, with the Xmean and Ymean variables simply calculating for the two input arrays respectively. The output of this function of this is then stored along with the euclidean distance in a dictionary to be used for further processing.
 
-\subsection{Semantics??}
 \section{Training}
 \begin{itemize}
 	\item first x vs ded training
 \end{itemize}
 \section{Update}
 \label{sssec:update}
-\begin{itemize}
-	\item Update everything
-\end{itemize}
+
+The way users type change over time. This is caused by a number of factors such as age or change in desk setup. For example, the way a user types at home will be different to the way users type at a coffee shop. Therefore, it is important that my program can learn and adapt. This is where the update function comes in. This step is done after the validation step and is called in possibility where a user has failed validation but re-authenticated successfully. Essentially this is called where the program has got it wrong. 
+
+The actual function is simple and is shown in figure \ref{fig:UpdateCode}. It takes indexes of the words that failed validation or have never been seen before as input. If the array input is the same length as the chosen array (i.e. all words have failed validation or have never been seen before) then the chosen array is imply used instead. Otherwise, the words are then taken from the chosen array and stored in the intruderWords array. 
+
+After this step the program is simple, it iterates through the intruderWords array and for each word contained within, generate the KD signal, compress it and then open or create the relavent word file and store this data within.
+
+Once it reaches the end of the array, it simply returns and the program moves on.
+
+\begin{figure}
+	\begin{lstlisting}
+		def update(self, indexes):
+        """Used to update word files with new data. Used typically after the user has re-authenticated
+
+        Args:
+            indexes (array): The indexes of the words that need updating in the chosen list
+        """
+        if len(indexes) == len(self.chosen):
+            intruderWords = self.chosen
+        else:
+            intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
+        for x in intruderWords:
+            fileName = x.word+'.json'
+            Kds = x.compress()
+            with open(self.pf.getKeyboardPath()+'/'+fileName, 'w') as write_file:
+                json.dump(Kds, write_file)
+            write_file.close()
+	\end{lstlisting}
+	\caption{Update Implementation}
+	\label{fig:UpdateCode}
+\end{figure}
 \section{Storage}
 \label{sssec:Storage}
 In order for this project to work correctly, it is essential that the program has a way of storing how users type certain words. It is necessary to build up a storage of the words that the user has typed in the past. In my project this is done by storing the KDS generated in the KD step and storing it in a json file. Each file is named after the word contained and represented by the KD signal inside. For example, if the word was "hello" the file would be named hello.json. Storing it this way ensured easy access to the data within and simple identification of which data belonged to which individual. Storing just the KD signal as opposed to storing the pairs or the raw keystroke data collected in the first place has many advantages. The first major advantage in storing just the KDS is that a malicious user cannot easily read how a user types just by looking at the files. Secondly, this type of data is easy to read by the program. Thirdly it stops the program having to perform the KDS element of the validation procedure every time is loads in a file resulting in less performance impact. Simply loading in and comparing is far easier than processing all of the data again and then comparing it. Figure \ref{fig:uncomp} shows a small excerpt of one of these word files.
 
 The main problem with storing the data this way is that file sizes can become a problem. Generating a KD signal generates a lot of data points and when these are all stored, the size of each individual word file starts to become an issue. Users also tend to use a lot of words and once the user has been using the program long enough, the size of the users directory can become huge. One way to fix this would be to reduce the amount of data points being generated for each word. Unfortunately this isn't feasible as accuracy is negatively impacted. Therefore the solution it to compress the data points when they are saved to the file and then decompress them when they are loaded back in.
-
 
 \begin{wrapfigure}{r}{0.4\textwidth}
 	\begin{center}
@@ -429,13 +459,47 @@ This type of compression makes a huge impact on the file sizes. For example, the
 	\label{fig:compression}
 \end{figure}
 
+Performance is important to the success of the program but reducing this slightly in order to save storage space on the users computer is acceptable. The next step is where to store these word files.
 
+Each user has a "User Profile". This essentially stores information about the current user such as the profile name, their current keyboard, whether they are a new user or not and how many keyboards they have. When a user profile is created as a result of either a new profile being created in the training procedure or "New" being returned from the validation procedure, a new folder is created in the Data folder inside the programs home directory which is named after the users windows user name. The python library has a built in function called "getpass" which simply interfaces with windows in order to get the current users information and provide a secure interface for password input\cite{getuser}. In order to get the current users information, I use the getuser function from this library. Each keyboard that the user has is stored inside the users folder. The users word information is stored inside the relevant keyboard along with their semantics storage file. A typical folder structure is shown in figure \ref{fig:foldStruct}.
 
-\begin{itemize}
-	\item Compression - file sizes too large
-	\item Keyboard storage info
-\end{itemize}
+The reason it is done this way is that users type differently on different keyboards and it made sense to have a way to store all the different profiles that the user may have. The semantics file is also stored inside the keyboard folder. This is for the reason that users may use caps lock on one keyboard and shift on another. It ensures that the program can really narrow down for certain users and really learn the user. The user profile class stores the list of keyboards along with the path to the current keyboard.
+
+\begin{wrapfigure}{l}{0.3\textwidth}
+	\begin{center}
+		\includegraphics[width=0.28\textwidth]{FolderStruct}
+	\end{center}
+	\caption{Example of folder structure after light usage by a user with one keyboard}
+	\label{fig:foldStruct}
+\end{wrapfigure}
+
 \section{Pausing}
+
+One main problem with my system was the lack of user privacy. For example, a user wouldn't want the program to pick up and store details about their bank password. Therefore, it becomes necessary to introduce a pause functionality. This is very simple and consists of a simple user interface screen which consists of one button which is shaped like a pause button. When the button is pressed the pause symbol changes to a play and the system stops recording the users keystrokes until the button is pressed again. The ui that powers this functionality runs on the main thread whilst the calculation happens on another thread. When the button is pressed to pause the calculation, the stop thread flag is switched to True which stops the thread and causes it to return. As such, when the calculation is switched on again a new thread is created and the calculation continues.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{PauseEx}
+		\caption{Pause UI}
+		\label{fig:pauseEx}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{PlayEx}
+		\caption{Play UI}
+		\label{fig:playEx}
+	\end{subfigure}
+	\caption{Example of play/pause UI in both states}
+	\label{fig:PPUI}
+\end{figure}
+
+However, this system is open to abuse because an imposter could simply switch the system off, use the system and then switch is back on. In order to combat this, when the user decides to pause the program, they are prompted to re-authenticate using the windows login system. This essentially combats this problem and ensures that data collection remains. Figure \ref{fig:PPUI} showcase both states of this simple section of the UI
+
+
+
 \begin{itemize}
 	\item Uses auth method
 	\item why? Sensitive info
