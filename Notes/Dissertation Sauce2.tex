@@ -377,6 +377,9 @@ Figure \ref{fig:corrco} shows the equation that my implementation is based upon 
 The code is self-explanatory, with the Xmean and Ymean variables simply calculating for the two input arrays respectively. The output of this function of this is then stored along with the euclidean distance in a dictionary to be used for further processing.
 
 \section{Training}
+When a new user is created, it is essential that some training happens. Otherwise, the program has nothing to go on and as such locks the computer at every interval. This is obviously not what I want to happen as not only is the incredibly annoying for the user but also the learning process would be incredibly slow. Therefore it is necessary to add a training phase. There are two potential approaches to a training phase. The first is to have a dedicated text that the user types out and the second is that for the first \(x\) intervals all word data is saved and then used as a bank. I explored both of these attempts in my project. 
+
+The first one I tested was the dedicated training phase with a dedicated sample text that the user types out. The difficulty with this wasn't making the UI or ensuring that the data was captured, it was coming up with the text itself. In order for this to work properly, a text was needed that contained all of the most common words that a user uses along with the correct punctuation. This in itself is difficult as each user is different. 
 \begin{itemize}
 	\item first x vs ded training
 \end{itemize}
@@ -496,15 +499,33 @@ One main problem with my system was the lack of user privacy. For example, a use
 	\label{fig:PPUI}
 \end{figure}
 
-However, this system is open to abuse because an imposter could simply switch the system off, use the system and then switch is back on. In order to combat this, when the user decides to pause the program, they are prompted to re-authenticate using the windows login system. This essentially combats this problem and ensures that data collection remains. Figure \ref{fig:PPUI} showcase both states of this simple section of the UI
+However, this system is open to abuse because an imposter could simply switch the system off, use the system and then switch is back on. In order to combat this, when the user decides to pause the program, they are prompted to re-authenticate using the windows login system. This essentially combats this problem and ensures that data collection remains. Figure \ref{fig:PPUI} showcase both states of this simple section of the UI. 
 
+Figure \ref{fig:stoppingThread} showcases the function that is run everytime the button is pressed. It essentially checks what image is being displayed. If the pause image is being displayed, then the program calls the windows UI in order to authenticate the user. If they pass this, then the image is changed, the stop threads flag is switched to true and all threads stop. If the play image is being displayed, then the image is switched and the calculation sub-process is started back up again.
 
+\begin{figure}
+	\begin{lstlisting}
+	def stop():
+    global stop_threads
+    if button.cget('image') == 'pyimage2':
+        cmd='rundll32.exe user32.dll, LockWorkStation'
+        subprocess.call(cmd)
+        button.configure(image=imgPlay)
+        button.image = imgPlay
+        stop_threads = True
+        for worker in workers:
+            worker.join()
+    else:
+        button.configure(image=imgPause)
+        button.image = imgPause
+        stop_threads = False
+        tmp = threading.Thread(target=runner, args=(0, prof, lambda: stop_threads))
+        tmp.start()
+        \end{lstlisting}
+        \caption{Code for controlling calculation threads}
+        \label{fig:stoppingThread}
+\end{figure}
 
-\begin{itemize}
-	\item Uses auth method
-	\item why? Sensitive info
-	\item Implementation processes??
-\end{itemize}
 \chapter{Results and Discussion}
 \begin{itemize}
 	\item Test Results

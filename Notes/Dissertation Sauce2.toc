@@ -15,9 +15,9 @@
 \contentsline {subsection}{\numberline {3.4.1}Euclidean Distance}{14}{}%
 \contentsline {subsection}{\numberline {3.4.2}Correlation Coefficient}{14}{}%
 \contentsline {section}{\numberline {3.5}Training}{15}{}%
-\contentsline {section}{\numberline {3.6}Update}{15}{}%
+\contentsline {section}{\numberline {3.6}Update}{16}{}%
 \contentsline {section}{\numberline {3.7}Storage}{16}{}%
 \contentsline {section}{\numberline {3.8}Pausing}{19}{}%
-\contentsline {chapter}{\numberline {4}Results and Discussion}{20}{}%
-\contentsline {chapter}{\numberline {5}Critical Appraisal}{21}{}%
-\contentsline {chapter}{\numberline {6}Conclusion}{22}{}%
+\contentsline {chapter}{\numberline {4}Results and Discussion}{21}{}%
+\contentsline {chapter}{\numberline {5}Critical Appraisal}{22}{}%
+\contentsline {chapter}{\numberline {6}Conclusion}{23}{}%
