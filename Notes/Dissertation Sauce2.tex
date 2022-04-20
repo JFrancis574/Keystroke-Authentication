@@ -54,6 +54,19 @@ Hello
 \setcounter{page}{1}
 
 \chapter{Survey of Literature}
+To prepare to start this project, I’ve studied many different papers from lots of different areas. 
+
+To begin with and gain a basic understanding of how keystroke dynamics authentication works, I read Time-frequency analysis of keystroke dynamics for user authentication [1] which presented a very basic system that uses keystroke dynamics along with pure maths-based approach in order to authenticate the user. Unfortunately, this system wasn’t a continuous system, but the paper still provided some value explaining the topic and allowing me to get a basic understanding of how it works. I decided to rely on this paper to base my system off because it was well-cited, researched, presented a solid approach I couldn’t fault, and it was published recently and built on many others attempts at a similar system.
+
+The paper Keystroke dynamics-based authentication service for cloud computing: Keystroke Authentication Service [2] showcase a different approach from the one above in that it makes use of a machine learning approach which is different from the previous papers purely maths-based approach. This paper also presents a continuous system which was useful when deciding to create my own. After reading and understanding this paper, I decided not to continue with a machine-learning based approach and as such this paper wasn’t that useful to me and I couldn’t rely on it.
+
+Research into open-source examples was also undertaken with a look at a keystroke analysis system created by Nikolai Janakiev [3]. This system was very interesting and provided a practical look at how some had implemented a theoretical system using machine learning. The system shown was accurate but at the cost of performance. This system was based upon the paper Comparing anomaly-detection algorithms for keystroke dynamics [4] which was a very useful paper on neural network-based keystroke dynamic based authentication.
+
+The paper Keystroke Dynamics-Based Authentication Using Unique Keypad [5] presents a system that is only used when logging in with a unique keypad which although not relevant in my case presented another way to make a keystroke dynamics authentication system. This unique keypad element of this paper wasn’t useful due to my system not using a unique keypad. However, the approach they used under the unique keypad was useful and could have been used in any system, with or without a unique keypad. I didn’t end up relying on this paper because I judged the approach type to be too theoretical in nature and not capable of being translated easily into my continuous system due to its performance drain and machine-learning based nature.
+
+The Wigner Distribution: A Time-Frequency analysis tool [6] was a good resource for further understanding the Wigner distribution which is a key algorithm in the system. The paper goes into extreme detail about this algorithm and as such was very useful in combination with the paper which originally presents the approach using the algorithm. Although the source is old, and as such may have been eclipsed by new sources, it was detailed and cited in a few other papers I read on this topic. Therefore, I’m going to rely on it when doing that part of the project.
+
+I believe that my current research has given me a good understanding of already existing keystroke dynamics authentication approaches and will allow me to produce a working system, but I believe that I will have to do further research when I implement my secondary aim which is to ensure that the system is lightweight and not a hindrance to the user.
 
 \chapter{Design and Implementation}
 
@@ -220,11 +233,38 @@ This is the bottom layer of the KD signal algorithm. It is a modified version of
 	0 & \text{ if } x_1 < x_2
 \end{cases}
 \end{equation}
-The modification done is very simple, the only change is the addition of a third case which tests if the two times are equal to one another. Due to the nature of the use case for my project, there is a relatively high chance that the two times are equal to one another. In this case this means that the user at this time is currently in the process of performing that action whether that be pressing or releasing the key. The
+The modification done is very simple, the only change is the addition of a third case which tests if the two times are equal to one another. Due to the nature of the use case for my project, there is a relatively high chance that the two times are equal to one another. In this case this means that the user at this time is currently in the process of performing that action whether that be pressing or releasing the key. The theoretical basis for this function is taken from "Time–frequency analysis of keystroke dynamics for user authentication" by Ramin Toosi and Mohammad Ali Akhaee\cite{ToosiRamin2021Taok}
 
 \subsection{Output}
-The resulting signal can be shown easily in graph format. fig 1.1 is the KD signal produced by a genuine user whilst fig 1.2 is the signal produced by an imposter user typing the same word.
-IMAGE GOES HERE
+The resulting signal can be shown easily in graph format. Figure \ref{fig:KDS1} and figure \ref{fig:KDS2} show the same user typing the same word twice in two different intervals. Figure \ref{fig:KDSBoth} is both sets of data overlaid on the same graph. As you can see, even with the same user typing it, both sets look very different and normalisation becomes essential in order to be able to compare the data accurately. 
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{KDS1}
+		\caption{First user typing hello}
+		\label{fig:KDS1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{KDS2}
+		\caption{Second user typing}
+		\label{fig:KDS2}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{KDSBoth}
+		\caption{Both signals overlayed on each other}
+		\label{fig:KDSBoth}
+	\end{subfigure}
+	\caption{KD Signals generated by a user typing hello}
+	\label{fig:KDS}
+\end{figure}
+
+
 
 \section{Dynamic Time Warping}
 \subsection{Path}
@@ -311,28 +351,20 @@ Possibility 4: The chosen only consists of words which the program has never bee
 Much like possibility 3, the program has no way of knowing whether the user is genuine or not. Therefore it takes the safest course of action and forces the user to re-authenticate. It then does the exact same as possibility 3 does.
 
 Possibility 5: All words fail validation
-
-If all words fail validation, then the program is confident that an imposter is attempting to use the computer. The function then returns False. FIX XXXXXXX
+If all words fail validation, then the program is confident that an imposter is attempting to use the computer. The function locks the pc and demands re-authentication from the user. Like in possibility 3 and 4, it will update the words that fail validation if the user passes re-authentication and will create a new user if the user logs into a different account.
 
 No matter what happens, two values are returned to the main program body.
 
-\begin{itemize}
-	\item Talk about selecting values Done
-	\item What effect does semantics have? Done
-	\item Weighting of Euclidean vs correlation Done
-	\item Chosen auth method Done
-	\item In all cases what happens? Done
-	\begin{itemize}
-		\item If not seen word before
-		\item If all validated
-		\item If all bar one are validated
-		\item etc
-	\end{itemize}
-\end{itemize}
-
 \subsection{Euclidean Distance}
 
-The first validation method used is the
+The first validation method used is the Euclidean Distance. It is a system of measure between two data points. In my system it is used on the warped data in order to generate the distance between them. The overall score is calculated by adding up all the distances between the data points output by the KD signal function and the data points input from the word file. This is results in a very good benchmark figure to determine how close the two signals are together. 
+
+\begin{equation}
+\textit{euc}(a,b) = \sqrt{\Sigma^n_{i=1}(a_i-b_i)^2}
+\label{fig:EUC}
+\end{equation}
+
+Figure \ref{fig:EUC} shows the mathematical formula for euclidean distance where \(a\) and \(b\) are the two KD signals, and \(n\) is number of data points. This then returns a value like we can see in the first element of the array in \ref{fig:VCompare}. The value returned is self-explanatory with a smaller value indicating less difference between signals than a large one. In my program rather than calculate this value myself, I used scipys implementation of this function\cite{scipycommunity_2022}. This is attempting to do this myself in pure python resulted in an incredibly slow processing times. The function used by scipy is much faster due to it being written in C++ which whilst having less function is far better at doing these functions with large datasets produced by the KD signal function.
 
 \subsection{Correlation Coefficient}
 
@@ -377,12 +409,54 @@ Figure \ref{fig:corrco} shows the equation that my implementation is based upon 
 The code is self-explanatory, with the Xmean and Ymean variables simply calculating for the two input arrays respectively. The output of this function of this is then stored along with the euclidean distance in a dictionary to be used for further processing.
 
 \section{Training}
-When a new user is created, it is essential that some training happens. Otherwise, the program has nothing to go on and as such locks the computer at every interval. This is obviously not what I want to happen as not only is the incredibly annoying for the user but also the learning process would be incredibly slow. Therefore it is necessary to add a training phase. There are two potential approaches to a training phase. The first is to have a dedicated text that the user types out and the second is that for the first \(x\) intervals all word data is saved and then used as a bank. I explored both of these attempts in my project. 
+When a new user is created, it is essential that some training happens. Otherwise, the program has nothing to go on and as such locks the computer at every interval. This is obviously not what I want to happen as not only is it incredibly annoying for the user but also the learning process would be incredibly slow. Therefore it is necessary to add a training phase. There are two potential approaches to a training phase. The first is to have a dedicated text that the user types out and the second is that for the first \(x\) intervals all word data is saved and then used as a bank. I explored both of these attempts in my project.
 
-The first one I tested was the dedicated training phase with a dedicated sample text that the user types out. The difficulty with this wasn't making the UI or ensuring that the data was captured, it was coming up with the text itself. In order for this to work properly, a text was needed that contained all of the most common words that a user uses along with the correct punctuation. This in itself is difficult as each user is different. 
-\begin{itemize}
-	\item first x vs ded training
-\end{itemize}
+The first one I expored was the dedicated training phase with a dedicated sample text that the user types out. The difficulty with this wasn't making the UI or ensuring that the data was captured, it was coming up with the text itself. In order for this to work properly, a text was needed that contained all of the most common words that a user uses along with a wide range of  punctuation. This in itself is difficult as each user is different. Therefore this method already starts to struggle. My program currently use the text shown below as the dedicated text.
+
+"Since they are still preserved in the rocks for us to see, they must have been formed quite recently, that is geologically speaking?
+What can explain these striations and their common orientation?			
+Did you ever hear about the Great Ice Age or the Pleistocene Epoch?			
+Less than one million years ago	in fact	some 12000 years ago an ice sheet many thousands of feet thick rode over Burke Mountain in a southeastward direction.
+The many boulders frozen to the underside of the ice sheet tended to scratch the rocks over which they rode.			
+The scratches or striations seen in the park rocks were caused by these attached boulders.				
+The ice sheet also plucked and rounded Burke Mountain into the shape it possesses today."
+
+This piece of text was chosen as it was long enough to get a wide variety of punctuation in but so long that the user gets bored. Furthermore, it contains a wide variety of punctuation which tests the programs ability to process this. A wide variety of words is also used in order to attempt to get the best coverage available.
+
+The next approach I tested was having the first 5 intervals for a new user simply recording and saving all words that are used. This gives better coverage than the other approach because it allows the program to learn the users habits and common words. This approach is also deals well with different users and allows greater insight into the user. While this method is good at learning users, it does potentially open up a security issue. If all words, are simply being saved and stored, then what stops an imposter user from altering this training data. Unfortunately, nothing in my program does as yet. This approach has another disadvantage, it doesn't learn how the user uses punctuation which the other approach does. 
+
+Whilst exploring both of these, I came to the conclusion that a mixture of both training methods would be the best approach. This would ensure that the program gets the best of both worlds. Furthermore, more data is always better in a system such as this. Therefore, I decided to use both systems with the first 5 intervals after the user finishes training being the training intervals. The reason 5 was chosen as the training intervals is because it minimises the security risk caused by an imposter user whilst still proving to be an effective data gathering tool.
+
+\begin{figure}
+	\begin{lstlisting}
+		def runner(id, prof, stop):
+    		count = 0
+    		while True:
+        		data, start = record(interval)
+        		if stop():
+            		break
+        		if trainingItersYN == False or count > trainingIters:
+            		inter = i.Calculation(data, start, prof, 1)
+            		if stop():
+                		break
+            		decision, index = inter.validation(mode='r')
+           			if decision == False:
+                		break
+        		else:
+           			if count <= trainingIters and len(data) != 0:
+                		inter = t.Training(data, start, prof, 1,0)
+                		count += 1
+                		if stop():
+                   			break
+      \end{lstlisting}
+      \caption{The main runner function with training intervals in}
+      \label{fig:runner}
+\end{figure}
+
+The code in \ref{fig:runner} highlights the main "runner" code. This takes the data in from the record function, if training iterations is turned on and the number of training iterations has been exceeded, then the validation function is run with that data and a decision returned. If that happens the pc goes through the authentication specified by the validation procedure. However, if the opposite is true and it is a training interval then the data is simply saved as specified by the training class which simply saves the KD signal generated for that word.
+
+The training class simply inherits from the calculation class and contains much the same data with two function added, the save all KDS and the save semantics functions.
+
 \section{Update}
 \label{sssec:update}
 
@@ -631,6 +705,10 @@ This contains details regarding the validation procedure.
 	\caption{FLowchart of first element of validation procedure.}
 	\label{fig:valProc}
 \end{figure}
+
+\chapter*{Appendix C}
+
+This chapter contains details of the training data test. 
 
 
 \end{document}

@@ -1,23 +1,23 @@
 \babel@toc {english}{}\relax 
 \contentsline {chapter}{\numberline {1}Introduction}{1}{}%
 \contentsline {chapter}{\numberline {2}Survey of Literature}{2}{}%
-\contentsline {chapter}{\numberline {3}Design and Implementation}{3}{}%
-\contentsline {section}{\numberline {3.1}Data gathering and Forming}{3}{}%
-\contentsline {subsection}{\numberline {3.1.1}Forming Words}{5}{}%
-\contentsline {subsection}{\numberline {3.1.2}Data Selection}{7}{}%
-\contentsline {section}{\numberline {3.2}KD Signal}{9}{}%
-\contentsline {subsection}{\numberline {3.2.1}Heaviside Step Function}{10}{}%
-\contentsline {subsection}{\numberline {3.2.2}Output}{10}{}%
-\contentsline {section}{\numberline {3.3}Dynamic Time Warping}{10}{}%
-\contentsline {subsection}{\numberline {3.3.1}Path}{10}{}%
-\contentsline {subsection}{\numberline {3.3.2}Cost Matrix}{10}{}%
-\contentsline {section}{\numberline {3.4}Validation Measures}{10}{}%
-\contentsline {subsection}{\numberline {3.4.1}Euclidean Distance}{14}{}%
-\contentsline {subsection}{\numberline {3.4.2}Correlation Coefficient}{14}{}%
-\contentsline {section}{\numberline {3.5}Training}{15}{}%
-\contentsline {section}{\numberline {3.6}Update}{16}{}%
-\contentsline {section}{\numberline {3.7}Storage}{16}{}%
-\contentsline {section}{\numberline {3.8}Pausing}{19}{}%
-\contentsline {chapter}{\numberline {4}Results and Discussion}{21}{}%
-\contentsline {chapter}{\numberline {5}Critical Appraisal}{22}{}%
-\contentsline {chapter}{\numberline {6}Conclusion}{23}{}%
+\contentsline {chapter}{\numberline {3}Design and Implementation}{4}{}%
+\contentsline {section}{\numberline {3.1}Data gathering and Forming}{4}{}%
+\contentsline {subsection}{\numberline {3.1.1}Forming Words}{6}{}%
+\contentsline {subsection}{\numberline {3.1.2}Data Selection}{8}{}%
+\contentsline {section}{\numberline {3.2}KD Signal}{10}{}%
+\contentsline {subsection}{\numberline {3.2.1}Heaviside Step Function}{11}{}%
+\contentsline {subsection}{\numberline {3.2.2}Output}{11}{}%
+\contentsline {section}{\numberline {3.3}Dynamic Time Warping}{11}{}%
+\contentsline {subsection}{\numberline {3.3.1}Path}{11}{}%
+\contentsline {subsection}{\numberline {3.3.2}Cost Matrix}{11}{}%
+\contentsline {section}{\numberline {3.4}Validation Measures}{11}{}%
+\contentsline {subsection}{\numberline {3.4.1}Euclidean Distance}{15}{}%
+\contentsline {subsection}{\numberline {3.4.2}Correlation Coefficient}{16}{}%
+\contentsline {section}{\numberline {3.5}Training}{17}{}%
+\contentsline {section}{\numberline {3.6}Update}{19}{}%
+\contentsline {section}{\numberline {3.7}Storage}{19}{}%
+\contentsline {section}{\numberline {3.8}Pausing}{22}{}%
+\contentsline {chapter}{\numberline {4}Results and Discussion}{24}{}%
+\contentsline {chapter}{\numberline {5}Critical Appraisal}{25}{}%
+\contentsline {chapter}{\numberline {6}Conclusion}{26}{}%

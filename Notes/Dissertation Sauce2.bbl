@@ -1,5 +1,9 @@
 \begin{thebibliography}{1}
 
+\bibitem{scipycommunity_2022}
+SCIPY Community.
+\newblock Scipy.spatial.distance.euclidean¶, Feb 2022.
+
 \bibitem{getuser}
 Python~Software Foundation.
 \newblock Getpass - portable password input, Apr 2022.

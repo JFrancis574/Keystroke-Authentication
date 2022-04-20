@@ -65,7 +65,7 @@ def runner(id, prof, stop):
         if stop():
             print("EXITING")
             break
-        if trainingItersYN == False:
+        if trainingItersYN == False or count > trainingIters:
             inter = i.Calculation(data, start, prof, 1)
             print(inter.noWords)
             if stop():
@@ -76,12 +76,13 @@ def runner(id, prof, stop):
             if decision == False:
                 break
         else:
-            if count <= trainingIters:
+            if count <= trainingIters and len(data) != 0:
                 inter = t.Training(data, start, prof, 1,0)
                 count += 1
                 if stop():
                     print("EXITING")
                     break
+            
     print("END")
     
 def getInp(keyboardHook, inpText, root):
@@ -150,3 +151,14 @@ if __name__ == '__main__':
     stop_threads = True
     for worker in workers:
         worker.join()
+
+
+"""
+"Since they are still preserved in the rocks for us to see, they must have been formed quite recently, that is geologically speaking?
+What can explain these striations and their common orientation?			
+Did you ever hear about the Great Ice Age or the Pleistocene Epoch?			
+Less than one million years ago	in fact	some 12000 years ago an ice sheet many thousands of feet thick rode over Burke Mountain in a southeastward direction.
+The many boulders frozen to the underside of the ice sheet tended to scratch the rocks over which they rode.			
+The scratches or striations seen in the park rocks were caused by these attached boulders.				
+The ice sheet also plucked and rounded Burke Mountain into the shape it possesses today."
+"""
