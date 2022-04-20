@@ -1,12 +1,14 @@
+from cProfile import label
 import json
 
 from matplotlib import pyplot as plt
+import numpy as np
 import user_profile as p
 import os
 import time as t
 from Interval import Calculation
 import timeit
-import seaborn as sns
+from fastdtw import fastdtw
 
 from sys import platform
 
@@ -224,20 +226,63 @@ print(data1KDS)
 print(list(data1KDS.keys()))
 
 
-KDS1 = {0.1 : 1, 0.2 : 2, 0.3 : 3, 0.4 : 3, 0.5 : 2, 0.6 : 2, 0.7 : 1, 0.8 : 0, 0.9 : 1}
-KDS2 = {0.1 : 1, 0.2 : 2, 0.3 : 2, 0.4 : 2, 0.5 : 2, 0.6 : 2, 0.7 : 2, 0.8 : 4}
+# KDS1 = {0.1 : 1, 0.2 : 2, 0.3 : 3, 0.4 : 3, 0.5 : 2, 0.6 : 2, 0.7 : 1, 0.8 : 0, 0.9 : 1}
+# KDS2 = {0.1 : 1, 0.2 : 2, 0.3 : 2, 0.4 : 2, 0.5 : 1, 0.6 : 0.5, 0.7 : 2, 0.8 : 2}
 
-fig, axs = plt.subplots(1,2)
+KDS1 = data1KDS
+KDS2 = data2KDS
 
-axs[0] = plt.plot(list(KDS1.keys()), list(KDS1.values()))
-axs[1] = plt.plot(list(KDS2.keys()), list(KDS2.values()))
+# plt.subplot(2,1,1)
+# plt.plot(list(KDS1.keys()), list(KDS1.values()))
+# plt.title("KDS signal generated for the word hello")
+# plt.xlabel("Time (Seconds)")
+# plt.ylabel("KDS")
+# plt.show()
 
-# sns.scatterplot(x=list(KDS1.keys()), y=list(KDS1.values()), ax=axs[0])
-# sns.scatterplot(x=list(KDS2.keys()), y=list(KDS2.values()), ax=axs[1])
+# # plt.subplot(2,1,2)
+# plt.plot(list(KDS2.keys()), list(KDS2.values()))
+# plt.title("KDS signal generated for the word hello")
+# plt.xlabel("Time (Seconds)")
+# plt.ylabel("KDS")
+# plt.show()
 
-# axs[0].title("KDS Sample 1")
-# axs[1].title("KDS Sample 2")
-plt.show()
+# plt.plot(list(KDS1.keys()), list(KDS1.values()), label="First user")
+# plt.plot(list(KDS2.keys()), list(KDS2.values()), label="Second user")
+# plt.legend(loc="upper left")
+# plt.title("KDS signal generated for the word hello")
+# plt.xlabel("Time (Seconds)")
+# plt.ylabel("KDS")
+# plt.show()
+
+# x = list(KDS1.values())
+# y = list(KDS2.values())
+
+
+# distance, path = fastdtw(x, y, dist=None)
+
+# x_path, y_path = zip(*path)
+# x_path = np.asarray(x_path)
+# y_path = np.asarray(y_path)
+# x_warped = x[x_path]
+# y_warped = y[y_path]
+
+
+# plt.plot(list(KDS1.keys()), x_warped)
+# plt.title("KDS signal 1 after going through Dynamic Time Warping")
+# plt.xlabel("Time (Seconds)")
+# plt.ylabel("KDS")
+# plt.show()
+
+# plt.plot(list(KDS2.keys()), y_warped)
+# plt.title("KDS signal 1 after going through Dynamic Time Warping")
+# plt.xlabel("Time (Seconds)")
+# plt.ylabel("KDS")
+# plt.show()
+    
+
+
+
+
 
 
 
