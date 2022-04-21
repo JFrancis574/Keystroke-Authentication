@@ -54,19 +54,6 @@ Hello
 \setcounter{page}{1}
 
 \chapter{Survey of Literature}
-To prepare to start this project, I’ve studied many different papers from lots of different areas. 
-
-To begin with and gain a basic understanding of how keystroke dynamics authentication works, I read Time-frequency analysis of keystroke dynamics for user authentication [1] which presented a very basic system that uses keystroke dynamics along with pure maths-based approach in order to authenticate the user. Unfortunately, this system wasn’t a continuous system, but the paper still provided some value explaining the topic and allowing me to get a basic understanding of how it works. I decided to rely on this paper to base my system off because it was well-cited, researched, presented a solid approach I couldn’t fault, and it was published recently and built on many others attempts at a similar system.
-
-The paper Keystroke dynamics-based authentication service for cloud computing: Keystroke Authentication Service [2] showcase a different approach from the one above in that it makes use of a machine learning approach which is different from the previous papers purely maths-based approach. This paper also presents a continuous system which was useful when deciding to create my own. After reading and understanding this paper, I decided not to continue with a machine-learning based approach and as such this paper wasn’t that useful to me and I couldn’t rely on it.
-
-Research into open-source examples was also undertaken with a look at a keystroke analysis system created by Nikolai Janakiev [3]. This system was very interesting and provided a practical look at how some had implemented a theoretical system using machine learning. The system shown was accurate but at the cost of performance. This system was based upon the paper Comparing anomaly-detection algorithms for keystroke dynamics [4] which was a very useful paper on neural network-based keystroke dynamic based authentication.
-
-The paper Keystroke Dynamics-Based Authentication Using Unique Keypad [5] presents a system that is only used when logging in with a unique keypad which although not relevant in my case presented another way to make a keystroke dynamics authentication system. This unique keypad element of this paper wasn’t useful due to my system not using a unique keypad. However, the approach they used under the unique keypad was useful and could have been used in any system, with or without a unique keypad. I didn’t end up relying on this paper because I judged the approach type to be too theoretical in nature and not capable of being translated easily into my continuous system due to its performance drain and machine-learning based nature.
-
-The Wigner Distribution: A Time-Frequency analysis tool [6] was a good resource for further understanding the Wigner distribution which is a key algorithm in the system. The paper goes into extreme detail about this algorithm and as such was very useful in combination with the paper which originally presents the approach using the algorithm. Although the source is old, and as such may have been eclipsed by new sources, it was detailed and cited in a few other papers I read on this topic. Therefore, I’m going to rely on it when doing that part of the project.
-
-I believe that my current research has given me a good understanding of already existing keystroke dynamics authentication approaches and will allow me to produce a working system, but I believe that I will have to do further research when I implement my secondary aim which is to ensure that the system is lightweight and not a hindrance to the user.
 
 \chapter{Design and Implementation}
 
@@ -264,11 +251,64 @@ The resulting signal can be shown easily in graph format. Figure \ref{fig:KDS1} 
 	\label{fig:KDS}
 \end{figure}
 
-
-
 \section{Dynamic Time Warping}
+
+
+The data in my project requires normalising to be useful. The algorithm that I chose to use is called the Dynamic Time Warping algorithm. Two sets of data, one loaded in from the word file and the other generated from that interval is input into this function in order to normalise it. As both sets of data are input, the Dynamic Time Warping algorithm attempts to change both sets of data in order to make them as close as possible. The output is two sets of normalised data which can then be compared against one another to provide a similarity score. 
+
+In my program, I chose to use the fastdtw library \cite{tandi_2015}. Like the name suggests, this library provides a really fast implementation of the dynamic time warping algorithm with the algorithm taking only \(O(n)\) time complexity\cite{tandi_2015}. Speed was the main reason I chose to use the library due to the large number of datapoints that this algorithm would have to deal with.
+
+The output of the two datasets shown in figure \ref{fig:KDS1} and figure \ref{fig:KDS2} both put through dynamic time warping is shown in figure \ref{fig:KDSDTW}.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{KDS1DTW}
+		\caption{First after DTW}
+		\label{fig:KDS1DTW}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{KDS2DTW}
+		\caption{Second after DTW}
+		\label{fig:KDS2DTW}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{KDSBothDTW}
+		\caption{Both signals overlayed on each other}
+		\label{fig:KDSBothDTW}
+	\end{subfigure}
+	\caption{KD signals after going through DTW}
+	\label{fig:KDSDTW}
+\end{figure}
+
+Shown in figures \ref{fig:KDS1DTW} and \ref{fig:KDS2DTW} is the results of the data in figures \ref{fig:KDS1} and \ref{fig:KDS2} after going through dynamic time warping. Despite going through the process, you can see that they haven't changed much and look the same. This is because both signals were typed by the same user and as such are very similar. However, when looking at figure \ref{fig:KDSBothDTW} you can see that both signal are pretty much the same. However, the first signal has an extra datapoint on the end which causes it to go on longer than the other signal. This is not a guge issue however, as the validation systems explained below returned the values of \(1.0\) and \(0.99999\) which showcases that both signals are the same.
+
 \subsection{Path}
-\subsection{Cost Matrix}
+The implementation i chose to use returns two values, the distance and the path. The distance is used in the validation step to calculate euclidean distance. The path is more important however. It is what is used to "warp" the data. Theoretically, it is the least costly path through a cost matrix. It essentially is a pairs of indexes in the two datasets which map up. It states which values need to go into the datasets. 
+
+In my implementation I use the code in figure \ref{fig:warping} in order to warp the data. The first step involves duplicating the data that is stored inside the path variable into the two other variables using zip to create iterables. These results are the converted into an array and then finally applied to the data in order to create the warped signals.
+
+\begin{figure}
+	\begin{lstlisting}
+		euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
+                    
+        ff_path, ii_path = zip(*path)
+        ff_path = np.asarray(ff_path)
+        ii_path = np.asarray(ii_path)
+        ff_warped = fromFile[ff_path]
+        ii_warped = inInterval[ii_path]
+	\end{lstlisting}
+	\caption{Warping Code}
+	\label{fig:warping}
+\end{figure}
+
+This warped signal is then fed into the validation measures in order to produce the validation score. 
+
 \section{Validation Measures}
 
 Finally the data is in a state where we can perform validation. In order to improve the accuracy of the program, I use two different validation methods along with the semantics collected in the word forming stage. 
@@ -556,14 +596,14 @@ One main problem with my system was the lack of user privacy. For example, a use
 
 \begin{figure}
 	\centering
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{PauseEx}
 		\caption{Pause UI}
 		\label{fig:pauseEx}
 	\end{subfigure}
 	\hfill
-	\begin{subfigure}[b]{0.3\textwidth}
+	\begin{subfigure}[b]{0.4\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{PlayEx}
 		\caption{Play UI}
