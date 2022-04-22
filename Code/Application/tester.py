@@ -1,8 +1,10 @@
 from cProfile import label
 import json
+import random
 
 from matplotlib import pyplot as plt
 import numpy as np
+from Training import Training
 import user_profile as p
 import os
 import time as t
@@ -203,34 +205,34 @@ def decompress(data):
 
 
 
-start = t.time()
-data1 = testerDataFormer("hello", 1.0,1.0,0,0)
+# start = t.time()
+# data1 = testerDataFormer("hello", 1.0,1.0,0,0)
 
-# i = Calculation(data1, start, p.User_Profile("Test"), 0)
-# make = i.validation(mode='t')
+# # i = Calculation(data1, start, p.User_Profile("Test"), 0)
+# # make = i.validation(mode='t')
 
-# i = Calculation(data1, start, p.User_Profile("Test"), 0)
-# make = i.validation(mode='rnl')
+# # i = Calculation(data1, start, p.User_Profile("Test"), 0)
+# # make = i.validation(mode='rnl')
 
-start = t.time()
-data1 = testerDataFormer("hello", 1.0, 1.0, 0,0)
-start2 = t.time()
-data2 = testerDataFormer("hello", 1.5,1.5,0,0)
+# start = t.time()
+# data1 = testerDataFormer("hello", 1.0, 1.0, 0,0)
+# start2 = t.time()
+# data2 = testerDataFormer("hello", 1.5,1.5,0,0)
 
-inter1 = Calculation(data1, start, p.User_Profile("Test"), 0)
-data1KDS = inter1.chosen[0].KDSWord()
-inter2 = Calculation(data2, start2, p.User_Profile("Test"), 0)
-data2KDS = inter2.chosen[0].KDSWord()
+# inter1 = Calculation(data1, start, p.User_Profile("Test"), 0)
+# data1KDS = inter1.chosen[0].KDSWord()
+# inter2 = Calculation(data2, start2, p.User_Profile("Test"), 0)
+# data2KDS = inter2.chosen[0].KDSWord()
 
-print(data1KDS)
-print(list(data1KDS.keys()))
+# print(data1KDS)
+# print(list(data1KDS.keys()))
 
 
-# KDS1 = {0.1 : 1, 0.2 : 2, 0.3 : 3, 0.4 : 3, 0.5 : 2, 0.6 : 2, 0.7 : 1, 0.8 : 0, 0.9 : 1}
-# KDS2 = {0.1 : 1, 0.2 : 2, 0.3 : 2, 0.4 : 2, 0.5 : 1, 0.6 : 0.5, 0.7 : 2, 0.8 : 2}
+# # KDS1 = {0.1 : 1, 0.2 : 2, 0.3 : 3, 0.4 : 3, 0.5 : 2, 0.6 : 2, 0.7 : 1, 0.8 : 0, 0.9 : 1}
+# # KDS2 = {0.1 : 1, 0.2 : 2, 0.3 : 2, 0.4 : 2, 0.5 : 1, 0.6 : 0.5, 0.7 : 2, 0.8 : 2}
 
-KDS1 = data1KDS
-KDS2 = data2KDS
+# KDS1 = data1KDS
+# KDS2 = data2KDS
 
 # plt.subplot(2,1,1)
 # plt.plot(list(KDS1.keys()), list(KDS1.values()))
@@ -280,6 +282,162 @@ KDS2 = data2KDS
 # plt.show()
     
 
+
+def test1():
+    print(1)
+    start = 0.1
+    end = 1.0
+    ref = 0.5
+    floatTime = 0.1
+    decisions = {}
+    euc = {}
+    corr = {}
+    startTime = t.time()
+    referenceData = testerDataFormer("geographically", ref , floatTime, 0,0)
+    prof = p.User_Profile("Test")
+    inter = Training(referenceData, startTime, prof, 0,0)
+    x = start
+    while x <= end:
+        x = round(x, 1)
+        startTime = t.time()
+        data = testerDataFormer("geographically", x, floatTime, 0,0)
+        distance, output = Calculation(data, startTime, prof,0).validation(mode='t')
+        euc[x] = list(distance.values())[0][0]
+        corr[x] = list(distance.values())[0][1]
+        decisions[x] = output
+        x += 0.1
+
+    # Euc Graph
+    x = list(euc.keys())
+    y = list(euc.values())
+
+    plt.plot(x,y)
+    plt.title("Euclidean Distance")
+    plt.xlabel("HoldTime")
+    plt.ylabel("Euc Score")
+    plt.show()
+
+    # Corr Graph
+    x = list(corr.keys())
+    y = list(corr.values())
+
+    plt.plot(x, y)
+    plt.title("2D Correlation Score")
+    plt.xlabel("HoldTime")
+    plt.ylabel("Correlation Score")
+    plt.show()
+
+    # Decisions
+    x = list(decisions.keys())
+    y = list(decisions.values())
+
+    plt.plot(x, y)
+    plt.title("Decisions")
+    plt.xlabel("HoldTime")
+    plt.ylabel("Decision")
+    plt.show()
+
+
+def testDataFormerInter(data, holdTime, floatTime, r=0):
+    time = t.time()
+    output = []
+    if r == 1:
+        x = 0
+        while x < len(data):
+            if random.choice([0,1]) == 0 or x == len(data)-1:
+                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
+                time+= holdTime
+                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
+                time += floatTime
+                x += 1
+            else:
+                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
+                output.append(k.KeyboardEvent('down', 99, name=data[x+1], time=time))
+                time+= holdTime
+                output.append(k.KeyboardEvent('up', 99, name=data[x+1], time=time))
+                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
+                time += floatTime
+                x += 2
+    else:
+        x = 0
+        while x < len(data):
+            if x % 2 == 0 or x == len(data)-1:
+                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
+                time+= holdTime
+                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
+                time += floatTime
+                x += 1
+            else:
+                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
+                output.append(k.KeyboardEvent('down', 99, name=data[x+1], time=time))
+                time+= holdTime
+                output.append(k.KeyboardEvent('up', 99, name=data[x+1], time=time))
+                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
+                time += floatTime
+                x += 2
+
+    return output
+
+def test2():
+    print(2)
+    start = 0.1
+    end = 1.0
+    ref = 0.5
+    floatTime = 0.1
+    decisions = {}
+    euc = {}
+    corr = {}
+    startTime = t.time()
+    referenceData = testDataFormerInter("geographically", ref , floatTime, r=0)
+    prof = p.User_Profile("Test")
+    inter = Training(referenceData, startTime, prof, 0,0)
+    x = start
+    while x <= end:
+        x = round(x, 1)
+        startTime = t.time()
+        data = testDataFormerInter("geographically", x, floatTime, r=0)
+        distance, output = Calculation(data, startTime, prof,0).validation(mode='t')
+        euc[x] = list(distance.values())[0][0]
+        corr[x] = list(distance.values())[0][1]
+        decisions[x] = output
+        x += 0.1
+
+
+    # Euc Graph
+    x = list(euc.keys())
+    y = list(euc.values())
+
+    plt.plot(x,y)
+    plt.title("Euclidean Distance")
+    plt.xlabel("HoldTime")
+    plt.ylabel("Euc Score")
+    plt.show()
+
+    # Corr Graph
+    x = list(corr.keys())
+    y = list(corr.values())
+
+    plt.plot(x, y)
+    plt.title("2D Correlation Score")
+    plt.xlabel("HoldTime")
+    plt.ylabel("Correlation Score")
+    plt.show()
+
+    # Decisions
+    x = list(decisions.keys())
+    y = list(decisions.values())
+
+    plt.plot(x, y)
+    plt.title("Decisions")
+    plt.xlabel("HoldTime")
+    plt.ylabel("Decision")
+    plt.show()
+
+test2()
+
+
+
+    
 
 
 

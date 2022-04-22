@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  21 APR 2022 17:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  22 APR 2022 16:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -429,41 +429,69 @@ Package pdftex.def Info: ./Images//PlayEx.png  used on input line 608.
 [22 <./Images//FolderStruct.png>] [23 <./Images//PauseEx.png> <./Images//PlayEx
 .png>] [24]
 Chapter 4.
+<./Images//EUCGraph.png, id=144, 462.528pt x 346.896pt>
+File: ./Images//EUCGraph.png Graphic file (type png)
+<use ./Images//EUCGraph.png>
+Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 656.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
 [25
 
 ]
+<./Images//CorrGraph.png, id=148, 462.528pt x 346.896pt>
+File: ./Images//CorrGraph.png Graphic file (type png)
+<use ./Images//CorrGraph.png>
+Package pdftex.def Info: ./Images//CorrGraph.png  used on input line 665.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+<./Images//DecisionsGraph.png, id=149, 462.528pt x 346.896pt>
+File: ./Images//DecisionsGraph.png Graphic file (type png)
+<use ./Images//DecisionsGraph.png>
+Package pdftex.def Info: ./Images//DecisionsGraph.png  used on input line 676.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+ [26 <./Images//EUCGraph.png>] [27 <./Images//CorrGraph.png> <./Images//Decisio
+nsGraph.png>]
+<./Images//EUCGraph2.png, id=159, 462.528pt x 346.896pt>
+File: ./Images//EUCGraph2.png Graphic file (type png)
+<use ./Images//EUCGraph2.png>
+Package pdftex.def Info: ./Images//EUCGraph2.png  used on input line 714.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+<./Images//CorrGraph2.png, id=160, 462.528pt x 346.896pt>
+File: ./Images//CorrGraph2.png Graphic file (type png)
+<use ./Images//CorrGraph2.png>
+Package pdftex.def Info: ./Images//CorrGraph2.png  used on input line 723.
+(pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
+ [28] [29 <./Images//EUCGraph2.png> <./Images//CorrGraph2.png>] [30]
 Chapter 5.
-[26
+[31
 
-]
+] [32]
 Chapter 6.
-(./Dissertation Sauce2.bbl [27
+(./Dissertation Sauce2.bbl [33
 
-]) [28
+]) [34
 
 ]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[29
+[35
 
-] [30]
-<./Images//ValidationProc.png, id=164, 1146.2825pt x 1064.97874pt>
+] [36]
+<./Images//ValidationProc.png, id=193, 1146.2825pt x 1064.97874pt>
 File: ./Images//ValidationProc.png Graphic file (type png)
 <use ./Images//ValidationProc.png>
-Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 744.
+Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 846.
 (pdftex.def)             Requested size: 343.8874pt x 319.4961pt.
- [31
+ [37
 
-] [32 <./Images//ValidationProc.png>] [33
+] [38 <./Images//ValidationProc.png>] [39
 
 ]
 (./Dissertation Sauce2.aux) ) 
 Here is how much of TeX's memory you used:
- 7269 strings out of 478268
- 116307 string characters out of 5846347
+ 7335 strings out of 478268
+ 117833 string characters out of 5846347
  646713 words of memory out of 5000000
- 25415 multiletter control sequences out of 15000+600000
+ 25481 multiletter control sequences out of 15000+600000
  480179 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,9n,63p,1328b,1344s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -484,10 +512,10 @@ mr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9
 pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.p
 fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb
 ></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on "Dissertation Sauce2.pdf" (36 pages, 713710 bytes).
+Output written on "Dissertation Sauce2.pdf" (42 pages, 942122 bytes).
 PDF statistics:
- 244 PDF objects out of 1000 (max. 8388607)
- 130 compressed objects within 2 object streams
+ 275 PDF objects out of 1000 (max. 8388607)
+ 145 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 106 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 131 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -641,6 +641,101 @@ Figure \ref{fig:stoppingThread} showcases the function that is run everytime the
 \end{figure}
 
 \chapter{Results and Discussion}
+
+In order to be able to test the accuracy of my system it is necessary to first define some measures. False Positive (FP) is used to define the case when the system lets in an imposter user. False Negative (FN) is the opposite of this where the system rejects a user it shouldn't have. True Positive (TP) is where the system makes the correct decision and allows in a user correctly. True Negative (TN) is where the system makes the correct decision and rejects a user where it should have. Hold time (HT) is the time in which a key is held down or the time between the when a key is pressed and when a key is released. The float time (FT) is the time between actions. It can be defined as the time between the user releasing a key and pressing down the next key.
+
+In order to test the system, it was necessary to create some data. In order to do this, I made a function which would generate test data with timings I specified. This enables me to generate lots of test data simply and easily. Furthermore, it allows reproducibility in the data collected. If the data was simply a user such as myself typing, it is almost impossible to get the same timings in terms of typing more than once. This function can be seen in Appendix C. That function can only deal with data that is linear (where a 'up' action is always followed by a 'down' action). A more complicated version that makes use of interleaving is shown below it.
+
+
+\section{Test 1: Validation Measures}
+
+The first tests I conducted on the system consisted of checking if results returned by the validation procedures are what is expected. In this test, the confidence interval is irrelevant as we are not measuring this. The test data consists a singular word "geographically". The first test in this set of tests consisted of me generating 10 sets of test data using the same word each time. Each set of test data increased the hold time by 0.1 whilst keeping the float time the same.. The program was in 'rnl' which ensured that it did not lock the pc or update the data. This was done in order to ensure that all tests were tested against the same dataset. The reference dataset which was loaded in each time consisted of the 5th set of test data. This test should return an inverted bell-shaped curve due to the reference data point being in the middle. 
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.6]{EUCGraph}
+	\caption{Euclidean Score}
+	\label{fig:EucGraph}
+\end{figure}
+
+Figure \ref{fig:EucGraph} shows the results of the testing. As shown, the test data results in a inverted bell curve which is expected. The smallest euclidean distances being in the middle as these are the most similar to the reference data that all datapoints are checked against. This proves that the euclidean distance is working as expected. Interestingly, the euclidean distance score is not a perfect inverted curve due much higher results on the left side of the graph rather than the right. I'm not too sure why this happens but I believe it may be because of the way in which Euclidean distance is calculated. It's because of results like this that the euclidean score is used as a estimation and a secondary measure to the 2D correlation co-efficient.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.6]{CorrGraph}
+	\caption{2D Correlation Co-efficient Score}
+	\label{fig:2DGraph}
+\end{figure}
+
+Figure \ref{fig:2DGraph} graphs the hold time against the 2D correlation score. Similar to the graph shown in figure \ref{fig:EucGraph} it takes the shape of a bell shaped curve. Unlike the euclidean graph this is a far more uniform graph which highlights once again that the 2D correlation co-efficient is a better measure than euclidean distance.
+
+Figure \ref{fig:decGraph} is a less important graph. It plots the decision made with a confidence interval of 0.8 against the hold time input. 1.0 represents a true decision whilst 0 a False decision. This graph maintains a bell shaped curve that follows closely the 2D correlation co-efficient graph.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.6]{DecisionsGraph}
+	\caption{Decisions and hold time}
+	\label{fig:decGraph}
+\end{figure}
+
+These graphs show that the system does what is expected and as such works properly. Despite the fact that the float time didn't change in any of these tests, its clear to see that changing it wouldn't affect the accuracy. The table below shows the raw output of the function.
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	HT & Euc & Corr & Dec \\ [0.5ex]
+	\hline
+	\hline
+	0.1 & 13997 & 0.56 & False \\
+	0.2 & 6001 & 0.72 & False \\
+	0.3 & 6001 & 0.73 & False \\
+	0.4 & 1.5 & 0.99 & True \\
+	0.5 & 1.5 & 0.99 & True \\
+	0.6 & 1.5 & 0.99 & True \\
+	0.7 & 1.5 & 0.99 & True \\
+	0.8 & 6000 & 0.74 & False \\
+	0.9 & 4000 & 0.83 & False \\
+	1.0 & 10000 & 0.58 & False \\
+	\hline
+	\end{tabular}
+\end{center}
+
+The raw data points to another interesting anomaly in the data, \(0.9\) if following the trend should have a euclidean distance greater than in \(0.8\) and a 2D correlation co-efficient less than in \(0.8\). However, this is not the case. This small anomaly doesn't affect the system in a huge way. Calculating the accuracy of this data we can see that 9/10 data sets follow the trend leading to an accuracy of 90%.
+
+Due to the way the data is formed with all the data being linear, this is not a perfect test. The best way to test this is on data that is more representative of how a user types. This is done using interleaving.
+
+
+\section{Test 2: Interleaving}
+
+Whilst the previous test provided a simple way to test the accuracy of the system, in order to get a better representation of how a normal user types, it's necessary to use interleaving in order to improve the test data. The function I used to generate the test data does so randomly leading to some interesting results. Theoretically when using interleaving we should see lower accuracy scores due to the randomness playing a part. When the reference data was generated this was also done randomly. 
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.6]{EUCGraph2}
+	\caption{Euclidean Scores of the data with interleaving}
+	\label{fig:EUCInter}
+\end{figure}
+
+Figure \ref{fig:EUCInter} shows the euclidean scores of the data. As you can see this metric really suffers due to interleaving. Once more proof as to why it isn't the main similarity measure. Rather than take a bell shaped curve like we expect, it fails to form any real curve, instead settling on a strong positive correlation between hold time and euclidean distance. Around the data used to form the reference data, a slight dip is observed which is a very loose way to tell that a small decrease in the distance is observed there.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.6]{CorrGraph2}
+	\caption{Correlation Scores of the data with interleaving}
+	\label{fig:CorrInter}
+\end{figure}
+
+Figure \ref{fig:CorrInter} shows the 2D correlation scores of the data with interleaving. Despite the randomness of the calculation, you can see, that this still follows a bell shaped curve with the highest accuracy observed around the 5th test which is around the same hold time used as the reference data. In real life data, randomness will be at a minimum as users tend to type in a rhythm with a small amount of variance. This test shows that the system can deal with randomness relatively well.
+
+\section{Test 3: Decisions}
+
+The next logical test to do is to test whether the decision being made. This is where the measures defined in the first paragraph of this section come into use. This test essentially tests whether the system can tell the difference between a genuine and an imposter user. In order to do this, I generated and saved some test data. Due to my program only choosing four words from an interval, each interval is comprised of only four words that are the same for each test. Any more and the program would not be able to test each interval correctly. No data is updated in the intervals and the sets of data are tested against a genuine sample of the users data. Different combinations are stored in these intervals. For example, in the first interval, all four words might be genuine whereas in the next interval, there might be three imposter words and one genuine. All possibilities are tested and written below. A copy of the data is stored inside the gitlab under test/data.
+
+The first possibility is that one word in the four is an imposter users.	
+
+
+
+
 \begin{itemize}
 	\item Test Results
 	\item Calc and use FP, FN, TP, TN - get a percentage
@@ -649,6 +744,17 @@ Figure \ref{fig:stoppingThread} showcases the function that is run everytime the
 	\item Speed, security??
 \end{itemize}
 \chapter{Critical Appraisal}
+
+In order to judge the success of the project, it is necessary compare the current system against the original aims and objectives of the project which are listed below. 
+\begin{enumerate}
+	\item To produce a lightweight key logger that can accurately log all inputs accurately and securely
+	\item To create a graphical system that allows the user to register or login
+	\item At an interval set by the user, the system will create a profile for that user based on their typing since the last interval and check this against the profile created in the registration system
+	\item If the user doesn't match, asks the user to re-authenticate
+\end{enumerate}
+
+I feel that my project has quite comfortably succeeded in point 1. The key logger produced records all keystrokes along with the action associated with them. Furthermore, the impact on performance is minimal with the keylogger and associated 
+
 \begin{enumerate}
 	\item Summary and crit analysis
 	\begin{itemize}
@@ -748,7 +854,25 @@ This contains details regarding the validation procedure.
 
 \chapter*{Appendix C}
 
-This chapter contains details of the training data test. 
+This appendix contains all the test data and code used in results and discussions.
+
+\section*{Test Data Former}
+
+Shown is a snapshot of the testdata former used in test 1. The actual full code is in the gitlab under code/test/tester.py
+\begin{figure}
+	\begin{lstlisting}
+		if isinstance(holdTime, float) and isinstance(floatTime, float):
+        	time = t.time()
+        	for x in data:
+            	output.append(k.KeyboardEvent('down', 99, name=x, time=time))
+            	time+= holdTime
+           	 	output.append(k.KeyboardEvent('up', 99, name=x, time=time))
+            	time += floatTime
+        	return output
+     \end{lstlisting}
+\end{figure}
+
+\section*{Test 1 Code}
 
 
 \end{document}

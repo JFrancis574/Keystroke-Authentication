@@ -162,7 +162,7 @@ class Calculation:
             list: All the words chosen that have failes
         """
         distances = {}
-        if mode in ['r', 'rnl']:
+        if mode in ['r', 'rnl', 't']:
             # For every word that has been chosen.
             for x in range(0, len(self.chosen)):
                 fileName = self.chosen[x].word+'.json'
@@ -175,13 +175,13 @@ class Calculation:
                     # Beautifying and forming the correct data
                     inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
-                    print("File")
-                    print(np.array_equal(inInterval, fromFile))
+                    # print("File")
+                    # print(np.array_equal(inInterval, fromFile))
                     
                     start_time = timeit.default_timer()
                     # Euclidean and fastdtw
-                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=None)
-                    print("DTW Time: ", timeit.default_timer() - start_time)
+                    euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
+                    # print("DTW Time: ", timeit.default_timer() - start_time)
                     
                     ff_path, ii_path = zip(*path)
                     ff_path = np.asarray(ff_path)
@@ -211,6 +211,8 @@ class Calculation:
                     # If the word has never been seen before
                     distances[x] = [None, None]
                 print(distances)
+            
+            
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
             bandingCorr = 0.85 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
@@ -244,6 +246,9 @@ class Calculation:
                     wordCheck.append(True)
                 else:
                     wordCheck.append(False)
+
+            if mode == 't':
+                return distances, wordCheck
             
             if len(wordCheck) != 1:
                 if False not in wordCheck and None not in wordCheck:

@@ -18,5 +18,8 @@
 \contentsline {section}{\numberline {3.7}Storage}{19}{}%
 \contentsline {section}{\numberline {3.8}Pausing}{22}{}%
 \contentsline {chapter}{\numberline {4}Results and Discussion}{25}{}%
-\contentsline {chapter}{\numberline {5}Critical Appraisal}{26}{}%
-\contentsline {chapter}{\numberline {6}Conclusion}{27}{}%
+\contentsline {section}{\numberline {4.1}Test 1: Validation Measures}{25}{}%
+\contentsline {section}{\numberline {4.2}Test 2: Interleaving}{28}{}%
+\contentsline {section}{\numberline {4.3}Test 3: Decisions}{28}{}%
+\contentsline {chapter}{\numberline {5}Critical Appraisal}{31}{}%
+\contentsline {chapter}{\numberline {6}Conclusion}{33}{}%
