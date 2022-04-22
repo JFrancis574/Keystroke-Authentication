@@ -4,6 +4,11 @@ import threading
 import time
 import tkinter as tk
 from functools import partial
+import keyboard
+from Interval import Calculation
+from Training import Training
+import user_profile
+import pickle
 
 # import keyboard
 
@@ -47,25 +52,25 @@ from functools import partial
 # plt.ylabel("Time Taken")
 # plt.show()
 
-def pausePlay():
-    if button.cget('image') == 'pyimage2':
-        print("PAUSE")
-        pause = True
-        button.configure(image=imgPlay)
-        button.image = imgPlay
-    else:
-        print("RESUME")
-        button.configure(image=imgPause)
-        button.image = imgPause
+# def pausePlay():
+#     if button.cget('image') == 'pyimage2':
+#         print("PAUSE")
+#         pause = True
+#         button.configure(image=imgPlay)
+#         button.image = imgPlay
+#     else:
+#         print("RESUME")
+#         button.configure(image=imgPause)
+#         button.image = imgPause
         
         
-def resource_path(relative_path):
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
+# def resource_path(relative_path):
+#     try:
+#         # PyInstaller creates a temp folder and stores path in _MEIPASS
+#         base_path = sys._MEIPASS
+#     except Exception:
+#         base_path = os.path.abspath(".")
+#     return os.path.join(base_path, relative_path)
 
 
 # pause = False
@@ -110,63 +115,87 @@ def resource_path(relative_path):
 # # Execute Tkinter
 # root.mainloop()
 
-def stop():
-    global stop_threads
-    if button.cget('image') == 'pyimage2':
-        print("PAUSE")
-        button.configure(image=imgPlay)
-        button.image = imgPlay
-        stop_threads = True
-        for worker in workers:
-            worker.join()
-        print(workers)
-        print('Finis.')
-    else:
-        print("RESUME")
-        button.configure(image=imgPause)
-        button.image = imgPause
-        stop_threads = False
-        tmp = threading.Thread(target=do_work, args=(0, lambda: stop_threads))
-        tmp.start()
+# def stop():
+#     global stop_threads
+#     if button.cget('image') == 'pyimage2':
+#         print("PAUSE")
+#         button.configure(image=imgPlay)
+#         button.image = imgPlay
+#         stop_threads = True
+#         for worker in workers:
+#             worker.join()
+#         print(workers)
+#         print('Finis.')
+#     else:
+#         print("RESUME")
+#         button.configure(image=imgPause)
+#         button.image = imgPause
+#         stop_threads = False
+#         tmp = threading.Thread(target=do_work, args=(0, lambda: stop_threads))
+#         tmp.start()
         
     
-def do_work(id, stop):
-    print("ID:", id)
-    x = 0
-    while True:
-        print(x)
-        time.sleep(x)
-        x += 1
-        if stop():
-            print("EXITING")
-            break
-    print("STOPPING")
+# def do_work(id, stop):
+#     print("ID:", id)
+#     x = 0
+#     while True:
+#         print(x)
+#         time.sleep(x)
+#         x += 1
+#         if stop():
+#             print("EXITING")
+#             break
+#     print("STOPPING")
     
-def Training():
-    trainRoot = tk.Tk()
+# def Training():
+#     trainRoot = tk.Tk()
     
 
 
-if __name__ == '__main__':
-    prof = Training()
-    quit()
-    global stop_threads
-    stop_threads = False
-    workers = []
-    id = 0
-    tmp = threading.Thread(target=do_work, args=(id, lambda: stop_threads))
-    workers.append(tmp)
-    tmp.start()
-    root = tk.Tk()
-    imgPause = tk.PhotoImage(file = resource_path('Pause.png')).subsample(3,3)
-    imgPlay = tk.PhotoImage(file = resource_path('Play.png')).subsample(3,3)
-    root.title("Play/Pause")
-    button = tk.Button(root, bg='white', fg='black', image=imgPause, command=stop)
-    button.pack()
-    root.mainloop()
-    stop_threads = True
-    for worker in workers:
-        worker.join()
+# if __name__ == '__main__':
+#     prof = Training()
+#     quit()
+#     global stop_threads
+#     stop_threads = False
+#     workers = []
+#     id = 0
+#     tmp = threading.Thread(target=do_work, args=(id, lambda: stop_threads))
+#     workers.append(tmp)
+#     tmp.start()
+#     root = tk.Tk()
+#     imgPause = tk.PhotoImage(file = resource_path('Pause.png')).subsample(3,3)
+#     imgPlay = tk.PhotoImage(file = resource_path('Play.png')).subsample(3,3)
+#     root.title("Play/Pause")
+#     button = tk.Button(root, bg='white', fg='black', image=imgPause, command=stop)
+#     button.pack()
+#     root.mainloop()
+#     stop_threads = True
+#     for worker in workers:
+#         worker.join()
+
+interval = 60
+flag = True
+
+def record(interval):
+    recorded = []
+    startTime = time.time()
+    keyBoardHook = keyboard.hook(recorded.append)
+    time.sleep(interval)
+    keyboard.unhook(keyBoardHook)
+    return recorded, startTime
+
+
+data, start = record(interval)
+prof = user_profile.User_Profile("Test")
+if flag == True:
+    train = Training(data, start, prof, 0, 0)
+    print("Training Start", start)
+    with open("Reference.pickle", 'wb') as write_file:
+        pickle.dump(data, write_file)
+
+        
+
+
 
 
 
