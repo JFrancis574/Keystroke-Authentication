@@ -1,6 +1,6 @@
 class KeyboardEvent:
     def __init__(self, event_type, scan_code, name, time):
-        """Used as a substitue on mac, simple class replicating the keyboard class
+        """Used as a substitute on mac, simple class replicating the keyboard class
 
         Args:
             event_type (string): Whether the action is up or down

@@ -1,4 +1,3 @@
-from cProfile import label
 import json
 import random
 
@@ -400,7 +399,7 @@ def test2():
         euc[x] = list(distance.values())[0][0]
         corr[x] = list(distance.values())[0][1]
         decisions[x] = output
-        x += 0.1
+        x += 0.2
 
 
     # Euc Graph

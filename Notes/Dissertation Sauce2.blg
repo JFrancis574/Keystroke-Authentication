@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Dissertation Sauce2.aux
 The style file: plain.bst
 Database file #1: reference.bib
-You've used 7 entries,
+You've used 8 entries,
             2118 wiz_defined-function locations,
-            533 strings with 4818 characters,
-and the built_in function-call counts, 1542 in all, are:
-= -- 137
-> -- 55
+            538 strings with 4852 characters,
+and the built_in function-call counts, 1741 in all, are:
+= -- 154
+> -- 62
 < -- 0
-+ -- 23
-- -- 16
-* -- 73
-:= -- 256
-add.period$ -- 15
-call.type$ -- 7
-change.case$ -- 29
++ -- 26
+- -- 18
+* -- 81
+:= -- 288
+add.period$ -- 17
+call.type$ -- 8
+change.case$ -- 33
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 53
-empty$ -- 159
-format.name$ -- 16
-if$ -- 326
+cite$ -- 8
+duplicate$ -- 60
+empty$ -- 181
+format.name$ -- 18
+if$ -- 369
 int.to.chr$ -- 0
-int.to.str$ -- 7
+int.to.str$ -- 8
 missing$ -- 1
-newline$ -- 32
-num.names$ -- 14
-pop$ -- 57
+newline$ -- 36
+num.names$ -- 16
+pop$ -- 66
 preamble$ -- 1
-purify$ -- 22
+purify$ -- 25
 quote$ -- 0
-skip$ -- 56
+skip$ -- 64
 stack$ -- 0
-substring$ -- 60
-swap$ -- 7
+substring$ -- 65
+swap$ -- 8
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 28
+type$ -- 32
 warning$ -- 0
-while$ -- 16
-width$ -- 8
-write$ -- 61
+while$ -- 18
+width$ -- 9
+write$ -- 69

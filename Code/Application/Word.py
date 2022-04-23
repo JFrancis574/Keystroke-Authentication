@@ -5,6 +5,11 @@ class Word:
     """
     
     def __init__(self, wordData = None):
+        """Used to store word objects
+
+        Args:
+            wordData (2D array, optional): the raw word data. Defaults to None.
+        """
 
         self.raw = wordData
         self.roundValue = 4

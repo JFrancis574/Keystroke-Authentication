@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  22 APR 2022 16:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  23 APR 2022 16:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -288,213 +288,243 @@ Chapter 2.
 
 ]
 Chapter 3.
+<./Images//OOP.png, id=23, 427.5975pt x 261.97874pt>
+File: ./Images//OOP.png Graphic file (type png)
+<use ./Images//OOP.png>
+Package pdftex.def Info: ./Images//OOP.png  used on input line 64.
+(pdftex.def)             Requested size: 165.59853pt x 101.45575pt.
+<./Images//OldPlan.png, id=25, 453.695pt x 279.0425pt>
+File: ./Images//OldPlan.png Graphic file (type png)
+<use ./Images//OldPlan.png>
+Package pdftex.def Info: ./Images//OldPlan.png  used on input line 73.
+(pdftex.def)             Requested size: 317.58434pt x 195.3284pt.
+<./Images//SystemPlan.png, id=26, 603.25375pt x 372.39125pt>
+File: ./Images//SystemPlan.png Graphic file (type png)
+<use ./Images//SystemPlan.png>
+Package pdftex.def Info: ./Images//SystemPlan.png  used on input line 79.
+(pdftex.def)             Requested size: 361.95503pt x 223.43646pt.
+
+Overfull \hbox (16.95503pt too wide) in paragraph at lines 79--80
+[][] 
+ []
+
+[3
+
+ <./Images//OOP.png>] [4 <./Images//OldPlan.png> <./Images//SystemPlan.png>]
+[5]
+<./Images//MathsBackend.png, id=40, 83.31125pt x 320.19624pt>
+File: ./Images//MathsBackend.png Graphic file (type png)
+<use ./Images//MathsBackend.png>
+Package pdftex.def Info: ./Images//MathsBackend.png  used on input line 98.
+(pdftex.def)             Requested size: 103.50105pt x 397.82095pt.
+<./Images//NewMaths.png, id=41, 121.45375pt x 382.42876pt>
+File: ./Images//NewMaths.png Graphic file (type png)
+<use ./Images//NewMaths.png>
+Package pdftex.def Info: ./Images//NewMaths.png  used on input line 105.
+(pdftex.def)             Requested size: 103.50105pt x 325.90042pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<./Images//KeyboardEvent.png, id=23, 354.32375pt x 29.10875pt>
+<./Images//KeyboardEvent.png, id=42, 354.32375pt x 29.10875pt>
 File: ./Images//KeyboardEvent.png Graphic file (type png)
 <use ./Images//KeyboardEvent.png>
-Package pdftex.def Info: ./Images//KeyboardEvent.png  used on input line 83.
+Package pdftex.def Info: ./Images//KeyboardEvent.png  used on input line 134.
 (pdftex.def)             Requested size: 343.69362pt x 28.23544pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[3
-
-]
-<./Images//KeyboardEventPreProc.png, id=28, 151.56625pt x 29.10875pt>
+<./Images//KeyboardEventPreProc.png, id=43, 151.56625pt x 29.10875pt>
 File: ./Images//KeyboardEventPreProc.png Graphic file (type png)
 <use ./Images//KeyboardEventPreProc.png>
 Package pdftex.def Info: ./Images//KeyboardEventPreProc.png  used on input line
- 94.
+ 145.
 (pdftex.def)             Requested size: 165.59853pt x 31.80429pt.
-<./Images//SimplePairing.png, id=29, 223.83624pt x 117.43875pt>
+[6] [7 <./Images//MathsBackend.png> <./Images//NewMaths.png>]
+<./Images//SimplePairing.png, id=53, 223.83624pt x 117.43875pt>
 File: ./Images//SimplePairing.png Graphic file (type png)
 <use ./Images//SimplePairing.png>
-Package pdftex.def Info: ./Images//SimplePairing.png  used on input line 106.
+Package pdftex.def Info: ./Images//SimplePairing.png  used on input line 157.
 (pdftex.def)             Requested size: 131.10168pt x 68.7865pt.
- [4 <./Images//KeyboardEvent.png> <./Images//KeyboardEventPreProc.png> <./Image
+ [8 <./Images//KeyboardEvent.png> <./Images//KeyboardEventPreProc.png> <./Image
 s//SimplePairing.png>]
-<./Images//PairingWrong.png, id=38, 238.8925pt x 132.495pt>
+<./Images//PairingWrong.png, id=61, 238.8925pt x 132.495pt>
 File: ./Images//PairingWrong.png Graphic file (type png)
 <use ./Images//PairingWrong.png>
-Package pdftex.def Info: ./Images//PairingWrong.png  used on input line 118.
+Package pdftex.def Info: ./Images//PairingWrong.png  used on input line 169.
 (pdftex.def)             Requested size: 131.10168pt x 72.71072pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5 <./Images//PairingWrong.png>] [6] [7]
-<./Images//WordsChosenVsTime.png, id=51, 462.528pt x 346.896pt>
+[9 <./Images//PairingWrong.png>] [10]
+<./Images//WordsChosenVsTime.png, id=72, 462.528pt x 346.896pt>
 File: ./Images//WordsChosenVsTime.png Graphic file (type png)
 <use ./Images//WordsChosenVsTime.png>
-Package pdftex.def Info: ./Images//WordsChosenVsTime.png  used on input line 18
-3.
+Package pdftex.def Info: ./Images//WordsChosenVsTime.png  used on input line 23
+4.
 (pdftex.def)             Requested size: 323.76738pt x 242.82553pt.
- [8 <./Images//WordsChosenVsTime.png>]
-[9]
-<./Images//KDS1.png, id=65, 462.528pt x 346.896pt>
+ [11] [12 <./Images//WordsChosenVsTime.png>] [13]
+<./Images//KDS1.png, id=89, 462.528pt x 346.896pt>
 File: ./Images//KDS1.png Graphic file (type png)
 <use ./Images//KDS1.png>
-Package pdftex.def Info: ./Images//KDS1.png  used on input line 232.
+Package pdftex.def Info: ./Images//KDS1.png  used on input line 283.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
-<./Images//KDS2.png, id=66, 462.528pt x 346.896pt>
+<./Images//KDS2.png, id=90, 462.528pt x 346.896pt>
 File: ./Images//KDS2.png Graphic file (type png)
 <use ./Images//KDS2.png>
-Package pdftex.def Info: ./Images//KDS2.png  used on input line 239.
+Package pdftex.def Info: ./Images//KDS2.png  used on input line 290.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
-<./Images//KDSBoth.png, id=67, 1387.584pt x 704.6325pt>
+<./Images//KDSBoth.png, id=91, 1387.584pt x 704.6325pt>
 File: ./Images//KDSBoth.png Graphic file (type png)
 <use ./Images//KDSBoth.png>
-Package pdftex.def Info: ./Images//KDSBoth.png  used on input line 246.
+Package pdftex.def Info: ./Images//KDSBoth.png  used on input line 297.
 (pdftex.def)             Requested size: 103.50105pt x 52.55486pt.
- [10 <./Images//KDS1.png> <./Images//KDS2.png> <./Images//KDSBoth.png>]
-<./Images//KDS1DTW.png, id=76, 462.528pt x 346.896pt>
+<./Images//KDS1DTW.png, id=92, 462.528pt x 346.896pt>
 File: ./Images//KDS1DTW.png Graphic file (type png)
 <use ./Images//KDS1DTW.png>
-Package pdftex.def Info: ./Images//KDS1DTW.png  used on input line 267.
+Package pdftex.def Info: ./Images//KDS1DTW.png  used on input line 318.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
-<./Images//KDS2DTW.png, id=77, 462.528pt x 346.896pt>
+<./Images//KDS2DTW.png, id=93, 462.528pt x 346.896pt>
 File: ./Images//KDS2DTW.png Graphic file (type png)
 <use ./Images//KDS2DTW.png>
-Package pdftex.def Info: ./Images//KDS2DTW.png  used on input line 274.
+Package pdftex.def Info: ./Images//KDS2DTW.png  used on input line 325.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
-<./Images//KDSBothDTW.png, id=78, 462.528pt x 346.896pt>
+<./Images//KDSBothDTW.png, id=94, 462.528pt x 346.896pt>
 File: ./Images//KDSBothDTW.png Graphic file (type png)
 <use ./Images//KDSBothDTW.png>
-Package pdftex.def Info: ./Images//KDSBothDTW.png  used on input line 281.
+Package pdftex.def Info: ./Images//KDSBothDTW.png  used on input line 332.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
-
-[11 <./Images//KDS1DTW.png> <./Images//KDS2DTW.png> <./Images//KDSBothDTW.png>]
-<./Images//SemanticsEx.png, id=85, 238.8925pt x 34.1275pt>
+ [14 <./Images//KDS1.png> <./Images//KDS2.png> <./Images//KDSBoth.png> <./Image
+s//KDS1DTW.png> <./Images//KDS2DTW.png> <./Images//KDSBothDTW.png>]
+[15]
+<./Images//SemanticsEx.png, id=107, 238.8925pt x 34.1275pt>
 File: ./Images//SemanticsEx.png Graphic file (type png)
 <use ./Images//SemanticsEx.png>
-Package pdftex.def Info: ./Images//SemanticsEx.png  used on input line 322.
+Package pdftex.def Info: ./Images//SemanticsEx.png  used on input line 373.
 (pdftex.def)             Requested size: 131.10168pt x 18.7285pt.
-<./Images//DistancesDict.png, id=86, 240.9pt x 80.3pt>
+<./Images//DistancesDict.png, id=108, 240.9pt x 80.3pt>
 File: ./Images//DistancesDict.png Graphic file (type png)
 <use ./Images//DistancesDict.png>
-Package pdftex.def Info: ./Images//DistancesDict.png  used on input line 334.
+Package pdftex.def Info: ./Images//DistancesDict.png  used on input line 385.
 (pdftex.def)             Requested size: 131.10168pt x 43.70197pt.
-[12 <./Images//SemanticsEx.png>]
-<./Images//WordCheck.png, id=91, 288.07625pt x 33.12375pt>
+ [16 <./Images//SemanticsEx.png> <./Images//DistancesDict.png>]
+<./Images//WordCheck.png, id=115, 288.07625pt x 33.12375pt>
 File: ./Images//WordCheck.png Graphic file (type png)
 <use ./Images//WordCheck.png>
-Package pdftex.def Info: ./Images//WordCheck.png  used on input line 358.
+Package pdftex.def Info: ./Images//WordCheck.png  used on input line 409.
 (pdftex.def)             Requested size: 288.07553pt x 33.12366pt.
- [13 <./Images//DistancesDict.png> <./Images//WordCheck.png>]
-<./Images//IfLen1.png, id=97, 596.2275pt x 628.3475pt>
+ [17 <./Images//WordCheck.png>]
+<./Images//IfLen1.png, id=120, 596.2275pt x 628.3475pt>
 File: ./Images//IfLen1.png Graphic file (type png)
 <use ./Images//IfLen1.png>
-Package pdftex.def Info: ./Images//IfLen1.png  used on input line 371.
+Package pdftex.def Info: ./Images//IfLen1.png  used on input line 422.
 (pdftex.def)             Requested size: 238.48677pt x 251.33455pt.
- [14 <./Images//IfLen1.png>] [15]
-<./Images//EucVs2D.png, id=105, 185.19188pt x 272.51813pt>
+ [18 <./Images//IfLen1.png>]
+<./Images//EucVs2D.png, id=125, 185.19188pt x 272.51813pt>
 File: ./Images//EucVs2D.png Graphic file (type png)
 <use ./Images//EucVs2D.png>
-Package pdftex.def Info: ./Images//EucVs2D.png  used on input line 413.
+Package pdftex.def Info: ./Images//EucVs2D.png  used on input line 464.
 (pdftex.def)             Requested size: 131.10168pt x 192.92369pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[16 <./Images//EucVs2D.png>] [17] [18] [19]
-<./Images//UncompressedData.png, id=120, 347.2975pt x 820.06375pt>
+ [19 <./Images//EucVs2D.png>]
+[20] [21] [22] [23]
+<./Images//UncompressedData.png, id=143, 347.2975pt x 820.06375pt>
 File: ./Images//UncompressedData.png Graphic file (type png)
 <use ./Images//UncompressedData.png>
-Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 541
+Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 592
 .
 (pdftex.def)             Requested size: 131.10168pt x 309.5753pt.
- [20 <./Images//UncompressedData.png>] [21]
-<./Images//FolderStruct.png, id=128, 197.23688pt x 487.06969pt>
+ [24 <./Images//UncompressedData.png>]
+<./Images//FolderStruct.png, id=148, 197.23688pt x 487.06969pt>
 File: ./Images//FolderStruct.png Graphic file (type png)
 <use ./Images//FolderStruct.png>
-Package pdftex.def Info: ./Images//FolderStruct.png  used on input line 587.
+Package pdftex.def Info: ./Images//FolderStruct.png  used on input line 638.
 (pdftex.def)             Requested size: 96.59958pt x 238.54732pt.
 
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 59
-3.
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 64
+4.
 
-<./Images//PauseEx.png, id=129, 330.48468pt x 333.49594pt>
+[25]
+<./Images//PauseEx.png, id=152, 330.48468pt x 333.49594pt>
 File: ./Images//PauseEx.png Graphic file (type png)
 <use ./Images//PauseEx.png>
-Package pdftex.def Info: ./Images//PauseEx.png  used on input line 601.
+Package pdftex.def Info: ./Images//PauseEx.png  used on input line 652.
 (pdftex.def)             Requested size: 137.9979pt x 139.25822pt.
-<./Images//PlayEx.png, id=130, 328.97906pt x 334.24875pt>
+<./Images//PlayEx.png, id=153, 328.97906pt x 334.24875pt>
 File: ./Images//PlayEx.png Graphic file (type png)
 <use ./Images//PlayEx.png>
-Package pdftex.def Info: ./Images//PlayEx.png  used on input line 608.
+Package pdftex.def Info: ./Images//PlayEx.png  used on input line 659.
 (pdftex.def)             Requested size: 137.9979pt x 140.2101pt.
-[22 <./Images//FolderStruct.png>] [23 <./Images//PauseEx.png> <./Images//PlayEx
-.png>] [24]
+ [26 <./Images//PauseEx.png> <./Images//PlayEx.png> <./Images//FolderStruct.png
+>] [27]
 Chapter 4.
-<./Images//EUCGraph.png, id=144, 462.528pt x 346.896pt>
+<./Images//EUCGraph.png, id=163, 462.528pt x 346.896pt>
 File: ./Images//EUCGraph.png Graphic file (type png)
 <use ./Images//EUCGraph.png>
-Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 656.
+Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 707.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
-[25
+[28
 
 ]
-<./Images//CorrGraph.png, id=148, 462.528pt x 346.896pt>
+<./Images//CorrGraph.png, id=168, 462.528pt x 346.896pt>
 File: ./Images//CorrGraph.png Graphic file (type png)
 <use ./Images//CorrGraph.png>
-Package pdftex.def Info: ./Images//CorrGraph.png  used on input line 665.
+Package pdftex.def Info: ./Images//CorrGraph.png  used on input line 716.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
-<./Images//DecisionsGraph.png, id=149, 462.528pt x 346.896pt>
+<./Images//DecisionsGraph.png, id=169, 462.528pt x 346.896pt>
 File: ./Images//DecisionsGraph.png Graphic file (type png)
 <use ./Images//DecisionsGraph.png>
-Package pdftex.def Info: ./Images//DecisionsGraph.png  used on input line 676.
+Package pdftex.def Info: ./Images//DecisionsGraph.png  used on input line 727.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
- [26 <./Images//EUCGraph.png>] [27 <./Images//CorrGraph.png> <./Images//Decisio
+ [29 <./Images//EUCGraph.png>] [30 <./Images//CorrGraph.png> <./Images//Decisio
 nsGraph.png>]
-<./Images//EUCGraph2.png, id=159, 462.528pt x 346.896pt>
+<./Images//EUCGraph2.png, id=179, 462.528pt x 346.896pt>
 File: ./Images//EUCGraph2.png Graphic file (type png)
 <use ./Images//EUCGraph2.png>
-Package pdftex.def Info: ./Images//EUCGraph2.png  used on input line 714.
+Package pdftex.def Info: ./Images//EUCGraph2.png  used on input line 765.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
-<./Images//CorrGraph2.png, id=160, 462.528pt x 346.896pt>
+<./Images//CorrGraph2.png, id=180, 462.528pt x 346.896pt>
 File: ./Images//CorrGraph2.png Graphic file (type png)
 <use ./Images//CorrGraph2.png>
-Package pdftex.def Info: ./Images//CorrGraph2.png  used on input line 723.
+Package pdftex.def Info: ./Images//CorrGraph2.png  used on input line 774.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
- [28] [29 <./Images//EUCGraph2.png> <./Images//CorrGraph2.png>] [30]
+ [31] [32 <./Images//EUCGraph2.png> <./Images//CorrGraph2.png>] [33]
 Chapter 5.
-[31
+[34
 
-] [32]
+] [35]
 Chapter 6.
-(./Dissertation Sauce2.bbl [33
+(./Dissertation Sauce2.bbl [36
 
-]) [34
+]) [37
 
 ]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[35
+[38
 
-] [36]
-<./Images//ValidationProc.png, id=193, 1146.2825pt x 1064.97874pt>
+] [39]
+<./Images//ValidationProc.png, id=212, 1146.2825pt x 1064.97874pt>
 File: ./Images//ValidationProc.png Graphic file (type png)
 <use ./Images//ValidationProc.png>
-Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 846.
+Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 901.
 (pdftex.def)             Requested size: 343.8874pt x 319.4961pt.
- [37
+ [40
 
-] [38 <./Images//ValidationProc.png>] [39
+] [41 <./Images//ValidationProc.png>] [42
 
 ]
 (./Dissertation Sauce2.aux) ) 
 Here is how much of TeX's memory you used:
- 7335 strings out of 478268
- 117833 string characters out of 5846347
- 646713 words of memory out of 5000000
- 25481 multiletter control sequences out of 15000+600000
+ 7399 strings out of 478268
+ 119227 string characters out of 5846347
+ 644713 words of memory out of 5000000
+ 25545 multiletter control sequences out of 15000+600000
  480179 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,9n,63p,1328b,1344s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 55i,9n,63p,1682b,1343s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvip
 s/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publ
@@ -512,10 +542,10 @@ mr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9
 pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.p
 fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb
 ></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on "Dissertation Sauce2.pdf" (42 pages, 942122 bytes).
+Output written on "Dissertation Sauce2.pdf" (45 pages, 1025939 bytes).
 PDF statistics:
- 275 PDF objects out of 1000 (max. 8388607)
- 145 compressed objects within 2 object streams
+ 295 PDF objects out of 1000 (max. 8388607)
+ 152 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 131 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 156 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -155,11 +155,11 @@ class Calculation:
         """The big boi. This essentially decided whether to accept the user or to kick the user out. Also handles the security aspect
 
         Args:
-            mode (str, optional): This chooses whether this function is in test mode or not. Defaults to 'r'. r = real t = test, rnl = real no lock
+            mode (str, optional): This chooses whether this function is in test mode or not. Defaults to 'r'. r = real, t = test, rnl = real no lock
 
         Returns:
             Bool: If the user has been validated or not
-            list: All the words chosen that have failes
+            list: All the words chosen that have failed
         """
         distances = {}
         if mode in ['r', 'rnl', 't']:
@@ -175,13 +175,11 @@ class Calculation:
                     # Beautifying and forming the correct data
                     inInterval = np.array(list(self.chosen[x].KDSWord().values()))
                     fromFile = np.array(list(dataIn.values()))
-                    # print("File")
-                    # print(np.array_equal(inInterval, fromFile))
-                    
-                    start_time = timeit.default_timer()
-                    # Euclidean and fastdtw
+
+
+                    # FastDTW implementation by slaypni
+                    # https://github.com/slaypni/fastdtw
                     euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
-                    # print("DTW Time: ", timeit.default_timer() - start_time)
                     
                     ff_path, ii_path = zip(*path)
                     ff_path = np.asarray(ff_path)
@@ -189,24 +187,21 @@ class Calculation:
                     ff_warped = fromFile[ff_path]
                     ii_warped = inInterval[ii_path]
 
-                    # CorrelationCoefficant
+                    # Correlation Coefficant
                     cov = 0
                     XSum = 0
                     YSum = 0
-                    # Xmean = np.mean(ff_warped)
-                    # Ymean = np.mean(ii_warped)
                     Xmean = sum(ff_warped)/len(ff_warped)
                     Ymean = sum(ii_warped)/len(ii_warped)
                     
-                    # for i in range(len(ff_warped)):
-                    #     cov += (ff_warped[i] - Xmean)*(ii_warped[i] - Ymean)
-                    #     XSum += math.pow(ff_warped[i]-Xmean, 2)
-                    #     YSum += math.pow(ii_warped[i]-Ymean, 2)
+                    for i in range(len(ff_warped)):
+                        cov += (ff_warped[i] - Xmean)*(ii_warped[i] - Ymean)
+                        XSum += math.pow(ff_warped[i]-Xmean, 2)
+                        YSum += math.pow(ii_warped[i]-Ymean, 2)
                     
                 
-                    # correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
-                    correlationCoEfficant = np.corrcoef(ff_warped, ii_warped)
-                    distances[x] = [euclideanDistance, correlationCoEfficant[0][1]]
+                    correlationCoEfficant = cov/((math.sqrt(XSum)*(math.sqrt(YSum))))
+                    distances[x] = [euclideanDistance, correlationCoEfficant]
                 else:
                     # If the word has never been seen before
                     distances[x] = [None, None]
@@ -247,9 +242,12 @@ class Calculation:
                 else:
                     wordCheck.append(False)
 
+            # For use in testing only
             if mode == 't':
                 return distances, wordCheck
             
+
+            # Decision maker
             if len(wordCheck) != 1:
                 if False not in wordCheck and None not in wordCheck:
                     return True, []
