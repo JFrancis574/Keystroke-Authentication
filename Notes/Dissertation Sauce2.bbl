@@ -1,38 +1,37 @@
 \begin{thebibliography}{1}
 
+\bibitem{ToosiRamin2021Taok}
+R.~Toosi and M.~A. Akhaee, ``Time–frequency analysis of keystroke dynamics
+  for user authentication,'' {\em Future generation computer systems},
+  vol.~115, pp.~438--447, 2021.
+
 \bibitem{boppreh_2016}
-Boppreh.
-\newblock Keyboard, Jan 2016.
-
-\bibitem{scipycommunity_2022}
-SCIPY Community.
-\newblock Scipy.spatial.distance.euclidean¶, Feb 2022.
-
-\bibitem{getuser}
-Python~Software Foundation.
-\newblock Getpass - portable password input, Apr 2022.
-
-\bibitem{subprocess}
-Python~Software Foundation.
-\newblock Timeit - measure execution time of small code snippets, Apr 2022.
-
-\bibitem{pythonsoftwarefoundation_2022}
-Python~Software Foundation.
-\newblock Timeit - measure execution time of small code snippets, Apr 2022.
-
-\bibitem{naskar_2020}
-Ankur Naskar.
-\newblock What is the average typing speed, average words per minute?, May
-  2020.
+Boppreh, ``Keyboard.'' https://pypi.org/project/keyboard, Jan 2016.
+\newblock Accessed: 30/11/2021.
 
 \bibitem{tandi_2015}
-Kazuaki Tandi.
-\newblock Fastdtw, Mar 2015.
+K.~Tandi, ``Fastdtw.'' https://pypi.org/project/fastdtw/, Mar 2015.
+\newblock Accessed: 10/01/2022.
 
-\bibitem{ToosiRamin2021Taok}
-Ramin Toosi and Mohammad~Ali Akhaee.
-\newblock Time–frequency analysis of keystroke dynamics for user
-  authentication.
-\newblock {\em Future generation computer systems}, 115:438--447, 2021.
+\bibitem{subprocess}
+P.~S. Foundation, ``Subprocess - subprocess management.''
+  https://docs.python.org/3/library/subprocess.html, Apr 2022.
+\newblock Accessed: 10/03/2022.
+
+\bibitem{scipycommunity_2022}
+S.~Community, ``Scipy.spatial.distance.euclidean.''
+  https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.euclidean.html,
+  Feb 2022.
+\newblock Accessed: 20/01/2022.
+
+\bibitem{getuser}
+P.~S. Foundation, ``Getpass - portable password input.''
+  https://docs.python.org/3/library/getpass.html, Apr 2022.
+\newblock Accessed: 20/02/2022.
+
+\bibitem{pythonsoftwarefoundation_2022}
+P.~S. Foundation, ``Timeit - measure execution time of small code snippets.''
+  https://docs.python.org/3/library/timeit.html, Apr 2022.
+\newblock Accessed: 20/03/2022.
 
 \end{thebibliography}

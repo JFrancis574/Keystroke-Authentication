@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  24 APR 2022 16:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  24 APR 2022 18:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -432,7 +432,11 @@ File: ./Images//UncompressedData.png Graphic file (type png)
 Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 593
 .
 (pdftex.def)             Requested size: 131.10168pt x 309.5753pt.
- [24 <./Images//UncompressedData.png>] [25]
+
+
+LaTeX Warning: Citation `naskar_2020' on page 24 undefined on input line 601.
+
+[24 <./Images//UncompressedData.png>] [25]
 <./Images//FolderStruct.png, id=151, 197.23688pt x 487.06969pt>
 File: ./Images//FolderStruct.png Graphic file (type png)
 <use ./Images//FolderStruct.png>
@@ -494,7 +498,36 @@ Chapter 5.
 Chapter 6.
 (./Dissertation Sauce2.bbl [39
 
-]) [40
+]
+Underfull \hbox (badness 10000) in paragraph at lines 17--20
+[]\OT1/cmr/m/n/10 P. S. Foun-da-tion, ``Sub-pro-cess - sub-pro-cess man-age-men
+t.''
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 22--26
+[]\OT1/cmr/m/n/10 S. Com-mu-nity, ``Scipy.spatial.distance.euclidean.''
+ []
+
+
+Overfull \hbox (68.5564pt too wide) in paragraph at lines 22--26
+\OT1/cmr/m/n/10 https://docs.scipy.org/doc/scipy/reference/generated/scipy.spat
+ial.distance.euclidean.html,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--31
+[]\OT1/cmr/m/n/10 P. S. Foun-da-tion, ``Get-pass - portable pass-word in-put.''
+
+ []
+
+
+Underfull \hbox (badness 2547) in paragraph at lines 28--31
+\OT1/cmr/m/n/10 https://docs.python.org/3/library/getpass.html, Apr 2022.  Ac-c
+essed:
+ []
+
+) [40
 
 ]
 
@@ -513,33 +546,37 @@ Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 940.
 ] [44 <./Images//ValidationProc.png>] [45
 
 ]
-(./Dissertation Sauce2.aux) ) 
+(./Dissertation Sauce2.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 7399 strings out of 478268
- 119227 string characters out of 5846347
+ 7397 strings out of 478268
+ 119197 string characters out of 5846347
  644713 words of memory out of 5000000
- 25545 multiletter control sequences out of 15000+600000
+ 25543 multiletter control sequences out of 15000+600000
  480179 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,9n,63p,1725b,1343s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvip
-s/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr5.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9
-.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
-pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.p
-fb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb
-></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on "Dissertation Sauce2.pdf" (48 pages, 1036469 bytes).
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
+</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
+/usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
+sr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr
+/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/l
+ocal/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loc
+al/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local
+/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/t
+exlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texl
+ive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive
+/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/20
+22/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/202
+2/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2022
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/texlive/2022/t
+exmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on "Dissertation Sauce2.pdf" (48 pages, 1036811 bytes).
 PDF statistics:
  304 PDF objects out of 1000 (max. 8388607)
  158 compressed objects within 2 object streams
