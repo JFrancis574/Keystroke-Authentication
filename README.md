@@ -5,7 +5,7 @@ This is the repository for the above project. It involves recording a users keys
 
 ## Requirements and running the program
 
-The project only runs on Windows 10. It has been tested and created on python 3.9 and as such has only been guarenteed to work on this version. Inside Code/Application/dist is an executable called main.exe which will work without python and is the executable for the project. Code/Application contains the source code for the project. In order to run it from the source code simply run the main.py file. In order to do this, the following packages are required.
+The project only runs on Windows 10. It has been tested and created on python 3.9 and as such has only been guarenteed to work on this version. Inside [Code/Application/dist](Code/Application/dist) is an executable called main.exe which will work without python and is the executable for the project. [Code/Application](Code/Application) contains the source code for the project. In order to run it from the source code simply run the [main.py](Code/Application/main.py) file. In order to do this, the following packages are required.
 
 | Package      | Version |
 | ----------- | ----------- |
@@ -16,7 +16,7 @@ The project only runs on Windows 10. It has been tested and created on python 3.
 | scipy      | 1.8.0 |
 | setuptools | 9.2.1 |
 
-Files under Code/Test Code may require further packages. 
+Files under [Code/Test code](Code/Test code) may require further packages and are deprecated.
 
 Inside [Code/Application](Code/Application) there is a make.bat file which can be used to create your own executable. The first step is to delete the build and dist folders along with their contents. This is in order to allow the directory to refresh. In order to do this, install the packages above along with pyinstaller and then run the file. This will output the produced executable inside the dist folder.
 
