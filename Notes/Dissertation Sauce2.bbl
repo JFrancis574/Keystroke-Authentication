@@ -29,9 +29,4 @@ P.~S. Foundation, ``Getpass - portable password input.''
   https://docs.python.org/3/library/getpass.html, Apr 2022.
 \newblock Accessed: 20/02/2022.
 
-\bibitem{pythonsoftwarefoundation_2022}
-P.~S. Foundation, ``Timeit - measure execution time of small code snippets.''
-  https://docs.python.org/3/library/timeit.html, Apr 2022.
-\newblock Accessed: 20/03/2022.
-
 \end{thebibliography}

@@ -58,7 +58,7 @@
 
 \chapter{Design and Implementation}
 
-I decided to create my system in python due to is flexibility, the large amount of documentation available and my familiarity with it. Furthermore, python contains multiple packages such as numpy which make doing advanced maths that is required simple and easy along with providing excellent performance. Due to the way in which my program contains a lot of datapoints. Having packages and functions which are fast is essential to keeping the program as lightweight as possible and avoiding a potential performance impact on the user.
+I decided to create my system in python due to is flexibility, the large amount of documentation available, and my familiarity with it. Furthermore, python contains multiple packages such as NumPy, which makes doing advanced maths simple, easy, and provides excellent performance. Due to how my program operates, many data points are generated for each word. As such, having fast packages and function is essential to keeping the program as lightweight as possible and avoiding a potential performance impact on the user.
 
 \begin{wrapfigure}{l}{0.5\textwidth}
 	\begin{center}
@@ -68,7 +68,7 @@ I decided to create my system in python due to is flexibility, the large amount 
 	\label{fig:ClassStruct}
 \end{wrapfigure}
 
-It also makes interacting with the various elements of my system simple due to the large number of packages available. I used an object orientated approach in my system. Figure \ref{fig:ClassStruct} is a visual representation of the class structure used in my program. The main file is used to tie it all together. It's where the program starts and runs from. When the raw data is collected in the main file, it's passed into the Calculation class where the preprocessing, word forming and validation procedures happen. Training inherits from the Calculation class and as such shares all methods and attributes with a saving to file function simply added on.  User profile is self-explanatory and just provides a simple way to store the user's details. Word just contains details of each word that is produced by the program. It's a simple storage mechanism that has a number of functions such as generating the KD signal and compression attached among others.
+It also makes interacting with the various elements of my system simple due to a large number of packages available. I used an object-orientated approach in my system. Figure \ref{fig:ClassStruct} is a visual representation of the class structure used in my program. The main file is where the program starts and runs from. When the raw data is collected in the main file, it is passed into the Calculation class where the preprocessing, word forming, and validation procedures happen. Training inherits from the Calculation class and shares all methods and attributes with a saving to file function simply added on. The User profile is self-explanatory and just provides a simple way to store the user's details. The Word class contains details of each word produced by the program. It's a simple storage mechanism with many functions, such as generating the KD signal and compression attached among others.
 
 \begin{figure}
 	\includegraphics[scale=0.7]{OldPlan}
@@ -82,13 +82,15 @@ It also makes interacting with the various elements of my system simple due to t
 	\label{fig:NewPlan}
 \end{figure}
 
-My system is a relatively complex system that differs slightly from the one set out in my interim report. My plan from my interim report is shown in figure \ref{fig:OldPlan}. It's significantly more simple than my actual system plan shown in figure \ref{fig:NewPlan}. One of the main difference is the lack of a database to hold the user login information. Upon creating such a database, I felt this was unnecessary and as such omitted this from my final system in favour of using a Windows based authentication system. This was done as too many authentication systems can confuse the user and there is no better security than the windows one. A new feature in my final system plan is the play/pause UI which allows the user to pause the system should they be doing something involving sensitive information they don't want recorded. Another new step is the update step, if the user initially fails validation but then re-authenticates correctly using their windows username and password then the relevant word objects are then updated. The reason I went for a maths based approach rather than using popular approaches such as machine learning is that machine learning approaches typically having a lengthy learning phase that consumes a lot of the user's time and a lot of the user's system resources. Furthermore, a maths based approach allows the system to be much more lightweight and it's simpler to develop and for the user to understand what is going on.
+My system is a relatively complex system that differs slightly from the one set out in my interim report. My plan from my interim report is shown in figure \ref{fig:OldPlan}. It's significantly more straightforward than my actual system plan shown in figure \ref{fig:NewPlan}. One main difference is the lack of a database to hold the user login information. Upon creating such a database, I felt this was unnecessary and, as such, omitted this from my final system in favour of using a Windows-based authentication system. This was done as too many authentication systems can confuse the user, and there is no better security than the windows one. A new feature in my final system plan is the play/pause UI which allows the user to pause the system should they do something involving sensitive information they do not want to be recorded. Another new step is the update step; if the user initially fails validation but then re-authenticates correctly using their windows username and password, the relevant word objects are updated. I went for a maths-based approach rather than using popular approaches such as machine learning because machine learning approaches typically have a lengthy learning phase that consumes a lot of the user's time and a lot of the user's system resources. Furthermore, a maths-based approach allows the system to be much more lightweight, and it's simpler to develop and for the user to understand what is going on. 
 
-The entire system works on intervals. An interval is defined as a period of time in which the data is collected. For example, if the interval was 60 seconds then data would be collected for 60 seconds processed and then the next interval would start. If the interval was shorter, then whilst the program would be theoretically more secure, it would suffer from a lack of data collected which would affect the overall accuracy of the system. Furthermore, having a shorter interval would lead to the program doing many more calculations which would affect the user's system performance. Choosing an interval such as 60 seconds allows me to balance accuracy and performance. Whilst I did try other interval times such as 5, 30 and 45 seconds, these all either suffered from lack of data collected or started to severely affect performance. In particular, the 5-second interval never collected enough data to be able to make a call and sometimes took longer than five seconds to perform the calculations which started to cause a problem due to the gaps in coverage.
+The entire system works at intervals. An interval is defined as a period in which the data is collected. For example, if the interval were 60 seconds, then data would be collected for 60 seconds, processed, and then the next interval would start. If the interval was shorter, then while the program would be theoretically more secure, it would suffer from a lack of data collected, which would affect the system's overall accuracy. Furthermore, having a shorter interval would lead to the program doing many more calculations, which would affect the user's system performance. Choosing an interval of 60 seconds allows me to balance accuracy and performance. While I tried other interval times such as 5, 30, and 45 seconds, these all suffered from a lack of data collected or started to affect performance severely. In particular, the 5-second interval never collected enough data to be able to make a call and sometimes took longer than five seconds to perform the calculations, which started to cause a problem due to the gaps in coverage. 
 
-Each individual step is explained in more detail below. The user upon first login, starts in the registration procedure. It is here that the system learns how the user types. It creates the profile data storage and then stores the data learnt inside. The system then moves on to recording the user's keystrokes for the interval. Once this has been completed, then the data goes through the preprocessing steps and then is formed into words. For each interval, only a select few words are chosen for validation. Once the words are chosen, they are put through validation. This involves loading in the learnt data in from the profile data storage and comparing the two using validation procedures. If they pass validation, the system moves on to the next interval and repeats the steps. If the words fail validation, then the user is asked to re-authenticate using windows authentication UI. If they pass this, then the words which fail are updated in the validation procedure and the system continues on. If the user fails, then a new user is created using the registration system. 
+Each step is explained in more detail below. The user, upon first login, starts in the registration procedure. It is here that the system learns how the user types. It creates the profile data storage and then stores the data learned inside. The system then records the user's keystrokes for the interval. Once this has been completed, the data goes through the preprocessing steps and is then formed into words. For each interval, only a select few words are chosen for validation. Once the words are chosen, they are put through validation. This involves loading the learned data from the profile data storage and comparing the two using validation procedures. If they pass validation, the system moves on to the next interval and repeats the steps. If the words fail validation, the user is asked to re-authenticate using windows authentication UI. If they pass this, the failed words are updated in the validation procedure, and the system continues. If the user fails, a new user is created using the registration system. 
 
-Whilst all this is going on, the play/pause UI is running in a separate thread. Should the user, ask the program to pause using this UI, then they are asked to re-authenticate and if this succeeds then the whole system is stopped until the user asks the program to continue again.
+While all this is happening, the play/pause UI is running in a separate thread. Should the user ask the program to pause using this UI, they are asked to re-authenticate, and if this succeeds, the whole system is stopped until the user asks the program to continue again. 
+
+The validation implementation is a rough version of one shown by Ramin Toosi and Mohammad Ali Akhaee in their excellent paper 'Time–frequency analysis of keystroke dynamics for user authentication'. \cite{ToosiRamin2021Taok} The paper is theoretical and describes an approach for performing validation on one word and then comparing them. It is, in essence, a one-time system, while mine is a continuous system that aims to keep the user safe. I have implemented their validation approach in my project while adding data gathering, word-forming, word selection, word storage, and update functionality. In figure \ref{fig:ValPlans}, you can see the two maths backends compared to one another. The main difference is that Wigners Distribution is omitted in the actual system. This is because this distribution is slow in my use case, and the improvements in accuracy are not worth the performance loss. The other difference between the two is the introduction of the Euclidean distance. This was introduced as a secondary validation measure to allow greater validation. This and the Correlation coefficient feed into the final similarity score.
 
 The validation implementation is a rough version of one shown by Ramin Toosi and Mohammad Ali Akhaee in their excellent paper 'Time–frequency analysis of keystroke dynamics for user authentication'. \cite{ToosiRamin2021Taok} The paper is theoretical in nature and describes an approach for performing validation on one word and then comparing them. It is in essence a one-time system whilst mine is a continuous system that aims to keep the user safe. In my project, I've modified and implemented their validation approach whilst adding data gathering, word forming, word selection, word storage and update functionality. In figure \ref{fig:ValPlans} you can see the two maths backends compared to one another. The main difference between the two is that Wigners Distribution is omitted in the actual system. This is because this distribution is slow in my usecase and the improvements in accuracy are not worth the performance loss. The other difference between the two is the introduction of the Euclidean distance. This was introduced as a secondary validation measure in order to allow the greater validation. It's this and Correlation co efficient that feed into the final similarity score.
 
@@ -112,7 +114,7 @@ The validation implementation is a rough version of one shown by Ramin Toosi and
 \end{figure}
 
 \section{Data gathering and Forming}
-My program relies on capturing the user's keystrokes and then processing them and then comparing them using a similarity measure. In order to do this, I decided to use the Keyboard Library\cite{boppreh_2016} as it is a lightweight, secure and modern library that makes capturing keystrokes easy. In my project, I make use of the hook function of the library which is used to "hook" onto a users keyboard and record all the user's actions in and create keyboard events for each action. The record function which makes use of this hook function is shown in figure \ref{fig:Record}. The code snippet is very simple, first the program will 'hook' onto the keyboard using the Keyboard Libary mentioned above, record all keystrokes until the interval has passed and then stop recording. The start time of the interval and an array of Keyboard Events are then returned to the main body of the program. The start time of the interval is recorded and returned as it used further on in order to be able to place keyboard events on a time line in the context of the interval.
+My program relies on capturing the user's keystrokes, processing them and comparing them using a similarity measure. In order to do this, I decided to use the Keyboard Library\cite{boppreh_2016} as it is a lightweight, secure and modern library that makes capturing keystrokes easy. In my project, I use of the hook function of the library, which is used to "hook" onto a user's keyboard and record all the user's actions and create keyboard events for each action. The record function which makes use of this hook function is shown in figure \ref{fig:Record}. The code snippet is very simple; first the program will 'hook' onto the keyboard using the Keyboard Library mentioned above, record all keystrokes until the interval has passed and then stop recording. The start time of the interval and an array of Keyboard Events are then returned to the main body of the program. The start time of the interval is recorded and returned as it used further on in order to be able to place keyboard events on a time line in the context of the interval.
 
 \begin{figure}[h!]
 	\begin{lstlisting}
@@ -128,7 +130,7 @@ My program relies on capturing the user's keystrokes and then processing them an
 	\label{fig:Record}
 \end{figure}
 
-A keyboard event is generated every time the user does something on the keyboard, whether that be pressing or releasing a key. Further information such as the type of the action (whether it was a press or a release), which key is this action happening on and a highly accurate time stamp of when the event occurred. Figure \ref{fig:Hook}, shows an example of a keyboard event produced by the function when the user presses down the 'h' key.
+A keyboard event is generated every time the user does something on the keyboard, whether pressing or releasing a key. Further information such as the type of the action (whether it was a press or a release), which key is this action happening on and a highly accurate time stamp of when the event occurred is also recorded. Figure \ref{fig:Hook}, shows an example of a keyboard event produced by the function when the user presses down the 'h' key.
 
 \begin{figure}[h]
 \centering
@@ -137,9 +139,9 @@ A keyboard event is generated every time the user does something on the keyboard
 \label{fig:Hook}
 \end{figure}	
 
-The first element in the array is the action, this can be either 'up' or 'down' which are both self-explanatory. The next field is the scan-code which is a field I don't use but is useful for identifying keys easily. After this, is the name of the key which in this case is 'h' as we pressed the 'h' key down. The next field is the time since the epoch in seconds which is useful as it is this precise time-stamp that is used to do the rest of the calculations. The other three fields are device, modifiers and whether the user used a keypad. None of these I use in my program and as such are discarded almost immediately.
+The first element in the array is the action, this can be either 'up' or 'down'. The next field is the scan-code, which I don't use but is useful for identifying keys. The next field is the name of the key which in this case is 'h'. After this is the time since the epoch in seconds, which is useful as this precise time-stamp is used to do the rest of the calculations. The other three fields are device, modifiers and whether the user uses a keypad. None of these I use in my program and are discarded almost immediately.
 
-A small amount of pre-processing is then done on this data before it is paired up. The first step is to remove the scan code, keypad, modifier and device from each keyboard event and convert them into something lighter and more usable. The next step is to take the start time that is returned by the record function and subtract this from the time stamp in each keyboard event to get the time that the action occurred in the interval. Figure \ref{fig:preproc} shows what the data in \ref{fig:Hook} looks like after going through this.
+A small amount of pre-processing is then done on this data before it is paired up. The first step is to remove the scan code, keypad, modifier and device from each keyboard event and in order to make them lighter and more usable. The next step is to take the start time that is returned by the record function and subtract this from the time stamp in each keyboard event to get the time that the action occurred in the interval. Figure \ref{fig:preproc} shows what the data in \ref{fig:Hook} looks like after going through this.
 
 \begin{wrapfigure}{l}{0.5\textwidth}
 	\begin{center}
@@ -151,7 +153,7 @@ A small amount of pre-processing is then done on this data before it is paired u
 
 The data collected at this point is stored as a 2D array with each sub array corresponding to an action. An example sub array is shown in \ref{fig:preproc}.
 
-In this form the data is unable to be used for anything, as it currently takes the form of a number of individual actions seem to have no relation to one another. Therefore, the next step is to form pairs from the data. A pair is formed of one 'down' and one 'up' action where the key field matches and the 'down' is before the 'up'. The reason this is done is that it allows the program to work half as much data which reduces the number of unnecessary data points and allow the program to be able to form words using these pairs.
+In this form, the data cannot be used for anything, as it currently takes the form of several individual actions that have no relation to one another. Therefore, the next step is to form pairs from the data. A pair is formed of one 'down' and one 'up' action where the key field matches and the 'down' is before the 'up'. This is done is that it allows the program to work with half as much data, which reduces the number of unnecessary data points and allows the program to be able to form words using these pairs.
 
 \begin{wrapfigure}{r}{0.4\textwidth}
 	\begin{center}
@@ -161,9 +163,9 @@ In this form the data is unable to be used for anything, as it currently takes t
 	\label{fig:SimpPair}
 \end{wrapfigure}
 
-There are two main rules to follow when pairing the data. Due to the nature of how the data is collected, it is currently stored in chronological order which is very useful. In many cases, the user will press and release a key in quick succession without pressing any other keys. Due to the chronological nature of the data, pairing these types of presses is easy. All that is needs to be done is to iterate through the pairs and when we come to a 'down' action then simply select the next value in the array if it is an 'up' action and the key matches. Figure \ref{fig:SimpPair} shows an example of this type of pairing. However, this type of nice easy matching is not always the case.
+There are two main rules to follow when pairing the data. In many cases, the user will press and release a key in quick succession without pressing any other keys. Due to the chronological nature of the data, pairing these types of presses is easy. All that is needs to be done is to iterate through the pairs and when we come to a 'down' action then simply select the next value in the array if it is an 'up' action and the key matches. Figure \ref{fig:SimpPair} shows an example of this type of pairing. However, this type of nice easy matching is not always the case.
 
-In some cases, a user may press more than one key down at once. This might occur when the user is capitalising words using 'shift' or when the user is typing fast, so they may be already pressing down the next key before releasing the previous. An example of what the data will look like when this is the case is shown in Figure \ref{fig:WrongPair}. Applying the previous method in which we pair up keys with matching key types and opposite actions which are next to each other would result in the output shown in the pairs array. As you can see, this is not correct and would only lead to one pair where there should be two.
+In some cases, a user may press multiple keys down at once. For example, this might occur when the user is capitalising words using 'shift' or when the user is typing fast, so they may be already pressing down the next key before releasing the previous. An example of what the data will look like when this is the case is shown in Figure \ref{fig:WrongPair}. Applying the previous method in which we pair up keys with matching key types and opposite actions which are next to each other would result in the output shown in the pairs array. As you can see, this is not correct and would only lead to one pair where there should be two.
 
 \begin{wrapfigure}{r}{0.4\textwidth}
 	\begin{center}
@@ -173,54 +175,21 @@ In some cases, a user may press more than one key down at once. This might occur
 	\label{fig:WrongPair}
 \end{wrapfigure}
 
-In order to fix this, it is necessary to include another case in the code. If the current action doesn't have a matching key and opposite action next in the array, then the program will iterate through the rest of the array starting from the current point in it searching for the next entry with a matching key and an opposite action that is after the current. If it finds one it will then pair them up. The key thing we assume for this to work is that every action has an opposite action. In nearly all cases we assume this to be true as it is highly unlikely that a user will hold down a key for the entire interval. If in a rare case this occurs, this is handled. If the method cannot find a pair, then it is still added to the pairs list with an end time of the length of the interval.
+In order to fix this, it is necessary to include another case in the code. Suppose the current action does not have a matching key and opposite action next in the array. In that case, the program will iterate through the rest of the array starting from the current point, searching for the next entry with a matching key and an opposite action after the current. If it finds one it will pair them up. The key thing we assume for this to work is that every action has an opposite action. In nearly all cases, we assume this to be true as it is improbable that a user will hold down a key for the entire interval. If the method cannot find a resultant action event, then it is still added to the pairs list with an end time of the length of the interval.
 
-The finished algorithm is shown in Figure \ref{fig:PairForm}. The reason for the error handling is that when coming to the end of the data, attempting to access the next element to check if it can be paired up results in an index error.
-\begin{figure}[h!]
-	\begin{lstlisting}
-		def rawPairs(self):
-        """
-        Converts the array from the process function into key pairs
-
-        Returns:
-            2D array: Consisting of a pair of actions from the array above.
-        """
-        pairsArray = []
-        for i in range(len(self.processed)):
-            try:
-                
-                if (self.processed[i][2] == 'down' and self.processed[i+1][2] == 'up' and self.processed[i][0].lower() == self.processed[i+1][0].lower()):
-                    # If the next value in the array is the up action
-                    pairsArray.append([self.processed[i][0], self.processed[i][1], self.processed[i+1][1]])
-                else:
-                    # Otherwise, search for the next opposing action and pair them up
-                    for x in range(i, len(self.processed)):
-                        if (self.processed[x][0].lower() == self.processed[i][0].lower() and self.processed[x][2] == 'up' and self.processed[i][2] == 'down'):
-                            pairsArray.append([self.processed[i][0], self.processed[i][1], self.processed[x][1]])
-                            break        
-            except IndexError:
-                pass
-        return pairsArray
-	\end{lstlisting}
-	\caption{Pair Forming Function}
-	\label{fig:PairForm}
-\end{figure}
-
-The resulting pairing algorithm shown in figure \ref{fig:PairForm} has a time complexity of \(O(n^2)\). In a program which is all about speed and minimal impact to the user, it is essential that the program has the lowest time complexity as possible. Due to the complicated nature of how users type, I believe this is the best time complexity for a problem of this nature.
+The resulting pairing algorithm has a time complexity of \(O(n^2)\). In a program which is all about speed and minimal impact to the user, it is essential that the program has the lowest time complexity as possible. Due to the complicated nature of how users type, I believe this is the best time complexity for a problem of this nature.
 
 \subsection{Forming Words}
 
-After forming the pairs, the next step is to form words from these pairs. The words that the program forms are essential as it is this that the program uses to compare users. In English words take many forms, as such it is needed to account for numerous different possibilities in the word forming function. This function takes in the list of pairs and returns an array of word objects. The reason I decide to pivot to an object orientated approach at this point in time is that these words are heavily utilised and I would like to have methods attached to them. For example, it is far easier to generate the Key Down Signal mentioned in following sections on a word by word basis rather than having one function in the main body of the calculation class. This reduces the amount of lines written and makes code easier to read and understand.
+After forming the pairs, the next step is to form words from these pairs. The words that the program forms are essential as it is this that the program uses to compare users. In English words take many forms, as such it is needed to account for numerous different possibilities in the word forming function.
 
 A word is defined in my program as a sequence of pairs bounded by punctuation, white space or the use of modifiers such as 'shift'. In latter stages of this report, I refer to these as break pairs. The one notable exception to this rule is when an apostrophe or a hyphen is detected. If this occurs, then the program will check the previous pair and the pair afterwords and if both are letters and not numeric or punctuation, the pair including the punctuation is added to the current word. 
 
-The data at this stage takes the form of a 2D array. The program will iterate through the 2D array it is given and check the key that the pair matches. If it is a letter or a number then it is added to another array which is used to store the current word being formed. If a break pair is found, it is not added to the current word, the current word is used to form a word object which is then saved to an output array and in some cases further action will be taken depending on what type the break pair takes. If the break pair is a white space pair, then the pair is simply skipped. However, if the break pair is a modifier such as 'shift' or 'ctrl' then the relevant entry in the semantics dictionary is updated for that user. This dictionary is used in the validation section of the project and is another indicator on how a user types. Backspace handling is done separately. If the user has pressed backspace, then the last letter added to the word is removed from it. The program can handle multiple backspaces even if they delete the entirety of the current word. If this occurs, the previous word object is popped off the array to be the current word and the last letter of this new current word is removed.
+The data at this stage takes the form of a 2D array. The program will iterate through the 2D array it is given and check the key that the pair matches. If it is a letter or a number then it is added to another array which is used to store the current word being formed. If a break pair is found, it is not added to the current word, the current word is used to form a word object which is then saved to an output array. If the break pair is a white space pair, then the pair is simply skipped. However, if the break pair is a modifier such as 'shift' or 'ctrl' then the relevant entry in the semantics dictionary is updated for that user. This dictionary is used in the validation section of the project and is another indicator on how a user types. Backspace handling is done separately. If the user has pressed backspace, then the last letter added to the word is removed from it. The program can handle multiple backspaces even if they delete the entirety of the current word. If this occurs, the previous word object is popped off the array to be the current word and the last letter of this new current word is removed.
 
 When the program gets to the last pair in the input array, if the pair is not a break pair then the pair is added to the current word and the current word forms a word object which is then saved to the output array.
 
 The program will then return the output array which at this time is formed of word objects and the semantics dictionary. The output array is then saved to the wordsOut attribute of the Calculation class while the semantics is saved to the semantics attribute in the class.
-
-The state of the data after this section is simple. The data is an array of word objects. Each word object is in essence an array of pairs with associated timings attached. This whole section could be defined as the pre-processing of the data to get it into a format that can be used in order to perform similarity calculations.
 
 \subsection{Data Selection}
 
@@ -228,7 +197,7 @@ If the program was to go through and check every single word for similarities, t
 
 As such, it is necessary to use a sampling method to choose words from the list of words chosen by the word forming function. While this is less accurate than checking every word, the performance gain over checking every word is huge with a large time saving per interval. Choosing how many words were selected was the next problem I endeavoured to fix.
 
-I conducted a number of tests measuring how long the entire validation procedure took. Initially I started with 2 words chosen per interval with one chosen every at the start of the interval and one at the end. I then increased the number of words chosen by two each time with the interval remaining the same. At each testing point, the interval remained the same with a word selected using the calculation if figure \ref{fig:Choose} Figure \ref{fig:WordsvsTime} shows the results of such a test. The time taken to perform the calculation increases linearly as the number of words chosen increases. If the word chosen is particularly long, then the time taken increases. The test data was the same for all tests with the user typing a paragraph containing 57 words of differing lengths. The test data along with the raw data collected and the code can be seen in Appendix A. 
+I conducted a number of tests measuring how long the entire validation procedure took. Initially I started with 2 words chosen per interval with one chosen every at the start of the interval and one at the end. I then increased the number of words chosen by two each time with the interval remaining the same. At each testing point, the interval remained the same with a word selected using the calculation if figure \ref{fig:Choose} Figure \ref{fig:WordsvsTime} shows the results of such a test. The time taken to perform the calculation increases linearly as the number of words chosen increases. If the word chosen is particularly long, then the time taken increases. The test data was the same for all tests with the user typing a paragraph containing 57 words of differing lengths.
 
 \begin{figure}
 	\centering
@@ -237,21 +206,14 @@ I conducted a number of tests measuring how long the entire validation procedure
 	\label{fig:WordsvsTime}
 \end{figure}
 
-After performing the test, I settled on the program choosing four words per interval. Choosing four words took under 10 seconds and allowed the program to get coverage every quarter of the interval which is an acceptable level of coverage.
+After performing the test, I settled on the program choosing four words per interval. Choosing four words took under 10 seconds and allowed the program to get coverage every quarter of the interval which is acceptable.
 
-The process to select 4 words from each interval is simple. Given the word list returned by the word former, the program performs the calculation shown in Figure \ref{fig:Choose} where \(w\) is the word list \(n\) is the number of words in the words lists returned by the word former and where \(k\) is the amount of words to be chosen.
-
-\begin{equation}
-\textit{EveryX}(w) = \frac{n}{k}
-\label{fig:Choose}
-\end{equation}
-
-This value returned by this equation is then used in the main body of the function. First the program chooses the first value in the words list and adds it to the output. It will select the value returned by figure \ref{fig:Choose}. After doing this, it will add the value returned by the equation again and select the word at that index again. This will keep happening until either the amount of words selected by the program is the number of words to be chosen. The resulting words are then returned by the function to be used in the rest of the program. 
+The process to choose the words is simple, it essentially will take one word from each quarter of the interval. This allows the program to get a good element of coverage.
 
 \section{KD Signal}
-Once the raw keystroke data has been formed into words and the words chosen, the next step is to transform the data from a word object made up of keystroke pairs into numerical data that can be used by later algorithms such as Dynamic Time Warping (DTW) and the correlation coefficient. The best way to do this is to transform the data into a measure of how many keys are being held down at a particular point in time. The resulting output is known as a key down signal (KDS). \cite{ToosiRamin2021Taok}
+Once the raw keystroke data has been formed into words and the words chosen, the next step is to transform the data from a word object made up of keystroke pairs into numerical data that can be used by later algorithms. The best way to do this is to transform the data into a measure of how many keys are being held down at a particular point in time. The resulting output is known as a key down signal (KDS). \cite{ToosiRamin2021Taok}
 
-To convert a word into a key down signal, the start and end times of the word being transformed are used. Assume that \(w\) is the array of times that key actions occur in a particular word. \(w_1\) being the time of the first action and \(w_n\) being the time of the last action. This part will loop through all timestamps until it ends with the final time which is denoted by \(w_n\). The accuracy of this step is paramount as it is the level of detail that is the base accuracy for the rest of the steps. A higher accuracy means that the program will check more data points within this range at the cost of reduced performance as the level of points being checked increases. The current level of this is set to 4 decimal points which seems to provide a good balance between accuracy and performance. However this is customisable.
+To convert a word into a key down signal, the start and end times of the word being transformed are used. Assume that \(w\) is the array of times that key actions occur in a particular word. \(w_1\) being the time of the first action and \(w_n\) being the time of the last action. This part will loop through all timestamps until it ends with the final time which is denoted by \(w_n\). The accuracy of this step is paramount as it is the level of detail that is the base accuracy for the rest of the steps. A higher accuracy means that the program will check more data points within this range at the cost of reduced performance. The current level of this is set to 4 decimal points which seems to provide a good balance between accuracy and performance.
 \begin{equation}
 \textit{KDS}(w) = \sum^{w_n}_{i=w_1}K(w_i)
 \end{equation}
@@ -305,10 +267,9 @@ The resulting signal can be shown easily in graph format. Figure \ref{fig:KDS1} 
 
 \section{Dynamic Time Warping}
 
-
 The data in my project requires normalising to be useful. The algorithm that I chose to use is called the Dynamic Time Warping algorithm. Two sets of data, one loaded in from the word file and the other generated from that interval is input into this function in order to normalise it. As both sets of data are input, the Dynamic Time Warping algorithm attempts to change both sets of data in order to make them as close as possible. The output is two sets of normalised data which can then be compared against one another to provide a similarity score. 
 
-In my program, I chose to use the fastdtw library \cite{tandi_2015}. Like the name suggests, this library provides a really fast implementation of the dynamic time warping algorithm with the algorithm taking only \(O(n)\) time complexity\cite{tandi_2015}. Speed was the main reason I chose to use the library due to the large number of datapoints that this algorithm would have to deal with.
+In my program, I chose to use the fastdtw library \cite{tandi_2015}. Like the name suggests, this library provides a really fast implementation of the dynamic time warping algorithm with the algorithm taking only \(O(n)\) time complexity\cite{tandi_2015}.
 
 The output of the two datasets shown in figure \ref{fig:KDS1} and figure \ref{fig:KDS2} both put through dynamic time warping is shown in figure \ref{fig:KDSDTW}.
 
@@ -338,36 +299,18 @@ The output of the two datasets shown in figure \ref{fig:KDS1} and figure \ref{fi
 	\label{fig:KDSDTW}
 \end{figure}
 
-Shown in figures \ref{fig:KDS1DTW} and \ref{fig:KDS2DTW} is the results of the data in figures \ref{fig:KDS1} and \ref{fig:KDS2} after going through dynamic time warping. Despite going through the process, you can see that they haven't changed much and look the same. This is because both signals were typed by the same user and as such are very similar. However, when looking at figure \ref{fig:KDSBothDTW} you can see that both signal are pretty much the same. However, the first signal has an extra datapoint on the end which causes it to go on longer than the other signal. This is not a guge issue however, as the validation systems explained below returned the values of \(1.0\) and \(0.99999\) which showcases that both signals are the same.
+Shown in figures \ref{fig:KDS1DTW} and \ref{fig:KDS2DTW} is the results of the data in figures \ref{fig:KDS1} and \ref{fig:KDS2} after going through dynamic time warping. Despite going through the process, you can see that they haven't changed much and look the same. This is because both signals were typed by the same user and as such are very similar. However, the first signal has an extra datapoint on the end which causes it to go on longer than the other signal. This is not a huge issue however, as the validation systems explained below returned the values of \(1.0\) and \(0.99999\) which showcases that both signals are the same.
 
 \subsection{Path}
 The implementation i chose to use returns two values, the distance and the path. The distance is used in the validation step to calculate euclidean distance. The path is more important however. It is what is used to "warp" the data. Theoretically, it is the least costly path through a cost matrix. It essentially is a pairs of indexes in the two datasets which map up. It states which values need to go into the datasets. 
-
-In my implementation I use the code in figure \ref{fig:warping} in order to warp the data. The first step involves duplicating the data that is stored inside the path variable into the two other variables using zip to create iterables. These results are the converted into an array and then finally applied to the data in order to create the warped signals.
-
-\begin{figure}
-	\begin{lstlisting}
-		euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
-                    
-        ff_path, ii_path = zip(*path)
-        ff_path = np.asarray(ff_path)
-        ii_path = np.asarray(ii_path)
-        ff_warped = fromFile[ff_path]
-        ii_warped = inInterval[ii_path]
-	\end{lstlisting}
-	\caption{Warping Code}
-	\label{fig:warping}
-\end{figure}
-
-This warped signal is then fed into the validation measures in order to produce the validation score. 
 
 \section{Validation Measures}
 
 Finally the data is in a state where we can perform validation. In order to improve the accuracy of the program, I use two different validation methods along with the semantics collected in the word forming stage. 
 
-The two methods I use along with the semantics are euclidean distance which is done in the dynamic time warping stage. This has secondary importance compared to the 2D correlation co-efficient. The reason for this, is that the euclidean distance is simply a measure of the distance between two points. This is not done on the warped data that is produced by the Dynamic Time Warping which contrasts to the 2D correlation co-efficient. Therefore, I use this as a rough figure and use the correlation co-efficient as the main method. 
+The two methods I use along with the semantics are euclidean distance which is done in the dynamic time warping stage. This has secondary importance compared to the 2D correlation co-efficient. The reason for this, is that the euclidean distance is simply a measure of the distance between two points and is not a good indicator for data such as this. Therefore, I use this as a rough figure and use the correlation co-efficient as the main method. 
 
-The values produced by these validation methods are then put together to form a value between 0 and 100. This is then compared against the confidence level. The confidence level is a integer which determines how similar the data loaded in from the file and the data collected in the interval have to be. For example, if the validation methods in the interval (Similarity Score) return a value of 0.75 and the confidence level is 0.8, then the user is rejected and asked to re-authenticate. When developing this project, I settled on a confidence level of 0.8. In plain english, this means that the program will only allow the user to pass validation if the input value is 80\% the same. Only the euclidean distance and the 2D correlation go into calculate the similarity score. The semantics are used to either raise the confidence level or lower it depending on the value returned by the semantics validation.
+The values produced by these validation methods are then put together to form a value between 0 and 100. This is then compared against the confidence level. The confidence level is a integer which determines how similar the data loaded in from the file and the data collected in the interval have to be. For example, if the validation methods in the interval (Similarity Score) return a value of 0.75 and the confidence level is 0.8, then the user is rejected and asked to re-authenticate. When developing this project, I settled on a confidence level of 0.8.  Only the euclidean distance and the 2D correlation go into calculate the similarity score. The semantics are used to either raise the confidence level or lower it depending on the value returned by the semantics validation.
 
 \begin{wrapfigure}{r}{0.4\textwidth}
 	\begin{center}
@@ -377,9 +320,9 @@ The values produced by these validation methods are then put together to form a 
 	\label{fig:sem}
 \end{wrapfigure}
 
-The semantics validation is very simple. In the words step of the validation procedure, the semantics of the data input is collected and stored in the class. Each user will also have a semantics file stored in their data directory. An example of a users semantics file is shown in figure \ref{fig:sem}. The data stored in the file and the data collected for that interval are then compared against one another. If for example, the user in the past has used the shift key and in this interval has also done so, then the confidence level is lowered by 0.02. However, if the user in the past has always used the caps lock key and never shift then they don't match and the confidence level is raised by 0.02. The reason of such a small change in the confidence level is that users habits regarding this are not typically set in stone and as such any large change will likely lead to reduced accuracy. For example, users will typically use shift when there is a single letter to be capitalised and will use caps lock when capitalising multiple keys. 
+The semantics validation is very simple. In the words step of the validation procedure, the semantics of the data input is collected and stored in the class. Each user will also have a semantics file stored in their data directory. An example of a users semantics file is shown in figure \ref{fig:sem}. The data stored in the file and the data collected for that interval are then compared against one another. If for example, the user in the past has used the shift key and in this interval has also done so, then the confidence level is lowered by 0.02. However, if the user in the past has always used the caps lock key and never shift then they don't match and the confidence level is raised by 0.02. The reason of such a small change in the confidence level is that users habits regarding this are not typically set in stone and as such any large change will likely lead to reduced accuracy.
 
-The validation methods are explained further in sections 3.4.1 and 3.4.2 respectively. Here I will outline the entire validation process. The flow chart in figure \ref{fig:valProc} provides a visual representation of the first part of the validation procedure. A clearer version is provided in Appendix B.
+The validation methods are explained further in sections 3.4.1 and 3.4.2 respectively. Here I will outline the entire validation process. The flow chart in figure \ref{fig:valProc} provides a visual representation of the first part of the validation procedure.
 
 \begin{wrapfigure}{l}{0.4\textwidth}
 	\begin{center}
@@ -389,9 +332,18 @@ The validation methods are explained further in sections 3.4.1 and 3.4.2 respect
 	\label{fig:distances}
 \end{wrapfigure}
 
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3]{ValidationProc}
+	\caption{Validation Procedure}
+	\label{fig:valProc}
+\end{figure}
+
+Figure \ref{fig:valProc} explains the validation procedure.
+
 As shown in figure \ref{fig:valProc}, the words chosen in the first step are iterated through. If a word already has a word file stored in the users directory then that is loaded in and decompressed. Otherwise, the procedure just returns two None values. The two data sets, one loaded in and the other generated from the current interval are then both put through Dynamic Time Warping where the euclidean distance is calculated and stored. The path generated by the DTW is then used to 'warp' both datasets. It is at this stage that the 2D correlation co-efficient is used in order to calculate one element of the similarity score. The Euclidean distance and the correlation co-efficient are then stored in a dictionary with the key being the index in the chosen array. Figure \ref{fig:distances} showcases an example distances dictionary. In the example, the first two elements were typed by a genuine user with the third being typed by an imposter and the last word has not been seen before so the validation procedures just returned None.
 
-After the distances dictionary has been formed with all values inside. The next step is to categorise the values. First of all we have to define the confidence level for each validation procedure. As shown in the flowchart (\ref{fig:valProc}), these are adjusted based on the results of the semantics validation. The values these take is further discussed in Chapter 4: Results and Discussion. The distances dictionary is iterated through and each value checked. Figure \ref{fig:DistanceTransform} below shows what happens in each individual case where \(e\) is the Euclidean Distance, \(c\) is the value returned by the correlation co-efficient, \(i\) is the confidence level for the correlation co-efficient and \(b\) is the confidence level for the Euclidean Distance.
+After the distances dictionary has been formed with all values inside. The next step is to categorise the values. First of all we have to define the confidence level for each validation procedure. As shown in the flowchart (\ref{fig:valProc}), these are adjusted based on the results of the semantics validation. The distances dictionary is iterated through and each value checked. Figure \ref{fig:DistanceTransform} below shows what happens in each individual case where \(e\) is the Euclidean Distance, \(c\) is the value returned by the correlation co-efficient, \(i\) is the confidence level for the correlation co-efficient and \(b\) is the confidence level for the Euclidean Distance.
 
 \begin{equation}
 	\begin{cases}
@@ -416,7 +368,7 @@ Transforming the data this way allows the order of the data to be preserved. Fur
 
 The "wordCheck" array shown in \ref{fig:wordCheck} is then used in the next step in order to finally perform an action based on the data. Despite what happens next only three outcome occur. Figure \ref{fig:If1} showcases what happens if only one word is in chosen and an output returned to it. If the word is true, then the person checks out and the program moves on to the next interval. However, if the word doesn't pass the validation checks or has never been seen before, then further processing has to be done. 
 
-This is very complex. If the user fails validation then their pc is locked and they are forced to re-authenticate. At the start of my project, I was planning on creating a separate register and login system however I dismissed due to the fact that users don't want another login system and that the default windows login screen does everything to a greater standard than I ever could. In order to perform this action, I load in the default python library sub process \cite{subprocess} which I then use to call the windows lock dll file. This enables me to lock the user out of the computer easily and efficiently without much wasted code or overhead in terms of performance. If the user has changed when the user does re-authenticate, then 'New' is returned. This tells my main body of the program that it is a new user and as such a new keyboard is created for that user. Keyboards and user storage are explained in \ref{sssec:Storage}. If the opposite happens and the user is re-authenticated successfully, then the word files and semantics are updated and the program returns true. The update process is explained in \ref{sssec:update}.
+This is very complex. If the user fails validation then their pc is locked and they are forced to re-authenticate. In order to perform this action, I load in the default python library sub process \cite{subprocess} which I then use to call the windows lock dll file. This enables me to lock the user out of the computer easily and efficiently without much wasted code or overhead in terms of performance. If the user has changed when the user does re-authenticate, then 'New' is returned. This tells my main body of the program that it is a new user and as such a new keyboard is created for that user. If the opposite happens and the user is re-authenticated successfully, then the word files and semantics are updated and the program returns true.
 
 \begin{figure}[h]
 	\centering
@@ -427,25 +379,24 @@ This is very complex. If the user fails validation then their pc is locked and t
 
 The validation function can take in as a parameter a 'mode'. This determines what happens should validation fail. The default mode is 'r' which stands for real. This allows the program to do the entire process including locking the users computer if validation fails. 'rnl' stands for real no lock which is mainly used for testing and demonstration purposes because it stops the users pc locking and just returns false. A 't' flag also exists, this indicates that the program is in test mode and when in test mode the program will simply save every word.
 
-Typically the user will type multiple words in an interval. This also needs to be handled correctly. For example, determine what needs to happen if the user types one word correctly, one incorrectly and the program has never seen another word before is no easy task. As the result outputted above from the wordCheck can take any one of three values for each word, there are plenty of variations. These are all explained below.
+Typically the user will type multiple words in an interval. As the result outputted above from the wordCheck can take any one of three values for each word, there are plenty of variations. These are all explained below.
 
 Possibility 1: All words pass Validation and wordCheck consists of just True values
-The simplest validation result. True and an empty array are returned. The runner which runs the validation process then continues on to the next interval.
+True and an empty array are returned. The runner which runs the validation process then continues on to the next interval.
 
 Possibility 2: Some words pass validation and some words have never been seen before.
-Another simple result. This results in the program creating word files for those which have not been seen for using the update function which is detailed in \ref{sssec:update}. True and an empty array is then returned and the program as a whole moves onto the next interval.
+This results in the program creating word files for those which have not been seen for using the update function which is detailed in \ref{sssec:update}. True and an empty array is then returned and the program as a whole moves onto the next interval.
 
-Possibility 3: All words have never been seen before or fail validation
-When a combination of never seen before and failing validation is detected, then the program has no confidence that the user is genuine, therefore it starts the re-authentication procedure which consists of locking the computer. If the user re-authenticates successfully then the program has confidence in the user, and all the words are then updated in the update function. However, if the user authenticates as a different user, then the 'New' is returned which instructs the rest of the program to create a new user.
+Possibility 3: All words have never been seen before or fail validation.
+
+When a combination of never seen before and failing validation is detected, then the program has no confidence that the user is genuine, therefore it starts the re-authentication procedure which is explained above.
 
 Possibility 4: The chosen only consists of words which the program has never been seen before.
 
 Much like possibility 3, the program has no way of knowing whether the user is genuine or not. Therefore it takes the safest course of action and forces the user to re-authenticate. It then does the exact same as possibility 3 does.
 
 Possibility 5: All words fail validation
-If all words fail validation, then the program is confident that an imposter is attempting to use the computer. The function locks the pc and demands re-authentication from the user. Like in possibility 3 and 4, it will update the words that fail validation if the user passes re-authentication and will create a new user if the user logs into a different account.
-
-No matter what happens, two values are returned to the main program body.
+If all words fail validation, then the program is confident that an imposter is attempting to use the computer. The function locks the pc and demands re-authentication from the user. Like in possibility 3 and 4, it will update the words that fail validation if the user passes re-authentication.
 
 \subsection{Euclidean Distance}
 
@@ -456,7 +407,7 @@ The first validation method used is the Euclidean Distance. It is a system of me
 \label{fig:EUC}
 \end{equation}
 
-Figure \ref{fig:EUC} shows the mathematical formula for euclidean distance where \(a\) and \(b\) are the two KD signals, and \(n\) is number of data points. This then returns a value like we can see in the first element of the array in \ref{fig:VCompare}. The value returned is self-explanatory with a smaller value indicating less difference between signals than a large one. In my program rather than calculate this value myself, I used scipys implementation of this function\cite{scipycommunity_2022}. This is attempting to do this myself in pure python resulted in an incredibly slow processing times. The function used by scipy is much faster due to it being written in C++ which whilst having less function is far better at doing these functions with large datasets produced by the KD signal function.
+Figure \ref{fig:EUC} shows the mathematical formula for euclidean distance where \(a\) and \(b\) are the two KD signals, and \(n\) is number of data points. This then returns a value like we can see in the first element of the array in \ref{fig:VCompare}. The value returned is self-explanatory with a smaller value indicating less difference between signals than a large one. In my program rather than calculate this value myself, I used scipys implementation of this function\cite{scipycommunity_2022}. TAttempting to do this myself in pure python resulted in slow processing times. The function used by scipy is much faster due to it being written in C++ which is far better at doing these functions with large datasets produced by the KD signal function.
 
 \subsection{Correlation Coefficient}
 
@@ -498,12 +449,12 @@ Figure \ref{fig:corrco} shows the equation that my implementation is based upon 
        \label{fig:CodeCorr}
 \end{figure}
 
-The code is self-explanatory, with the Xmean and Ymean variables simply calculating for the two input arrays respectively. The output of this function of this is then stored along with the euclidean distance in a dictionary to be used for further processing.
+The code is self-explanatory, with the Xmean and Ymean variables simply calculating the mean for the two input arrays respectively. The output of this function of this is then stored along with the euclidean distance in a dictionary to be used for further processing.
 
 \section{Training}
-When a new user is created, it is essential that some training happens. Otherwise, the program has nothing to go on and as such locks the computer at every interval. This is obviously not what I want to happen as not only is it incredibly annoying for the user but also the learning process would be incredibly slow. Therefore it is necessary to add a training phase. There are two potential approaches to a training phase. The first is to have a dedicated text that the user types out and the second is that for the first \(x\) intervals all word data is saved and then used as a bank. I explored both of these attempts in my project.
+When a new user is created, it is essential that training happens. Otherwise, the program has nothing to go on and as such locks the computer at every interval. This is incredibly annoying for the user but also the learning process would be slow. Therefore it is necessary to add a training phase. There are two potential approaches to a training phase. The first is to have a dedicated text that the user types out and the second is that for the first \(x\) intervals all word data is saved and then used as a bank. I explored both of these attempts in my project.
 
-The first one I expored was the dedicated training phase with a dedicated sample text that the user types out. The difficulty with this wasn't making the UI or ensuring that the data was captured, it was coming up with the text itself. In order for this to work properly, a text was needed that contained all of the most common words that a user uses along with a wide range of  punctuation. This in itself is difficult as each user is different. Therefore this method already starts to struggle. My program currently use the text shown below as the dedicated text.
+The first one I explored was the dedicated training phase with a dedicated sample text that the user types out. The difficulty with this wasn't making the UI or ensuring that the data was captured, it was coming up with the text itself. In order for this to work properly, a text was needed that contained all of the most common words that a user uses along with a wide range of  punctuation. This in itself is difficult as each user is different. My program currently use the text shown below as the dedicated text.
 
 "Since they are still preserved in the rocks for us to see, they must have been formed quite recently, that is geologically speaking?
 What can explain these striations and their common orientation?			
@@ -513,11 +464,11 @@ The many boulders frozen to the underside of the ice sheet tended to scratch the
 The scratches or striations seen in the park rocks were caused by these attached boulders.				
 The ice sheet also plucked and rounded Burke Mountain into the shape it possesses today."
 
-This piece of text was chosen as it was long enough to get a wide variety of punctuation in but so long that the user gets bored. Furthermore, it contains a wide variety of punctuation which tests the programs ability to process this. A wide variety of words is also used in order to attempt to get the best coverage available.
+This piece of text was chosen as it was long enough to get a wide variety of punctuation in but so long that the user gets bored. A wide variety of words is also used in order to attempt to get the best coverage available.
 
-The next approach I tested was having the first 5 intervals for a new user simply recording and saving all words that are used. This gives better coverage than the other approach because it allows the program to learn the users habits and common words. This approach is also deals well with different users and allows greater insight into the user. While this method is good at learning users, it does potentially open up a security issue. If all words, are simply being saved and stored, then what stops an imposter user from altering this training data. Unfortunately, nothing in my program does as yet. This approach has another disadvantage, it doesn't learn how the user uses punctuation which the other approach does. 
+The next approach I tested was having the first 5 intervals for a new user simply recording and saving all words that are used. This gives better coverage than the other approach because it allows the program to learn the users habits and common words. This approach is also deals well with different users and allows greater insight into the user. While this method is good at learning users, it does potentially open up a security issue. If all words, are simply being saved and stored, nothing stops an imposter user from altering this training data. This approach has another disadvantage, it doesn't learn how the user uses punctuation which the other approach does. 
 
-Whilst exploring both of these, I came to the conclusion that a mixture of both training methods would be the best approach. This would ensure that the program gets the best of both worlds. Furthermore, more data is always better in a system such as this. Therefore, I decided to use both systems with the first 5 intervals after the user finishes training being the training intervals. The reason 5 was chosen as the training intervals is because it minimises the security risk caused by an imposter user whilst still proving to be an effective data gathering tool.
+Whilst exploring both of these, I came to the conclusion that a mixture of both training methods would be the best approach. This would ensure that the program gets the best of both worlds. Therefore, I decided to use both systems with the first 5 intervals after the user finishes training being the training intervals. The reason 5 was chosen as the training intervals is because it minimises the security risk caused by an imposter user whilst still proving to be an effective data gathering tool.
 
 \begin{figure}
 	\begin{lstlisting}
@@ -547,41 +498,13 @@ Whilst exploring both of these, I came to the conclusion that a mixture of both 
 
 The code in \ref{fig:runner} highlights the main "runner" code. This takes the data in from the record function, if training iterations is turned on and the number of training iterations has been exceeded, then the validation function is run with that data and a decision returned. If that happens the pc goes through the authentication specified by the validation procedure. However, if the opposite is true and it is a training interval then the data is simply saved as specified by the training class which simply saves the KD signal generated for that word.
 
-The training class simply inherits from the calculation class and contains much the same data with two function added, the save all KDS and the save semantics functions.
-
 \section{Update}
 \label{sssec:update}
 
 The way users type change over time. This is caused by a number of factors such as age or change in desk setup. For example, the way a user types at home will be different to the way users type at a coffee shop. Therefore, it is important that my program can learn and adapt. This is where the update function comes in. This step is done after the validation step and is called in possibility where a user has failed validation but re-authenticated successfully. Essentially this is called where the program has got it wrong. 
 
-The actual function is simple and is shown in figure \ref{fig:UpdateCode}. It takes indexes of the words that failed validation or have never been seen before as input. If the array input is the same length as the chosen array (i.e. all words have failed validation or have never been seen before) then the chosen array is imply used instead. Otherwise, the words are then taken from the chosen array and stored in the intruderWords array. 
+The function is very simple. It will iterate through all words that have failed validation and simply update the word files with the data collected from the current interval.
 
-After this step the program is simple, it iterates through the intruderWords array and for each word contained within, generate the KD signal, compress it and then open or create the relavent word file and store this data within.
-
-Once it reaches the end of the array, it simply returns and the program moves on.
-
-\begin{figure}
-	\begin{lstlisting}
-		def update(self, indexes):
-        """Used to update word files with new data. Used typically after the user has re-authenticated
-
-        Args:
-            indexes (array): The indexes of the words that need updating in the chosen list
-        """
-        if len(indexes) == len(self.chosen):
-            intruderWords = self.chosen
-        else:
-            intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
-        for x in intruderWords:
-            fileName = x.word+'.json'
-            Kds = x.compress()
-            with open(self.pf.getKeyboardPath()+'/'+fileName, 'w') as write_file:
-                json.dump(Kds, write_file)
-            write_file.close()
-	\end{lstlisting}
-	\caption{Update Implementation}
-	\label{fig:UpdateCode}
-\end{figure}
 \section{Storage}
 \label{sssec:Storage}
 In order for this project to work correctly, it is essential that the program has a way of storing how users type certain words. It is necessary to build up a storage of the words that the user has typed in the past. In my project this is done by storing the KDS generated in the KD step and storing it in a json file. The reason for storing it this instead of storing it inside a database is that the data is highly variable and as such it is not possible to store the data inside a database. For example, one signal might have 90,000 datapoitns while another might only have 5000. As such, it's not practical to store this kind of highly variable data inside a database. Each file is named after the word contained and represented by the KD signal inside. For example, if the word was "hello" the file would be named hello.json. Storing it this way ensured easy access to the data within and simple identification of which data belonged to which individual. Storing just the KD signal as opposed to storing the pairs or the raw keystroke data collected in the first place has many advantages. The first major advantage in storing just the KDS is that a malicious user cannot easily read how a user types just by looking at the files. Secondly, this type of data is easy to read by the program. Thirdly it stops the program having to perform the KDS element of the validation procedure every time is loads in a file resulting in less performance impact. Simply loading in and comparing is far easier than processing all of the data again and then comparing it. Figure \ref{fig:uncomp} shows a small excerpt of one of these word files.
@@ -644,7 +567,7 @@ The reason it is done this way is that users type differently on different keybo
 
 \section{Pausing}
 
-One main problem with my system was the lack of user privacy. For example, a user wouldn't want the program to pick up and store details about their bank password. Therefore, it becomes necessary to introduce a pause functionality. This is very simple and consists of a simple user interface screen which consists of one button which is shaped like a pause button. When the button is pressed the pause symbol changes to a play and the system stops recording the users keystrokes until the button is pressed again. The ui that powers this functionality runs on the main thread whilst the calculation happens on another thread. When the button is pressed to pause the calculation, the stop thread flag is switched to True which stops the thread and causes it to return. As such, when the calculation is switched on again a new thread is created and the calculation continues.
+One main problem with my system was the lack of user privacy. For example, a user wouldn't want the program to pick up and store details about their bank password. Therefore, it becomes necessary to introduce a pause functionality. This is very simple and consists of a simple user interface screen which consists of one button which is shaped like a pause button. When the button is pressed the pause symbol changes to a play and the system stops recording the users keystrokes until the button is pressed again. The UI that powers this functionality runs on the main thread whilst the calculation happens on another thread. When the button is pressed to pause the calculation, the stop thread flag is switched to True which stops the thread and causes it to return. As such, when the calculation is switched on again a new thread is created and the calculation continues.
 
 \begin{figure}
 	\centering
@@ -696,7 +619,7 @@ Figure \ref{fig:stoppingThread} showcases the function that is run everytime the
 
 In order to be able to test the accuracy of my system it is necessary to first define some measures. False Positive (FP) is used to define the case when the system lets in an imposter user. False Negative (FN) is the opposite of this where the system rejects a user it shouldn't have. True Positive (TP) is where the system makes the correct decision and allows in a user correctly. True Negative (TN) is where the system makes the correct decision and rejects a user where it should have. Hold time (HT) is the time in which a key is held down or the time between the when a key is pressed and when a key is released. The float time (FT) is the time between actions. It can be defined as the time between the user releasing a key and pressing down the next key.
 
-In order to test the system, it was necessary to create some data. In order to do this, I made a function which would generate test data with timings I specified. This enables me to generate lots of test data simply and easily. Furthermore, it allows reproducibility in the data collected. If the data was simply a user such as myself typing, it is almost impossible to get the same timings in terms of typing more than once. This function can be seen in Appendix C. That function can only deal with data that is linear (where a 'up' action is always followed by a 'down' action). A more complicated version that makes use of interleaving is shown below it.
+In order to test the system, it was necessary to create some data. In order to do this, I made a function which would generate test data with timings I specified. This enables me to generate lots of test data simply and easily. Furthermore, it allows reproducibility in the data collected. If the data was simply a user such as myself typing, it is almost impossible to get the same timings in terms of typing more than once. This function can be seen in Appendix C. That function can only deal with data that is linear (where a 'up' action is always followed by a 'down' action).
 
 
 \section{Test 1: Validation Measures}
@@ -719,18 +642,7 @@ Figure \ref{fig:EucGraph} shows the results of the testing. As shown, the test d
 	\label{fig:2DGraph}
 \end{figure}
 
-Figure \ref{fig:2DGraph} graphs the hold time against the 2D correlation score. Similar to the graph shown in figure \ref{fig:EucGraph} it takes the shape of a bell shaped curve. Unlike the euclidean graph this is a far more uniform graph which highlights once again that the 2D correlation co-efficient is a better measure than euclidean distance.
-
-Figure \ref{fig:decGraph} is a less important graph. It plots the decision made with a confidence level of 0.8 against the hold time input. 1.0 represents a true decision whilst 0 a False decision. This graph maintains a bell shaped curve that follows closely the 2D correlation co-efficient graph.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.6]{DecisionsGraph}
-	\caption{Decisions and hold time}
-	\label{fig:decGraph}
-\end{figure}
-
-These graphs show that the system does what is expected and as such works properly. Despite the fact that the float time didn't change in any of these tests, its clear to see that changing it wouldn't affect the accuracy. The table below shows the raw output of the function.
+Figure \ref{fig:2DGraph} graphs the hold time against the 2D correlation score. Similar to the graph shown in figure \ref{fig:EucGraph} it takes the shape of a bell shaped curve. Unlike the euclidean graph this is a far more uniform graph which highlights once again that the 2D correlation co-efficient is a better measure than euclidean distance. The table below shows the raw data of such a test.
 
 \begin{center}
 	\begin{tabular}{|c|c|c|c|}
@@ -754,32 +666,7 @@ These graphs show that the system does what is expected and as such works proper
 
 The raw data points to another interesting anomaly in the data, \(0.9\) if following the trend should have a euclidean distance greater than in \(0.8\) and a 2D correlation co-efficient less than in \(0.8\). However, this is not the case. This small anomaly doesn't affect the system in a huge way. Calculating the accuracy of this data we can see that 9/10 data sets follow the trend leading to an accuracy of 90%.
 
-Due to the way the data is formed with all the data being linear, this is not a perfect test. The best way to test this is on data that is more representative of how a user types. This is done using interleaving.
-
-
-\section{Test 2: Interleaving}
-
-Whilst the previous test provided a simple way to test the accuracy of the system, in order to get a better representation of how a normal user types, it's necessary to use interleaving in order to improve the test data. The function I used to generate the test data does so randomly leading to some interesting results. Theoretically when using interleaving we should see lower accuracy scores due to the randomness playing a part. When the reference data was generated this was also done randomly. 
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.6]{EUCGraph2}
-	\caption{Euclidean Scores of the data with interleaving}
-	\label{fig:EUCInter}
-\end{figure}
-
-Figure \ref{fig:EUCInter} shows the euclidean scores of the data. As you can see this metric really suffers due to interleaving. Once more proof as to why it isn't the main similarity measure. Rather than take a bell shaped curve like we expect, it fails to form any real curve, instead settling on a strong positive correlation between hold time and euclidean distance. Around the data used to form the reference data, a slight dip is observed which is a very loose way to tell that a small decrease in the distance is observed there.
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.6]{CorrGraph2}
-	\caption{Correlation Scores of the data with interleaving}
-	\label{fig:CorrInter}
-\end{figure}
-
-Figure \ref{fig:CorrInter} shows the 2D correlation scores of the data with interleaving. Despite the randomness of the calculation, you can see, that this still follows a bell shaped curve with the highest accuracy observed around the 5th test which is around the same hold time used as the reference data. In real life data, randomness will be at a minimum as users tend to type in a rhythm with a small amount of variance. This test shows that the system can deal with randomness relatively well.
-
-\section{Test 3: Decisions}
+\section{Test 2: Decisions}
 
 The next logical test to do is to test whether the decision being made. This is where the measures defined in the first paragraph of this section come into use. This test essentially tests whether the system can tell the difference between a genuine and an imposter user. In order to do this, I generated and saved some test data. Due to my program only choosing four words from an interval, each interval is comprised of only four words that are the same for each test. Any more and the program would not be able to test each interval correctly. No data is updated in the intervals and the sets of data are tested against a genuine sample of the users data. Different combinations are stored in these intervals. For example, in the first interval, all four words might be genuine whereas in the next interval, there might be three imposter words and one genuine. All possibilities are tested and written below. A copy of the data is stored inside the gitlab under test/data.
 
@@ -804,15 +691,15 @@ The first possibility is that one word in the four is an imposter user
 
 \section{Summary and Critical Analysis}
 
-Compared to the system set out in my original interim report, I produced the system that I set out to create. Whilst the produced system differs from the word explained in the outline as shown by figures \ref{fig:OldPlan} and \ref{fig:NewPlan}, the functionality remains the same. I would go as far as to say that the produced system is an upgrade on the proposed system. The produced system is accurate, lightweight, secure and as such fulfils all of the original aims. Whilst some functionality around login has not been implemented due to not being needed, the expanded functionality added far outweighs this. The expanded functionality being the compression and decompression function which vastly reduce the amount of storage space being used in the user's computer, the update functionality which allows the system to learn the user's typing throughout the life cycle of the program and the multiple stages of the training functionality which allow the system to get a comprehensive and deep knowledge of how the user types. These all improve the accuracy of the system. By changing my original plans and moving away from a database approach due to the high variability in the amount of data produced for each word by the system, I've reduced the performance cost because inserting and removing data from a database is a costly operation in terms of performance.
+ Whilst the produced system differs from the word explained in the outline as shown by figures \ref{fig:OldPlan} and \ref{fig:NewPlan}, the functionality remains the same. I would go as far as to say that the produced system is an upgrade on the proposed system. The produced system is accurate, lightweight, secure and as such fulfils all of the original aims. Whilst some functionality around login has not been implemented due to not being needed, the expanded functionality added far outweighs this. The expanded functionality being the compression and decompression function which vastly reduce the amount of storage space being used in the user's computer, the update functionality which allows the system to learn the user's typing throughout the life cycle of the program and the multiple stages of the training functionality which allow the system to get a comprehensive and deep knowledge of how the user types. By changing my original plans and moving away from a database approach due to the high variability in the amount of data produced for each word by the system, I've reduced the performance cost because inserting and removing data from a database is a costly operation in terms of performance.
 
-The word forming and choosing is also another way in which the functionality of the proposed system has been expanded in the produced system. In my proposed system, I planned on checking the entire intervals keystrokes and not forming words. By doing first forming words and then checking a small sample of these, the resulting system is faster and more accurate. Instead of forming one profile for an entire user, which is broad and not particularly accurate as a result, the system produces a mini profile for each word. The more data points per user which are generated by this approach allows the system to be more accurate and as such a better system. 
+The word forming and choosing is also another way in which the functionality of the proposed system has been expanded in the produced system. In my proposed system, I planned on checking the entire intervals keystrokes and not forming words. By doing first forming words and then checking a small sample of these, the resulting system is faster and more accurate. Instead of forming one profile for an entire user, which is broad and not particularly accurate as a result, the system produces a mini profile for each word. The more data points per user which are generated by this approach allows the system to be more accurate.
 
-The overall system is accurate and secure. As can be seen in figure \ref{fig:CorrInter} the system is secure and provides the results that are expected. Furthermore, the system is highly secure. Whilst an imposter can look inside the word files, the information they can actually gain is not useful as shown in figure \ref{fig:compression}. That's because these word files simply contain highly compressed version of the KD signal for that word. No data is transmitted off the user's system as well, ensuring that user's who are concerned about the data being shared with a third party such as advertisers can use the system without worry. The addition of the play/pause functionality is also good for users who may be worried about the system recording the users bank details. This functionality allows them to stay in control of the system and stop it picking up unwanted details. Therefore, it is clear to see that the produced system is highly accurate and secure. When combined with the weightlessness of the program, its clear to see that the system is fit for use.
+The overall system is accurate and secure, as shown by figure \ref{fig:2DGraph}. The system is the only data that is stored is a highly compressed version of the KDS signal. No data is transmitted off the user's system as well, ensuring that user's who are concerned about the data being shared with a third party such as advertisers can use the system without worry. The addition of the play/pause functionality is also good for users who may be worried about the system recording sensitive information. Therefore, it is clear to see that the produced system is highly accurate and secure. When combined with the weightlessness of the program, its clear to see that the system is fit for use.
 
-However, the produced system does suffer from some shortcomings. As mentioned previously, whilst an imposter user accessing the data stored inside the word files is not a concern due to the nature of the data within, the program suffers from a security standpoint due to the word files being named after the word within. This is a pretty large security flaw. However, because of the play/pause functionality, the user should pause the program every time they need to enter sensitive information which is a small relief from this issue. In the future, I would seek to encrypt the file names in order to mitigate this issue. The validation measure is only as good as the number of data points collected. Therefore, for words such as "hi" which are going to generate relatively few data points, the system struggles with providing an accurate validation score leading to a few cases of false negatives or positives. This is a hard issue to fix however, the obvious solution is simply to omit word with a few data points to be selected for validation. This throes up more problems however, what if small words are the only options in that interval? Another option would be to simply go into greater detail and generate more data points for those words. Unfortunately due to the nature of creating a UI in python, the provided UI for the system is rather ugly and not pleasant to look at. If I was to do this project again this is the main thing I would do differently.
+However, the produced system does suffer from some shortcomings. As mentioned previously, whilst an imposter user accessing the data stored inside the word files is not a concern due to the nature of the data within, the program suffers from a security standpoint due to the word files being named after the word within. However, because of the play/pause functionality, the user should pause the program every time they need to enter sensitive information which is a small relief from this issue. In the future, I would seek to encrypt the file names in order to mitigate this issue. The validation measure is only as good as the number of data points collected. Therefore, for words such as "hi" which are going to generate relatively few data points, the system struggles with providing an accurate validation score leading to a few cases of false negatives or positives. This is a hard issue to fix however, the obvious solution is simply to omit word with a few data points to be selected for validation. This throes up more problems however, what if small words are the only options in that interval? Another option would be to simply go into greater detail and generate more data points for those words. Unfortunately due to the nature of creating a UI in python, the provided UI for the system is rather ugly and not pleasant to look at. If I was to do this project again this is the main thing I would do differently.
 
-Overall, I would say that producing the system went well with no major problems. The actual element I thought would be hardest and take the most effort in the actual validation system itself was easier than expected. Planning out the data flow from the raw keystroke data to the validation result took more planning and steps than expected. The UI was more of an issue that it needed to be. This is because  I need to play around with different threads as I needed my program to be able to do two things at once. 
+Overall, I would say that producing the system went well with no major problems. The actual element I thought would be hardest and take the most effort in the actual validation system itself was easier than expected. In contrast, planning out the data flow from the raw keystroke data to the validation result took more planning and steps than expected. The UI was more of an issue that it needed to be. This is because  I need to play around with different threads as I needed my program to be able to do two things at once. 
 
 \subsection{Aims and Objective}
 
@@ -881,88 +768,4 @@ Comparing the produced system and the planned system brings up a number of diffe
 
 \bibliographystyle{ieeetr}
 \bibliography{reference}
-\chapter*{Appendix A}
-
-This appendix contains the test data used in figure \ref{fig:WordsvsTime} and the raw data in a table format for this test.
-
-\section*{The Test Paragraph}
-The data consisted of a user typing the following paragraph. The paragraph consists of differing lengths and multiple forms of capitalisation and punctuation.
-
-"Hello my name is Jack, I like to do lots of work and play counter strike. I am from Waterbeach although I am going to be living in Landbeach soon. This will be fun with my friend Alex and will ensure that I can relax and continue to work for Ben. I am looking forward to it."
-
-\section*{Results in Table Form}
-The results in table form are here. As you can quite clearly see the time increased linearly. The speed of this is impacted by the speed of the computer it is running on. A faster computer will mean that the results are significantly faster.
-
-\begin{center}
-	\begin{tabular}{|c|c|}
-		Number of Words Chosen & Time \\
-	\end{tabular}
-\end{center}
-
-\section*{Code Used}
-The code used to do this is below. It consists of me using running the validation method with different amounts of words chosen each time until we reach the max number of words chosen.
-
-The code here is very simple and makes use of the rest of my source code. The timeit function\cite{pythonsoftwarefoundation_2022} is part of the default python installation provides a useful function that allows me to accurately time how long functions take. 
-
-\begin{figure}[h!]
-	\begin{lstlisting}
-		times = {}
-		# The typing data is loaded in from a file
-		file = open("data.pickle", 'wb')
-		data = pickle.load(file) # And then unpacked
-		start = 1649857380.5629547 # The start time of when the data was collected in epoch time
-		prof = pf.User_Profile() # The user profile used
-		presave = t.Training(data, start, prof, 1,0) # Saving all word files immediately
-		
-		interval = i.Calculation(data, start, prof, 1)
-		for x in range(2, interval.noWords, 2):
-			print(x)
-			interval.chosenAmount = x
-			interval.chosen = interval.choose()
-			start = timeit.default_timer()
-			_, _ = interval.validation(mode='rnl') # Test mode, ensures the pc does not lock or update the data
-			times[x] = timeit.default_timer() - start
-	\end{lstlisting}
-	\caption{Word Selection Testing}
-	\label{fig:selTest}
-\end{figure}
-
-The data stored in the times dictionary is then plotted with the keys plotted against the values.
-
-\chapter*{Appendix B}
-
-This contains details regarding the validation procedure.
-
-\section*{First Validation Proc Flowchart}
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.30]{ValidationProc}
-	\caption{FLowchart of first element of validation procedure.}
-	\label{fig:valProc}
-\end{figure}
-
-\chapter*{Appendix C}
-
-This appendix contains all the test data and code used in results and discussions.
-
-\section*{Test Data Former}
-
-Shown is a snapshot of the testdata former used in test 1. The actual full code is in the gitlab under code/test/tester.py
-\begin{figure}
-	\begin{lstlisting}
-		if isinstance(holdTime, float) and isinstance(floatTime, float):
-        	time = t.time()
-        	for x in data:
-            	output.append(k.KeyboardEvent('down', 99, name=x, time=time))
-            	time+= holdTime
-           	 	output.append(k.KeyboardEvent('up', 99, name=x, time=time))
-            	time += floatTime
-        	return output
-     \end{lstlisting}
-\end{figure}
-
-\section*{Test 1 Code}
-
-
 \end{document}
