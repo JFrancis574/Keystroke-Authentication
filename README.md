@@ -18,7 +18,7 @@ The project only runs on Windows 10. It has been tested and created on python 3.
 
 Files under Code/Test Code may require further packages. 
 
-Inside Code/Application there is a make.bat file which can be used to create your own executable. The first step is to delete the build and dist folders along with their contents. This is in order to allow the directory to refresh. In order to do this, install the packages above along with pyinstaller and then run the file. This will output the produced executable inside the dist folder.
+Inside [Code/Application] (Code/Application) there is a make.bat file which can be used to create your own executable. The first step is to delete the build and dist folders along with their contents. This is in order to allow the directory to refresh. In order to do this, install the packages above along with pyinstaller and then run the file. This will output the produced executable inside the dist folder.
 
 When running the program, it will create a folder called Data in which the created word and profile files will be stored in whatever the working directory is.
 
