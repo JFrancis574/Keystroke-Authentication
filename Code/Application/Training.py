@@ -4,7 +4,7 @@ from Interval import Calculation
 
 class Training(Calculation):
     
-    def __init__(self, raw, startTime, pf, semCheck, validation=0):
+    def __init__(self, raw, startTime, pf, semCheck, stop, validation=0):
         """Training version of the Calculation Class
 
         Args:
@@ -12,15 +12,12 @@ class Training(Calculation):
             startTime (timestamp): The timestamp at which the raw data was collected
             pf (User_Profile): The user profile which the data belongs to
             semCheck (int): Flag which controls if to check the semantics data
-            validation (int, optional): If to perform validation as well. Defaults to 0.
+            validation (int, optional): If to perform validation as well. Defaults to 0
         """
-        super().__init__(raw, startTime, pf, semCheck)
+        super().__init__(raw, startTime, pf, semCheck, lambda: stop)
         self.wordTrainingSet = 100
-        if validation == 0:
-            self.semantics = self.usesPunc()
-            self.success = self.genKDSAndSave()
-        else:
-            pass
+        self.semantics = self.usesPunc()
+        self.success = self.genKDSAndSave()
     
     def genKDSAndSave(self):
         for x in range(0, len(self.wordsOut)):

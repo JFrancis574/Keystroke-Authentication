@@ -5,7 +5,6 @@ import subprocess
 import sys
 import threading
 import time
-from tkinter import ttk
 import keyboard
 import tkinter as tk
 import Interval as i
@@ -13,12 +12,11 @@ import Training as t
 from user_profile import User_Profile
 
 # The main running class. Run everything from here.
-
 interval = 60
-trainingItersYN = False
+trainingItersYN = True
 trainingIters = 5
 
-def record(interval):
+def record(interval, stop):
     """Recording keystrokes function
 
     Args:
@@ -28,6 +26,8 @@ def record(interval):
         keystroke data: Comprised of a dictionary
         starttime: Comprised of the starttime of the data
     """
+    if stop():
+        return None, None
     recorded = []
     # Uses pythons builtin time library
     # https://docs.python.org/3/library/time.html
@@ -37,8 +37,20 @@ def record(interval):
     # Implementation by Broppeh
     # https://github.com/boppreh/keyboard
     keyBoardHook = keyboard.hook(recorded.append)
-    time.sleep(interval)
+    if stop():
+        return None, None
+    x = 0 
+    while x <= interval:
+        if stop():
+            return None, None
+        time.sleep(1)
+        if stop():
+            return None, None
+        x += 1
+    # time.sleep(interval)
     keyboard.unhook(keyBoardHook)
+    if stop():
+        return None, None
     return recorded, startTime
 
 def resource_path(relative_path):
@@ -53,7 +65,6 @@ def resource_path(relative_path):
     try:
         return os.path.join(sys._MEIPASS, relative_path)
     except Exception:
-        print(Exception)
         return os.path.join(os.path.abspath("."), relative_path)
 
 def stop():
@@ -85,14 +96,11 @@ def runner(id, prof, stop):
     """
     count = 0
     while True:
-        data, start = record(interval)
-        if stop():
-            break
+        data, start = record(interval, lambda: stop_threads)
         if stop():
             break
         if trainingItersYN == False or count > trainingIters:
-            inter = i.Calculation(data, start, prof, 1)
-            print(inter.noWords)
+            inter = i.Calculation(data, start, prof, 1, lambda: stop_threads)
             if stop():
                 break
             decision, index = inter.validation(mode='r')
@@ -101,7 +109,7 @@ def runner(id, prof, stop):
                 break
         else:
             if count <= trainingIters and len(data) != 0:
-                inter = t.Training(data, start, prof, 1,0)
+                inter = t.Training(data, start, prof, 1,0, lambda: stop_threads)
                 count += 1
                 if stop():
                     break
@@ -158,11 +166,10 @@ def training():
         button.pack()
         root.mainloop()
 
-        train = t.Training(recorded, start, prof, 1, 0)
+        train = t.Training(recorded, start, prof, 1, 0, lambda: stop_threads)
 
         if train.success == True:
             # If Training succeds return and start the main program
-            root.destroy()
             return prof
         else:  
             # Otherwise loop back round
@@ -173,9 +180,9 @@ def training():
     
     
 if __name__ == '__main__':
-    prof = training()
     global stop_threads
     stop_threads = False
+    prof = training()
     workers = []
     id = 0
     tmp = threading.Thread(target=runner, args=(id, prof, lambda: stop_threads))
