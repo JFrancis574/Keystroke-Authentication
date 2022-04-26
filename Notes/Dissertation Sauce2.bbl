@@ -1,9 +1,45 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{ToosiRamin2021Taok}
 R.~Toosi and M.~A. Akhaee, ``Time–frequency analysis of keystroke dynamics
   for user authentication,'' {\em Future generation computer systems},
   vol.~115, pp.~438--447, 2021.
+
+\bibitem{cloudComp}
+A.~Abo-alian, N.~L. Badr, and M.~F. Tolba, ``Keystroke dynamics-based user
+  authentication service for cloud computing,'' {\em Concurrency and
+  Computation: Practice and Experience}, vol.~28, no.~9, pp.~2567--2585, 2016.
+
+\bibitem{Salvador2004FastDTWTA}
+S.~Salvador and P.~K.-F. Chan, ``Fastdtw: Toward accurate dynamic time warping
+  in linear time and space,'' 2004.
+
+\bibitem{IzakianHesam2015Fcot}
+H.~Izakian, W.~Pedrycz, and I.~Jamal, ``Fuzzy clustering of time series data
+  using dynamic time warping distance,'' {\em Engineering applications of
+  artificial intelligence}, vol.~39, pp.~235--244, 2015.
+
+\bibitem{inbook}
+R.~O'connell, {\em Wigner Distribution}, pp.~851--854.
+\newblock 07 2009.
+
+\bibitem{4766782}
+R.~B. Pachori and P.~Sircar, ``Time-frequency analysis using time-order
+  representation and wigner distribution,'' in {\em TENCON 2008 - 2008 IEEE
+  Region 10 Conference}, pp.~1--6, Nov 2008.
+
+\bibitem{janakiev_2018}
+N.~Janakiev, ``Biometric prediction on keystroke dynamics,'' Jun 2018.
+\newblock Accessed: 10/11/20221.
+
+\bibitem{5270346}
+K.~S. Killourhy and R.~A. Maxion, ``Comparing anomaly-detection algorithms for
+  keystroke dynamics,'' in {\em 2009 IEEE/IFIP International Conference on
+  Dependable Systems Networks}, pp.~125--134, 2009.
+
+\bibitem{s21062242}
+M.~Choi, S.~Lee, M.~Jo, and J.~S. Shin, ``Keystroke dynamics-based
+  authentication using unique keypad,'' {\em Sensors}, vol.~21, no.~6, 2021.
 
 \bibitem{boppreh_2016}
 Boppreh, ``Keyboard.'' https://pypi.org/project/keyboard, Jan 2016.
