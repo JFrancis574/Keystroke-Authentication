@@ -44,7 +44,9 @@
 \maketitle
 
 
-\section{Abstract}
+\chapter*{Abstract}
+
+Many security systems in use today are one-time systems such as passwords and biometrics are only useful at login. If a user has authenticated and then an imposter takes control, these systems are useless. This paper presents an approach for a continuous system which uses keystroke dynamics along with 2D correlation co-efficient and Dynamic Time Warping to ensure that the user is genuine and if an imposter user is detected will force the user to re-authenticate. The system works around two main features, Words and Intervals. Data is collected in intervals, formed into word and then validation is performed on these words using KD signals, Dynamic Time Warping, Euclidean Distance and Correlation Co-efficient.The system also contains a training phase which is designed to ensure that the learning process is useful along with a play/pause functionality which ensures that the users privacy is respected. The produced system which is based along these lines is fast, secure and accurate and fulfils the aims and objective set out at the start of the project. The system is also designed to take as little space on the users storage as possible through the introduction of a compression and decompression functions. The system also contains a simple update function which allows it to learn users.  The system boasts an accuracy of XXX which is very good and should ensure that the user feels protected and secure at all times.
 
 \tableofcontents
 
@@ -52,13 +54,24 @@
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
+In today's world, passwords aren't enough to guarantee security. New methods such as fingerprints and facial recognition have been tried in order to improve security. However, whilst these methods are good for login, they don't prevent malicious users taking control after a user has logged in. In this use, case they essentially become useless. This is where keystroke dynamics are useful, it can catch these imposter users who have bypassed the other authentication methods. By analysing the keystrokes and building up a profile for the user, a keystroke dynamics-based system can easily ensure the system is being used by a legitimate user. Most systems that attempt to do this are theoretical in nature and most if not all use a machine learning approach. This is where my system differs from others because it uses an approach build on KD signals and a Dynamic Time Warping algorithm. This has many advantages such as speed and performance as many other machine learning based approaches need significant time and resources in order to learn how a user types.
 
+The system has been created in python 3.9 and has an emphasis on security, accuracy and performance. The key aims and objectives that I originally set out to achieve and based my system on are shown below:
+
+\begin{enumerate}
+	\item To produce a lightweight key logger that can accurately log all inputs accurately and securely
+	\item To create a graphical system that allows the user to register or login
+	\item At an interval set by the user, the system will create a profile for that user based on their typing since the last interval and check this against the profile created in the registration system
+	\item If the user doesn't match, asks the user to re-authenticate
+\end{enumerate}
+
+Overall, the aim of the project is to create a system that can authenticate users based on their keystroke dynamics that is fast, accurate and secure.
 
 \chapter{Survey of Literature}
 
-In order to create this project, it was necessary to do some research into the project. 
+In order to create this project, it was necessary to do some research into the techniques and approaches. 
 
-In order to do some research onto what a system based on keystroke authentication would involve, I read \emph{Time-frequency analysis of keystroke dynamics for user authentication}\cite{ToosiRamin2021Taok} which presented a highly theoretical one time system that used a maths based approach using a dynamic time warping algorithm along with a Wigner distribution in order to perform similarity calculations. The presented system only worked with small word samples. AUnfortuntly, the system wasn't a continuous system, but the paper still provided value in how to implement a validation measure. The validation function in my produced system is a highly modified version of the system set out in this paper. I decided to rely on this paper because it was published recently, well-cited, well researched and presented a solid approach I couldn't find any problems with.
+In order to do some research onto what a system based on keystroke authentication would involve, I read \emph{Time-frequency analysis of keystroke dynamics for user authentication}\cite{ToosiRamin2021Taok} which presented a highly theoretical one time system that used a maths based approach using a dynamic time warping algorithm along with a Wigner distribution in order to perform similarity calculations. The presented system only worked with small word samples. Unfortunately, the system wasn't a continuous system, but the paper still provided value in how to implement a validation measure. The validation function in my produced system is a highly modified version of the system set out in this paper. I decided to rely on this paper because it was published recently, well-cited, well researched and presented a solid approach I couldn't find any problems with.
 
 Another paper I read in the opening stages of this project is \emph{Keystroke dynamics-based authentication service for cloud computing: Keystroke Authentication Service.}\cite{cloudComp} This paper showcased a continuous machine learning approach as opposed to the one time maths based approach showcased previously. Whilst I did not use the approach set out in this paper, the different viewpoint showcased was useful when making the decision in what approach to take. The reason I didn't end up choosing this approach because whilst the paper is relatively recent, it is not well-cited and the paper lacks detail in what is actually happening. Furthermore, I choose to go with a maths based approach because I felt this was more challenging. I decided I couldn't rely on this paper because of these reasons and as such it wasn't that useful to me.
 
@@ -719,14 +732,7 @@ Overall, I would say that producing the system went well with no major problems.
 
 \subsection{Aims and Objective}
 
-In order to judge the success of the project, it is necessary compare the current system against the original aims and objectives of the project which are listed below. 
-
-\begin{enumerate}
-	\item To produce a lightweight key logger that can accurately log all inputs accurately and securely
-	\item To create a graphical system that allows the user to register or login
-	\item At an interval set by the user, the system will create a profile for that user based on their typing since the last interval and check this against the profile created in the registration system
-	\item If the user doesn't match, asks the user to re-authenticate
-\end{enumerate}
+In order to judge the success of the project, it is necessary compare the current system against the original aims and objectives of the project which are listed in the introduction.
 
 I feel that my project has quite comfortably succeeded in point 1. The key logger produced records all keystrokes along with the action associated with them. Furthermore, the impact on performance is minimal with the keylogger in particular not being noticeable to the user thus satsifying the accurate and lightweight requirements. The validation procedure is unfortunately heavier and may slow down the user system a small amount. If I was to do the project again, I would reduce the performance impact on the user of the validation procedure by either implementing a faster procedure to generate the data points or by improving the storage solution. In order to implement a faster procedure, I would rewrite the project in a faster but more basic language such as C++. This would dramatically improve the speed of the validation procedure but would drastically increase the amount of code written due to the lack of suitable packages. Whilst other storage systems such as databases were explored, I would aim to go for a storage solution that could store highly variable data such as the one produced by this program, securely, speedily and with minimal impact on the user's performance and disk space. One example of a solution is a big data storage system which uses ai in order to store the data. This would also speed up the program because then the compression and decompression functions would no longer be needed which both take up \(O(n)\) time each. Furthermore, this would allow me to implement clustering which would further speed up the program by allowing similar record to be stored next to each other. Overall, the produced system comfortably fulfils this aim.
 
@@ -740,6 +746,15 @@ The final aim is also fulfilled. In my produced system, if the user fails valida
 \subsection{Time plans}
 
 \section{Social, Sustainability, Commercial and Economic Context}
+
+My program has potentially huge positive impact on people and businesses. The average cost of a cyber attack on a UK business in 2021 was £2760\cite{o'dea_2022}. My program is designed to improve the security of user's systems and as such installing the program for the business would help reduce this figure thus saving businesses money. My system is designed to stop imposters using a user's computer and performing malicious action, therefore installing the system on the user's computer would enable them to avoid this potential attack. My program would also go some way in reducing the number of cyber attacks worldwide which have seen a 15\% increase year on year.\cite{karafiloski_2021}. 
+
+Unfortunately, my program could also have a negative impact on people and businesses. The underlying base of my project is a keylogger which can very easily be modified to be malicious. It could be used to record all users keystrokes including confidential matters like passwords and bank details. This would be a huge issue for both people and businesses and would cost them not only a lot of time but money as well. Furthermore, the data which the program collects could be used by advertisers to track them throughout the web and thus bombard them with ads. This is not really an issue for businesses but for people this could become an issue with data privacy. 
+
+Overall, my system has many benefits to society. It will overall improve security of systems, reduce dependency on passwords and improve users trust in such security programs due to its play/pause functionality which stops the program from recording users confidential details. Furthermore, the highly accurate and lightweight nature of the program ensures that electricity consumption of the system will not be massively increased thus any negative sustainability impact is minimal. However, the program could have a negative impact on society due to the large amount of data it collects, the potential selling of users typing data and the easy way to make into a malicious keylogger. 
+
+Keystroke dynamics authentication systems are at an early stage in their development. Not many such systems exist or are in use in the wider economy and many theoretical proposed systems are in development. One that I've found is called \emph{Typingdna ActiveLock}\cite{typingdna_2022}. This program claims that it does the same thing as my project. I believe it uses a machine learning approach however to learn how a user types. Systems such as this, I believe will become more widespread in the future and showcase the potential usecase in the wider economy.  The underlying maths is in use in a different kind of system however. \emph{TypingDNA focus}\cite{typingdna_2021} is a system which uses keystroke data in order to predict users moods and as such improve their productivity. Whilst the use case isn't exactly the same, the underlying process it. The program records keystrokes, processes the data and then makes a classification decision based on it. As shown by these systems, my system can already be used in commercial situations. However, in order to be properly suited for commercial uses, I would make a few small mainly cosmetic changes such as UI improvement, a better storage system and more robust code. This would enable the program to be more user friendly and secure and as such provide a better experience for the user.
+
 
 \section{Personal Development}
 

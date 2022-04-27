@@ -6,36 +6,36 @@ Database file #1: reference.bib
 Warning--I didn't find a database entry for "naskar_2020"
 Warning--empty booktitle in Salvador2004FastDTWTA
 Warning--empty publisher in inbook
-You've used 14 entries,
+You've used 18 entries,
             1876 wiz_defined-function locations,
-            575 strings with 5785 characters,
-and the built_in function-call counts, 3153 in all, are:
-= -- 312
-> -- 96
+            592 strings with 6244 characters,
+and the built_in function-call counts, 3645 in all, are:
+= -- 352
+> -- 112
 < -- 0
-+ -- 39
-- -- 25
-* -- 195
-:= -- 434
-add.period$ -- 21
-call.type$ -- 14
-change.case$ -- 13
++ -- 47
+- -- 29
+* -- 219
+:= -- 502
+add.period$ -- 25
+call.type$ -- 18
+change.case$ -- 17
 chr.to.int$ -- 0
-cite$ -- 16
-duplicate$ -- 154
-empty$ -- 344
-format.name$ -- 25
-if$ -- 792
+cite$ -- 20
+duplicate$ -- 170
+empty$ -- 416
+format.name$ -- 29
+if$ -- 916
 int.to.chr$ -- 0
-int.to.str$ -- 14
+int.to.str$ -- 18
 missing$ -- 9
-newline$ -- 52
-num.names$ -- 14
-pop$ -- 74
+newline$ -- 64
+num.names$ -- 18
+pop$ -- 102
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 106
+skip$ -- 122
 stack$ -- 0
 substring$ -- 168
 swap$ -- 53
@@ -44,7 +44,7 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 2
-while$ -- 28
-width$ -- 16
-write$ -- 136
+while$ -- 32
+width$ -- 20
+write$ -- 164
 (There were 3 warnings)
