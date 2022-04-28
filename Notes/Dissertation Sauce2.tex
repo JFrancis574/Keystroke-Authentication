@@ -41,7 +41,35 @@
 
 \begin{document}
 
-\maketitle
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Using Keystroke Dynamics to Authenticate a User Based on their Typing}
+            
+        \vspace{0.5cm}
+        \LARGE
+        CO2301 Computer Science Project Dissertation
+            
+        \vspace{1.5cm}
+            
+        \textbf{Jack Francis}
+            
+        \vfill
+            
+        \vspace{0.8cm}
+            
+        \Large
+        School of Computing and Mathematical Sciences\\
+        University Of Leicester\\
+        \today
+            
+    \end{center}
+\end{titlepage}
+
+\newpage
+PLAG DEC
 
 
 \chapter*{Abstract}
@@ -206,7 +234,7 @@ In some cases, a user may press multiple keys down at once. For example, this mi
 
 In order to fix this, it is necessary to include another case in the code. Suppose the current action does not have a matching key and opposite action next in the array. In that case, the program will iterate through the rest of the array starting from the current point, searching for the next entry with a matching key and an opposite action after the current. If it finds one it will pair them up. The key thing we assume for this to work is that every action has an opposite action. In nearly all cases, we assume this to be true as it is improbable that a user will hold down a key for the entire interval. If the method cannot find a resultant action event, then it is still added to the pairs list with an end time of the length of the interval.
 
-The resulting pairing algorithm has a time complexity of \(O(n^2)\). In a program which is all about speed and minimal impact to the user, it is essential that the program has the lowest time complexity as possible. Due to the complicated nature of how users type, I believe this is the best time complexity for a problem of this nature.
+The resulting pairing algorithm has a time complexity of \(O(n^2)\). In a program that is all about speed and minimal impact to the user, it is essential that the program has the lowest time complexity as possible. Due to the complicated nature of how users type, I believe this is the best time complexity for a problem of this nature.
 
 \subsection{Forming Words}
 
@@ -744,6 +772,15 @@ The final aim is also fulfilled. In my produced system, if the user fails valida
 
 
 \subsection{Time plans}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.27]{GantChartAll}
+	\caption{Original Time Plans}
+	\label{fig:GAll}
+\end{figure}
+
+Figure \ref{fig:GAll} showcases the original time plan for my project. This plan assumed I would rigidly stick to the ideas I had in my interim report. Due to the way, I altered my plans not only for the algorithms in use but also storage and added further functionality around testing, this plan was quickly modified. Several tasks were moved around with the mathematical basis being done after creating the keylogger. The login system and storage was scrapped entirely with the update functionality ad compression/decompression and play/pause functionality replacing it. Furthermore, the time allocated to the Wigner distribution was instead used to implement the validation measures and the classifier at the end of these methods. Overall, whilst I didn't stick to my plan all the time, it still provided a good basis for the project and ensured that I got all the work done and as such was crucial for the success of the project.
 
 \section{Social, Sustainability, Commercial and Economic Context}
 

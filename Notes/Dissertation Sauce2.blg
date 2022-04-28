@@ -3,39 +3,38 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Dissertation Sauce2.aux
 The style file: ieeetr.bst
 Database file #1: reference.bib
-Warning--I didn't find a database entry for "naskar_2020"
 Warning--empty booktitle in Salvador2004FastDTWTA
 Warning--empty publisher in inbook
-You've used 18 entries,
+You've used 19 entries,
             1876 wiz_defined-function locations,
-            592 strings with 6244 characters,
-and the built_in function-call counts, 3645 in all, are:
-= -- 352
-> -- 112
+            597 strings with 6346 characters,
+and the built_in function-call counts, 3768 in all, are:
+= -- 362
+> -- 116
 < -- 0
-+ -- 47
-- -- 29
-* -- 219
-:= -- 502
-add.period$ -- 25
-call.type$ -- 18
-change.case$ -- 17
++ -- 49
+- -- 30
+* -- 225
+:= -- 519
+add.period$ -- 26
+call.type$ -- 19
+change.case$ -- 18
 chr.to.int$ -- 0
-cite$ -- 20
-duplicate$ -- 170
-empty$ -- 416
-format.name$ -- 29
-if$ -- 916
+cite$ -- 21
+duplicate$ -- 174
+empty$ -- 434
+format.name$ -- 30
+if$ -- 947
 int.to.chr$ -- 0
-int.to.str$ -- 18
+int.to.str$ -- 19
 missing$ -- 9
-newline$ -- 64
-num.names$ -- 18
-pop$ -- 102
+newline$ -- 67
+num.names$ -- 19
+pop$ -- 109
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 122
+skip$ -- 126
 stack$ -- 0
 substring$ -- 168
 swap$ -- 53
@@ -44,7 +43,7 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 2
-while$ -- 32
-width$ -- 20
-write$ -- 164
-(There were 3 warnings)
+while$ -- 33
+width$ -- 21
+write$ -- 171
+(There were 2 warnings)
