@@ -26,47 +26,114 @@ When running the program, it will create a folder called Data in which the creat
 
 ## Repository map
 <pre>
-📦jtf10
+📦FinalYearProject
  ┣ 📂Code
  ┃ ┣ 📂Application
  ┃ ┃ ┣ 📂build
  ┃ ┃ ┃ ┗ 📂main
  ┃ ┃ ┃ ┃ ┣ 📜Analysis-00.toc
+ ┃ ┃ ┃ ┃ ┣ 📜base_library.zip
  ┃ ┃ ┃ ┃ ┣ 📜EXE-00.toc
+ ┃ ┃ ┃ ┃ ┣ 📜main.exe.manifest
+ ┃ ┃ ┃ ┃ ┣ 📜main.pkg
  ┃ ┃ ┃ ┃ ┣ 📜PKG-00.toc
  ┃ ┃ ┃ ┃ ┣ 📜PYZ-00.pyz
  ┃ ┃ ┃ ┃ ┣ 📜PYZ-00.toc
  ┃ ┃ ┃ ┃ ┣ 📜Tree-00.toc
  ┃ ┃ ┃ ┃ ┣ 📜Tree-01.toc
  ┃ ┃ ┃ ┃ ┣ 📜Tree-02.toc
- ┃ ┃ ┃ ┃ ┣ 📜base_library.zip
- ┃ ┃ ┃ ┃ ┣ 📜main.exe.manifest
- ┃ ┃ ┃ ┃ ┣ 📜main.pkg
  ┃ ┃ ┃ ┃ ┣ 📜warn-main.txt
  ┃ ┃ ┃ ┃ ┗ 📜xref-main.html
  ┃ ┃ ┣ 📂dist
  ┃ ┃ ┃ ┗ 📜main.exe
+ ┃ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┃ ┣ 📜DBConnection.cpython-38.pyc
+ ┃ ┃ ┃ ┣ 📜DBConnection.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜Interval.cpython-38.pyc
+ ┃ ┃ ┃ ┣ 📜Interval.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜KeyboardClass.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜keyboardTest.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜main.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜main2.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜profile.cpython-38.pyc
+ ┃ ┃ ┃ ┣ 📜profile.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜ProfileError.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜sec.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜stopThread.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜Training.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜user_profile.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜Utilities.cpython-38.pyc
+ ┃ ┃ ┃ ┣ 📜Utilities.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜Word.cpython-38.pyc
+ ┃ ┃ ┃ ┣ 📜Word.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜WordProcessing.cpython-38.pyc
+ ┃ ┃ ┃ ┗ 📜WordProcessing.cpython-39.pyc
  ┃ ┃ ┣ 📜Interval.py
  ┃ ┃ ┣ 📜KeyboardClass.py
- ┃ ┃ ┣ 📜Pause.png
- ┃ ┃ ┣ 📜Play.png
- ┃ ┃ ┣ 📜ProfileError.py
- ┃ ┃ ┣ 📜Training.py
- ┃ ┃ ┣ 📜TrainingText.csv
- ┃ ┃ ┣ 📜Word.py
- ┃ ┃ ┣ 📜data.pickle
  ┃ ┃ ┣ 📜keyboardEvent.py
  ┃ ┃ ┣ 📜main.py
  ┃ ┃ ┣ 📜main.spec
  ┃ ┃ ┣ 📜make.bat
  ┃ ┃ ┣ 📜packagesRequired.txt
- ┃ ┃ ┣ 📜sec.py
- ┃ ┃ ┣ 📜sec.spec
+ ┃ ┃ ┣ 📜Pause.png
+ ┃ ┃ ┣ 📜Play.png
+ ┃ ┃ ┣ 📜ProfileError.py
  ┃ ┃ ┣ 📜tester.py
- ┃ ┃ ┗ 📜user_profile.py
+ ┃ ┃ ┣ 📜Training.py
+ ┃ ┃ ┣ 📜TrainingText.csv
+ ┃ ┃ ┣ 📜user_profile.py
+ ┃ ┃ ┣ 📜Word.py
+ ┃ ┃ ┣ 📜Words0.json
+ ┃ ┃ ┣ 📜Words1.json
+ ┃ ┃ ┣ 📜Words2.json
+ ┃ ┃ ┗ 📜Words3.json
+ ┃ ┣ 📂Demo System
+ ┃ ┃ ┣ 📂build
+ ┃ ┃ ┃ ┗ 📂main
+ ┃ ┃ ┃ ┃ ┣ 📜Analysis-00.toc
+ ┃ ┃ ┃ ┃ ┣ 📜base_library.zip
+ ┃ ┃ ┃ ┃ ┣ 📜EXE-00.toc
+ ┃ ┃ ┃ ┃ ┣ 📜main.exe.manifest
+ ┃ ┃ ┃ ┃ ┣ 📜main.pkg
+ ┃ ┃ ┃ ┃ ┣ 📜PKG-00.toc
+ ┃ ┃ ┃ ┃ ┣ 📜PYZ-00.pyz
+ ┃ ┃ ┃ ┃ ┣ 📜PYZ-00.toc
+ ┃ ┃ ┃ ┃ ┣ 📜Tree-00.toc
+ ┃ ┃ ┃ ┃ ┣ 📜Tree-01.toc
+ ┃ ┃ ┃ ┃ ┣ 📜Tree-02.toc
+ ┃ ┃ ┃ ┃ ┣ 📜warn-main.txt
+ ┃ ┃ ┃ ┃ ┗ 📜xref-main.html
+ ┃ ┃ ┣ 📂dist
+ ┃ ┃ ┃ ┗ 📜main.exe
+ ┃ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┃ ┣ 📜Interval.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜KeyboardClass.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜main.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜Training.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜user_profile.cpython-39.pyc
+ ┃ ┃ ┃ ┗ 📜Word.cpython-39.pyc
+ ┃ ┃ ┣ 📜Interval.py
+ ┃ ┃ ┣ 📜KeyboardClass.py
+ ┃ ┃ ┣ 📜keyboardEvent.py
+ ┃ ┃ ┣ 📜main.py
+ ┃ ┃ ┣ 📜main.spec
+ ┃ ┃ ┣ 📜make.bat
+ ┃ ┃ ┣ 📜packagesRequired.txt
+ ┃ ┃ ┣ 📜Pause.png
+ ┃ ┃ ┣ 📜Play.png
+ ┃ ┃ ┣ 📜ProfileError.py
+ ┃ ┃ ┣ 📜tester.py
+ ┃ ┃ ┣ 📜Training.py
+ ┃ ┃ ┣ 📜TrainingText.csv
+ ┃ ┃ ┣ 📜user_profile.py
+ ┃ ┃ ┣ 📜Word.py
+ ┃ ┃ ┣ 📜Words0.json
+ ┃ ┃ ┣ 📜Words1.json
+ ┃ ┃ ┣ 📜Words2.json
+ ┃ ┃ ┗ 📜Words3.json
  ┃ ┣ 📂Test code
  ┃ ┃ ┣ 📂Data
- ┃ ┃ ┃ ┣ 📂Pickles
+ ┃ ┃ ┃ ┗ 📂Pickles
  ┃ ┃ ┃ ┃ ┣ 📜1
  ┃ ┃ ┃ ┃ ┣ 📜60SecondTestData
  ┃ ┃ ┃ ┃ ┣ 📜60SecondTestDataToBeChecked.p
@@ -81,21 +148,27 @@ When running the program, it will create a folder called Data in which the creat
  ┃ ┃ ┃ ┣ 📜Figure_1.png
  ┃ ┃ ┃ ┣ 📜Genuine vs Imposter.png
  ┃ ┃ ┃ ┗ 📜NormalVsDTW.png
+ ┃ ┃ ┣ 📂__pycache__
+ ┃ ┃ ┃ ┣ 📜DBConnection.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜keyboardTest.cpython-39.pyc
+ ┃ ┃ ┃ ┣ 📜keyboardTestMac.cpython-39.pyc
+ ┃ ┃ ┃ ┗ 📜setup.cpython-39.pyc
  ┃ ┃ ┣ 📜DBConnection.py
  ┃ ┃ ┣ 📜DynamicTImeWarping.py
  ┃ ┃ ┣ 📜JSONTest.py
- ┃ ┃ ┣ 📜Plan.md
- ┃ ┃ ┣ 📜Prototype.py
- ┃ ┃ ┣ 📜keyStorage.db
  ┃ ┃ ┣ 📜keyboardTest.py
  ┃ ┃ ┣ 📜keyboardTestMac.py
+ ┃ ┃ ┣ 📜keyStorage.db
  ┃ ┃ ┣ 📜loginTest.py
+ ┃ ┃ ┣ 📜Plan.md
+ ┃ ┃ ┣ 📜Prototype.py
  ┃ ┃ ┣ 📜setup.py
  ┃ ┃ ┣ 📜temp.py
  ┃ ┃ ┗ 📜temp2.py
  ┃ ┗ 📜ProjectWorkSpace.code-workspace
  ┣ 📂Notes
  ┃ ┣ 📂Images
+ ┃ ┃ ┣ 📜ConfMatrixTest2.png
  ┃ ┃ ┣ 📜CorrGraph.png
  ┃ ┃ ┣ 📜CorrGraph2.png
  ┃ ┃ ┣ 📜DecisionsGraph.png
@@ -104,6 +177,7 @@ When running the program, it will create a folder called Data in which the creat
  ┃ ┃ ┣ 📜EUCGraph2.png
  ┃ ┃ ┣ 📜EucVs2D.png
  ┃ ┃ ┣ 📜FolderStruct.png
+ ┃ ┃ ┣ 📜GantChartAll.png
  ┃ ┃ ┣ 📜HELLO KDS.png
  ┃ ┃ ┣ 📜IfLen1.png
  ┃ ┃ ┣ 📜KDS1.png
@@ -116,8 +190,8 @@ When running the program, it will create a folder called Data in which the creat
  ┃ ┃ ┣ 📜KeyboardEventPreProc.png
  ┃ ┃ ┣ 📜MathsBackend.png
  ┃ ┃ ┣ 📜NewMaths.png
- ┃ ┃ ┣ 📜OOP.png
  ┃ ┃ ┣ 📜OldPlan.png
+ ┃ ┃ ┣ 📜OOP.png
  ┃ ┃ ┣ 📜PairingWrong.png
  ┃ ┃ ┣ 📜PauseEx.png
  ┃ ┃ ┣ 📜Play.png
@@ -140,7 +214,6 @@ When running the program, it will create a folder called Data in which the creat
  ┃ ┣ 📜Dissertation Sauce2.tex
  ┃ ┣ 📜Dissertation Sauce2.toc
  ┃ ┣ 📜GantChartAll.gan
- ┃ ┣ 📜GantChartAll.png
  ┃ ┣ 📜GantChartSem1.gan
  ┃ ┣ 📜GantChartSem1.png
  ┃ ┣ 📜GantChartSem2.gan
@@ -160,6 +233,10 @@ Contains all of the code for the project including test code and actual code.
 
 ### Application
 As explained above, this contains the source code along with the executable inside the dist folder. Included in this directory is a tester file which comprises of some tests that can be run.
+
+### Demo System
+
+Contained inside here is the source code for the demo system along with an executable. The modules needed are the same as above. The only difference between the two systems is that the demo contains print statements throughout which explain what is going on.
 
 ### Test Code 
 Contains test code that was used when starting the project. Has not been updated in quite some time and is a little bit of a mess. Inside this folder, is stored some example data stored inside pickles.
