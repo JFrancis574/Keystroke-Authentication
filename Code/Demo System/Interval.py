@@ -367,6 +367,8 @@ class Calculation:
                         else:
                             # Otherwise, set up a new profile
                             return 'New', []
+                    else:
+                        return True, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
                         
                 elif True in wordCheck and False in wordCheck and None not in wordCheck:
                         print("Some words failed")

@@ -116,8 +116,10 @@ def runner(id, prof, stop):
             if stop():
                 break
             start = time.time()
-            decision, index = inter.validation(mode='rnl')
+            decision, _ = inter.validation(mode='rnl')
             print("Validation took ", (time.time()- start), "seconds")
+            if decision == 'New':
+                prof.addKeyboard(None)
         else:
             if count <= trainingIters and len(data) != 0:
                 print("Is a training iteration, so all words just get saved instead of calcs")

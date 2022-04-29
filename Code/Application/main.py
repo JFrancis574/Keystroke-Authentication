@@ -103,9 +103,9 @@ def runner(id, prof, stop):
             inter = i.Calculation(data, start, prof, 1, lambda: stop_threads)
             if stop():
                 break
-            decision, index = inter.validation(mode='r')
-            if decision == False:
-                break
+            decision, _ = inter.validation(mode='r')
+            if decision == 'New':
+                prof.addKeyboard(None)
         else:
             if count <= trainingIters and len(data) != 0:
                 inter = t.Training(data, start, prof, 1,0, lambda: stop_threads)

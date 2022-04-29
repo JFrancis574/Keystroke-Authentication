@@ -54,6 +54,7 @@ class User_Profile:
                 name = ''.join(choice(letters) for i in range(10))
         newKeyboard = k(name, self.userPath)
         self.keyboards.append(newKeyboard)
+        self.currentKeyboard = newKeyboard
         return newKeyboard
         
     def changeKeyboard(self, name):

@@ -157,7 +157,7 @@ class Calculation:
             # Just selects the middle word
             return [self.wordsOut[len(self.wordsOut//2)]]
         
-        tempWords = self.wordsOut
+        tempWords = self.wordsOut.copy()
         while True:
             if len(out) == self.chosenAmount or len(tempWords) == 1:
                 return out
@@ -280,10 +280,10 @@ class Calculation:
                     return None, None
                 if False not in wordCheck and None not in wordCheck:
                     return True, []
-                elif True in wordCheck and None in wordCheck:
+                elif True in wordCheck and None in wordCheck and False not in wordCheck:
                     self.update([i for i, j  in enumerate(wordCheck) if j == None])
                     return True, []
-                elif False in wordCheck and None in wordCheck:
+                elif False in wordCheck and None in wordCheck and True not in wordCheck:
                     # Code to lock pc
                     if mode != 'rnl':
                         self.lockPc()
@@ -302,7 +302,7 @@ class Calculation:
                             # Otherwise, set up a new profile
                             return 'New', []
                     else:
-                        return False, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
+                        return True, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
                     
                 elif True not in wordCheck and False not in wordCheck and None in wordCheck:
                     if mode != 'rnl':
@@ -322,9 +322,68 @@ class Calculation:
                             # Otherwise, set up a new profile
                             return 'New', []
                     else:
-                        return False, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
+                        return True, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
+                
+                elif True in wordCheck and False in wordCheck and None not in wordCheck:
+                        if mode != 'rnl':
+                            self.lockPc()
+                            # The user then re-authenticates
+                            # Check if user re-authenticates successfully
+                            while True:
+                                if self.checkLocked():
+                                    break
+                            # If the same user,
+                            if getpass.getuser() == self.pf.user:
+                                # Update the relevant words and the semantics stored
+                                self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                                self.updateSemantics()
+                                return True, []
+                            else:
+                                # Otherwise, set up a new profile
+                                return 'New', []
+                        else:
+                            return True, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
+                        
+                elif True in wordCheck and False in wordCheck and None in wordCheck:
+                    if mode != 'rnl':
+                        self.lockPc()
+                        # The user then re-authenticates
+                        # Check if user re-authenticates successfully
+                        while True:
+                            if self.checkLocked():
+                                break
+                        # If the same user,
+                        if getpass.getuser() == self.pf.user:
+                            # Update the relevant words and the semantics stored
+                            self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                            self.updateSemantics()
+                            return True, []
+                        else:
+                            # Otherwise, set up a new profile
+                            return 'New', []
+                    else:
+                        return True, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
+               
                 else:
-                    return False, [(i,j) for i, j in enumerate(wordCheck) if j == False]
+                    if mode != 'rnl':
+                        self.lockPc()
+                        # The user then re-authenticates
+                        # Check if user re-authenticates successfully
+                        while True:
+                            if self.checkLocked():
+                                break
+                        # If the same user,
+                        if getpass.getuser() == self.pf.user:
+                            # Update the relevant words and the semantics stored
+                            self.update([i for i, j  in enumerate(wordCheck) if j == None or j == False])
+                            self.updateSemantics()
+                            return True, []
+                        else:
+                            # Otherwise, set up a new profile
+                            return 'New', []
+                    else:
+                        return True, [i for i, j  in enumerate(wordCheck) if j == None or j == False]
+                
             else:
                 if True in wordCheck:
                     return True, []
