@@ -5,7 +5,8 @@ This is the repository for the above project. It involves recording a users keys
 
 ## Requirements and running the program
 
-The project only runs on Windows 10. It has been tested and created on python 3.9 and as such has only been guarenteed to work on this version. Inside [Code/Application/dist](Code/Application/dist) is an executable called main.exe which will work without python and is the executable for the project. [Code/Application](Code/Application) contains the source code for the project. In order to run it from the source code simply run the [main.py](Code/Application/main.py) file. In order to do this, the following packages are required.
+The project only runs on Windows 10. It has been tested and created on python 3.9 and as such has only been guarenteed to work on this version. The program requires the user to have admin priviliges and as such will not work on university computers.
+Inside [Code/Application/dist](Code/Application/dist) is an executable called main.exe which will work without python and is the executable for the project. [Code/Application](Code/Application) contains the source code for the project. In order to run it from the source code simply run the [main.py](Code/Application/main.py) file. In order to do this, the following packages are required.
 
 | Package      | Version |
 | ----------- | ----------- |
@@ -15,6 +16,7 @@ The project only runs on Windows 10. It has been tested and created on python 3.
 | pip        | 20.2.3 |
 | scipy      | 1.8.0 |
 | setuptools | 9.2.1 |
+| json | any |
 
 Files under [Code/Test code](Code/Test code) may require further packages and are deprecated.
 
@@ -164,4 +166,21 @@ Contains test code that was used when starting the project. Has not been updated
 
 ### Notes
 This contains all things dissertation and notes along with it. The dissertation in pdf form, the interim report and all dissertation related files are stored here. As well as these important documents is a number of note files which I created along the way. The source of the dissertation is also here as I wrote it in LaTeX.
+
+### tester.py
+[Code/Application/tester.py](Code/Application/tester.py)
+Contains all the code necessary to run the tests in the dissertation. Further packages are required for this. These are listed below:
+
+| Package      | Version |
+| ----------- | ----------- |
+| fastdtw    | 0.3.4 |
+| keyboard   | 0.13.5 |
+| numpy      | 1.22.3 |
+| pip        | 20.2.3 |
+| scipy      | 1.8.0 |
+| setuptools | 9.2.1 |
+| matplotlib | any |
+| sklearn | any |
+
+
 

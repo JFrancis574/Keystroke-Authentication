@@ -20,6 +20,8 @@ class Training(Calculation):
         self.success = self.genKDSAndSave()
     
     def genKDSAndSave(self):
+        """Simply generates and saves the KD signal 
+        """
         for x in range(0, len(self.wordsOut)):
             fileName = self.wordsOut[x].word+'.json'
             Kds = self.wordsOut[x].compress()
@@ -35,6 +37,11 @@ class Training(Calculation):
         return True
     
     def usesPunc(self):
+        """Very simple function to check if the user uses punctuation
+
+        Returns:
+            dict: Punc dict
+        """
         out = {}
         for x in self.pairs:
             if x[0] in ['alt', 'shift', 'ctrl', 'caps lock']:

@@ -104,7 +104,6 @@ def runner(id, prof, stop):
             if stop():
                 break
             decision, index = inter.validation(mode='r')
-            print(decision, index)
             if decision == False:
                 break
         else:

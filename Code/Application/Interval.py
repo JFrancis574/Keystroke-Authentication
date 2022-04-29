@@ -194,6 +194,9 @@ class Calculation:
 
                     # FastDTW implementation by slaypni
                     # https://github.com/slaypni/fastdtw
+                    
+                    # Euclidean distance implementation by scipy
+                    # https://scipy.org/
                     euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
                     
                     if self.stop():
@@ -225,12 +228,11 @@ class Calculation:
                 else:
                     # If the word has never been seen before
                     distances[x] = [None, None]
-                print(distances)
             
             
                 
             bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-            bandingCorr = 0.85 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
+            bandingCorr = 0.80 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
             bandingChange = 0.02 # The decrease for correct semantics. SUBJECT TO CHANGE
             
             if self.stop():
@@ -366,7 +368,6 @@ class Calculation:
         else:
             # Only in use in test mode
             # Current reg system, just generate and save KDS for every word
-            # TEMP  - WILL NEED IMPROV
             for x in range(0, len(self.wordsOut)):
                 fileName = self.wordsOut[x].word+'.json'
                 Kds = self.wordsOut[x].compress()

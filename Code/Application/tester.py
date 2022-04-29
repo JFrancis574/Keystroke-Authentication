@@ -2,14 +2,14 @@ import json
 import random
 
 from matplotlib import pyplot as plt
-import numpy as np
 from Training import Training
 import user_profile as p
 import os
 import time as t
 from Interval import Calculation
 import timeit
-from fastdtw import fastdtw
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import numpy as np
 
 from sys import platform
 
@@ -19,7 +19,20 @@ else:
     import keyboard as k
 
 def testerDataFormer(string, holdTime, floatTime, file=0, variable=0):
+    """Used to form test data
+
+    Args:
+        string (string): The word to "type" out
+        holdTime (float or array): The holdtime if array iterates through
+        floatTime (float or array): The floattime if array iterates through
+        file (int, optional): If to load in from file. Defaults to 0.
+        variable (int, optional): If to variablise the data. Defaults to 0.
+
+    Returns:
+        KeyboardEvent: KeyboardEvent rep of input
+    """
     output = []
+    # if file
     if file == 0:
         data = string
     else:
@@ -28,6 +41,8 @@ def testerDataFormer(string, holdTime, floatTime, file=0, variable=0):
         else:
             return
     
+    
+    # Check what types the data hold
     if isinstance(holdTime, float) and isinstance(floatTime, float):
         time = t.time()
         for x in data:
@@ -71,14 +86,29 @@ def testerDataFormer(string, holdTime, floatTime, file=0, variable=0):
             return output
         
 def multipleTestRunner(Teststring, iterations, imposterCount, genuineHoldData, genuineFloatData, imposterHoldData, imposterFloatData, benchmark=0):
+    """Used to run multiple tests
+
+    Args:
+        Teststring (string): The string to run the tests on
+        iterations (int): How many tests
+        imposterCount (int): How many are imposters
+        genuineHoldData (array, float): The array of genuine hold data
+        genuineFloatData (array, float): The array of genuine float data 
+        imposterHoldData (array, float): The array of imposter hold data 
+        imposterFloatData (array, float): The array of imposter float data 
+        benchmark (int, optional): If no benchmark exists. Defaults to 0.
+
+    Returns:
+        dict: The resultant scores
+    """
     if iterations == 0 or Teststring == "":
         return
     pf = p.Profile('Test')
     
+    # Creates the benchmark
     if benchmark == 0:
          # No benchmark exists
         print("Creating Benchmark")
-        # iterations -= 1
         startCount = 1
        
         if isinstance(Teststring, str):
@@ -161,127 +191,74 @@ def multipleTestRunnerVariable(string, midValueHold, midValueFloat, variableAmou
         countFloat += everyXFloat
         count += 1
     return output
+
+
+def testDataFormerInter(data, holdTime, floatTime, r=0):
+    """Uses interleaving
+
+    Args:
+        data (string): The test data to generate
+        holdTime (float): The holdtime
+        floatTime (float): The floattime
+        r (int, optional): If it is random or not. Defaults to 0.
+
+    Returns:
+        array of KeyboardEvent: The resulting data
+    """
+    time = t.time()
+    output = []
+    if r == 1:
+        x = 0
+        while x < len(data):
+            if random.choice([0,1]) == 0 or x == len(data)-1:
+                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
+                time+= holdTime
+                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
+                time += floatTime
+                x += 1
+            else:
+                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
+                output.append(k.KeyboardEvent('down', 99, name=data[x+1], time=time))
+                time+= holdTime
+                output.append(k.KeyboardEvent('up', 99, name=data[x+1], time=time))
+                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
+                time += floatTime
+                x += 2
+    else:
+        x = 0
+        while x < len(data):
+            if x % 2 == 0 or x == len(data)-1:
+                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
+                time+= holdTime
+                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
+                time += floatTime
+                x += 1
+            else:
+                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
+                output.append(k.KeyboardEvent('down', 99, name=data[x+1], time=time))
+                time+= holdTime
+                output.append(k.KeyboardEvent('up', 99, name=data[x+1], time=time))
+                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
+                time += floatTime
+                x += 2
+
+    return output
         
     
 def displayDictNice(dict, roundValue):
+    """Simply prints the dict nicely
+
+    Args:
+        dict (dict): The dict to be displayed nicely
+        roundValue (_type_): _description_
+    """
     if len(list(dict.keys())) == 0:
         return
     print("TNO: HT: FT: D:")
     values = list(dict.values())
     for i in range(len(list(dict.keys()))):
         print(i, round(values[i][0], roundValue), round(values[i][1], roundValue), values[i][2])
-    
-    
-    
-
-def decompress(data):
-        """Used to decompress the data that is stored in and convert it into the required dictionary
-
-        Args:
-            data (dictionary): The compressed data
-
-        Returns:
-            dict: The uncompressed data, very large
-        """
-        outDict = {}
-        multiplier = int(str(1) + 4*str(0))
-        multiplierPlus1 = int(str('11') + str(int(4-1)*'0'))
-        for x in data:
-            startTime = list(x.values())[0][0]
-            endTime = list(x.values())[0][1]
-            value = list(x.values())[1]
-            for x in range(int(startTime*multiplier), int(endTime*multiplierPlus1)+1):
-                outDict[x/multiplier] = value
-        return outDict
-            
-# out = multipleTestRunner("geographically", 10, 5, [0.1, 0.1, 0.15, 0.125, 0.12, 0.11, 0.09, 0.1, 0.099, 0.1], [0.01, 0.015, 0.02, 0.012, 0.013, 0.014, 0.013, 0.011, 0.02, 0.02], [1.0, 1.0, 3.0, 5.0, 6.0, 9.0, 3.0, 2.0, 2.0, 5.0], [0.1, 0.5, 0.2, 0.1, 0.25, 0.2, 0.2, 0.1, 0.7, 0.34], 0)           
-# print("Stats:")
-# for i in range(len(list(out.keys()))):
-#     print(list(out.keys())[i], list(out.values())[i])
-# MaxHold = 0.15 MaxFloat = 0.02
-# displayDictNice(multipleTestRunnerVariable('hello', 0.1, 0.01, 0.05, 0.01, 100), 3)
-# displayDictNice(multipleTestRunnerVariable("geographically", 1.0,1.0,0.5,0.5,10),3)
-
-
-
-# start = t.time()
-# data1 = testerDataFormer("hello", 1.0,1.0,0,0)
-
-# # i = Calculation(data1, start, p.User_Profile("Test"), 0)
-# # make = i.validation(mode='t')
-
-# # i = Calculation(data1, start, p.User_Profile("Test"), 0)
-# # make = i.validation(mode='rnl')
-
-# start = t.time()
-# data1 = testerDataFormer("hello", 1.0, 1.0, 0,0)
-# start2 = t.time()
-# data2 = testerDataFormer("hello", 1.5,1.5,0,0)
-
-# inter1 = Calculation(data1, start, p.User_Profile("Test"), 0)
-# data1KDS = inter1.chosen[0].KDSWord()
-# inter2 = Calculation(data2, start2, p.User_Profile("Test"), 0)
-# data2KDS = inter2.chosen[0].KDSWord()
-
-# print(data1KDS)
-# print(list(data1KDS.keys()))
-
-
-# # KDS1 = {0.1 : 1, 0.2 : 2, 0.3 : 3, 0.4 : 3, 0.5 : 2, 0.6 : 2, 0.7 : 1, 0.8 : 0, 0.9 : 1}
-# # KDS2 = {0.1 : 1, 0.2 : 2, 0.3 : 2, 0.4 : 2, 0.5 : 1, 0.6 : 0.5, 0.7 : 2, 0.8 : 2}
-
-# KDS1 = data1KDS
-# KDS2 = data2KDS
-
-# plt.subplot(2,1,1)
-# plt.plot(list(KDS1.keys()), list(KDS1.values()))
-# plt.title("KDS signal generated for the word hello")
-# plt.xlabel("Time (Seconds)")
-# plt.ylabel("KDS")
-# plt.show()
-
-# # plt.subplot(2,1,2)
-# plt.plot(list(KDS2.keys()), list(KDS2.values()))
-# plt.title("KDS signal generated for the word hello")
-# plt.xlabel("Time (Seconds)")
-# plt.ylabel("KDS")
-# plt.show()
-
-# plt.plot(list(KDS1.keys()), list(KDS1.values()), label="First user")
-# plt.plot(list(KDS2.keys()), list(KDS2.values()), label="Second user")
-# plt.legend(loc="upper left")
-# plt.title("KDS signal generated for the word hello")
-# plt.xlabel("Time (Seconds)")
-# plt.ylabel("KDS")
-# plt.show()
-
-# x = list(KDS1.values())
-# y = list(KDS2.values())
-
-
-# distance, path = fastdtw(x, y, dist=None)
-
-# x_path, y_path = zip(*path)
-# x_path = np.asarray(x_path)
-# y_path = np.asarray(y_path)
-# x_warped = x[x_path]
-# y_warped = y[y_path]
-
-
-# plt.plot(list(KDS1.keys()), x_warped)
-# plt.title("KDS signal 1 after going through Dynamic Time Warping")
-# plt.xlabel("Time (Seconds)")
-# plt.ylabel("KDS")
-# plt.show()
-
-# plt.plot(list(KDS2.keys()), y_warped)
-# plt.title("KDS signal 1 after going through Dynamic Time Warping")
-# plt.xlabel("Time (Seconds)")
-# plt.ylabel("KDS")
-# plt.show()
-    
-
-
+                
 def test1():
     print(1)
     start = 0.1
@@ -335,104 +312,115 @@ def test1():
     plt.xlabel("HoldTime")
     plt.ylabel("Decision")
     plt.show()
+    
+    
+def record(interval, words, expected):
+    """Recording keystrokes function
 
+    Args:
+        interval (float): How long to record for
 
-def testDataFormerInter(data, holdTime, floatTime, r=0):
-    time = t.time()
-    output = []
-    if r == 1:
-        x = 0
-        while x < len(data):
-            if random.choice([0,1]) == 0 or x == len(data)-1:
-                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
-                time+= holdTime
-                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
-                time += floatTime
-                x += 1
-            else:
-                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
-                output.append(k.KeyboardEvent('down', 99, name=data[x+1], time=time))
-                time+= holdTime
-                output.append(k.KeyboardEvent('up', 99, name=data[x+1], time=time))
-                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
-                time += floatTime
-                x += 2
-    else:
-        x = 0
-        while x < len(data):
-            if x % 2 == 0 or x == len(data)-1:
-                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
-                time+= holdTime
-                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
-                time += floatTime
-                x += 1
-            else:
-                output.append(k.KeyboardEvent('down', 99, name=data[x], time=time))
-                output.append(k.KeyboardEvent('down', 99, name=data[x+1], time=time))
-                time+= holdTime
-                output.append(k.KeyboardEvent('up', 99, name=data[x+1], time=time))
-                output.append(k.KeyboardEvent('up', 99, name=data[x], time=time))
-                time += floatTime
-                x += 2
-
-    return output
-
-def test2():
-    print(2)
-    start = 0.1
-    end = 1.0
-    ref = 0.5
-    floatTime = 0.1
-    decisions = {}
-    euc = {}
-    corr = {}
+    Returns:
+        keystroke data: Comprised of a dictionary
+        starttime: Comprised of the starttime of the data
+    """
+    recorded = []
+    # Uses pythons builtin time library
+    # https://docs.python.org/3/library/time.html
     startTime = t.time()
-    referenceData = testDataFormerInter("geographically", ref , floatTime, r=0)
+
+    print("Recording")
+    print("Write the following words")
+    print(words)
+    print(expected)
+    # Uses the keyboard lib to unhook and hook the data
+    # Implementation by Broppeh
+    # https://github.com/boppreh/keyboard
+    keyBoardHook = k.hook(recorded.append)
+    t.sleep(interval)
+    print("Stopping")
+    k.unhook(keyBoardHook)
+    return recorded, startTime
+
+def process(data, start):
+    """
+    Converts the raw keystroke data into a pair consisting of both the up and down actions.
+
+    Returns:
+        2D array: 2 dimensional array consisting of a seperate array for each key action. Converts the time into one that can actually be used.
+    """
+    if len(data) == 0:
+        return []
+    rawKeys = []
+    for record in data:
+        rawKeys.append([record.name, (record.time - start), record.event_type])
+    return rawKeys
+
+
+def test2(all=False):
+    print(2)
+    stop = False
+    interval = 60
+    tests = 4
+    expected = [[True, True, True, True], [True, True, False, True], [False, False, False, False], [True, False, True, False]]
+    words = ["Hello", "google", "words", "geographically"]
+    outputDist = {}
+    outputDec = {}
     prof = p.User_Profile("Test")
-    inter = Training(referenceData, startTime, prof, 0,0)
-    x = start
-    while x <= end:
-        x = round(x, 1)
-        startTime = t.time()
-        data = testDataFormerInter("geographically", x, floatTime, r=0)
-        distance, output = Calculation(data, startTime, prof,0).validation(mode='t')
-        euc[x] = list(distance.values())[0][0]
-        corr[x] = list(distance.values())[0][1]
-        decisions[x] = output
-        x += 0.2
+    if len(os.listdir(prof.getKeyboardPath())) == 0:
+        print("Benchmark")
+        data, start = record(interval, words, [])
+        train = Training(data, start, prof, 1, None, 0)
+        print("Benchmark Done")
+        
+    i = 3
+    while i < tests:
+        data, start = record(interval, words, expected[i])
+        inter = Calculation(data, start, prof, 1, lambda: stop)
+        distances, decision = inter.validation(mode='t')
+        print(decision)
+        if decision == expected[i] or all == True:
+            outputDist[i] = distances
+            outputDec[i] = decision
+            filename = "Words"+str(i)+'.json'
+            data = process(data, start)
+            with open(filename, 'w') as write:
+                json.dump(data, write)
+            i += 1
+        else:
+            print("Doesn't match")
+            
+def loadInJson(data):
+    with open(data, 'r') as read:
+        rawData = json.load(read)
+    return rawData
 
+# test2(all=True)
 
-    # Euc Graph
-    x = list(euc.keys())
-    y = list(euc.values())
-
-    plt.plot(x,y)
-    plt.title("Euclidean Distance")
-    plt.xlabel("HoldTime")
-    plt.ylabel("Euc Score")
+def confMatrix():
+    files = ["Words0.json","Words1.json","Words2.json","Words3.json",]
+    stop = False
+    prof = p.User_Profile("Test")
+    allDec = []
+    expected = [True, True, True, True, True, True, False, True, False, False, False, False, True, False, True, False]
+    for x in files:
+        inter = Calculation([], [], prof, 1, lambda: stop)
+        inter.processed = loadInJson(x)
+        inter.pairs = inter.rawPairs()
+        inter.wordsOut, inter.semantics = inter.words()
+        inter.noWords = len(inter.wordsOut)
+        inter.chosen = inter.choose()
+        _, dec = inter.validation(mode='t')
+        allDec.append(dec)
+    allDec = np.asarray(allDec)
+    final = allDec.ravel()
+    cm = confusion_matrix(expected, final)
+    disp = ConfusionMatrixDisplay(cm)
+    disp.plot()
     plt.show()
+    
+confMatrix()
 
-    # Corr Graph
-    x = list(corr.keys())
-    y = list(corr.values())
-
-    plt.plot(x, y)
-    plt.title("2D Correlation Score")
-    plt.xlabel("HoldTime")
-    plt.ylabel("Correlation Score")
-    plt.show()
-
-    # Decisions
-    x = list(decisions.keys())
-    y = list(decisions.values())
-
-    plt.plot(x, y)
-    plt.title("Decisions")
-    plt.xlabel("HoldTime")
-    plt.ylabel("Decision")
-    plt.show()
-
-test2()
 
 
 

@@ -86,7 +86,7 @@ class Word:
         Returns:
             array: Consists of a string of key values pairs from the dictionary
         """
-        return [{'key':k, 'value': v} for k, v in mapping.items()]
+        return [{'range':k, 'value': v} for k, v in mapping.items()]
     
     def compress(self):
         """Compressed the KD data into ranges to save space. e.g. will convert {0.5 : 1, 0.6 : 1, 0.7 : 1, 0.8 : 0, 0.9 : 0 } into {0.5 - 0.7 : 1, 0.8 - 0.9 : 0}
