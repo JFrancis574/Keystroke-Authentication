@@ -74,7 +74,7 @@ PLAG DEC
 
 \chapter*{Abstract}
 
-Many security systems in use today are one-time systems such as passwords and biometrics are only useful at login. If a user has authenticated and then an imposter takes control, these systems are useless. This paper presents an approach for a continuous system which uses keystroke dynamics along with 2D correlation co-efficient and Dynamic Time Warping to ensure that the user is genuine and if an imposter user is detected will force the user to re-authenticate. The system works around two main features, Words and Intervals. Data is collected in intervals, formed into word and then validation is performed on these words using KD signals, Dynamic Time Warping, Euclidean Distance and Correlation Co-efficient.The system also contains a training phase which is designed to ensure that the learning process is useful along with a play/pause functionality which ensures that the users privacy is respected. The produced system which is based along these lines is fast, secure and accurate and fulfils the aims and objective set out at the start of the project. The system is also designed to take as little space on the users storage as possible through the introduction of a compression and decompression functions. The system also contains a simple update function which allows it to learn users.  The system boasts an accuracy of XXX which is very good and should ensure that the user feels protected and secure at all times.
+Many security systems in use today are one-time systems such as passwords and biometrics are only useful at login. If a user has authenticated and then an imposter takes control, these systems are useless. This paper presents an approach for a continuous system which uses keystroke dynamics along with 2D correlation co-efficient and Dynamic Time Warping to ensure that the user is genuine and if an imposter user is detected will force the user to re-authenticate. The system works around two main features, Words and Intervals. Data is collected in intervals, formed into word and then validation is performed on these words using KD signals, Dynamic Time Warping, Euclidean Distance and Correlation Co-efficient.The system also contains a training phase which is designed to ensure that the learning process is useful along with a play/pause functionality which ensures that the users privacy is respected. The produced system which is based along these lines is fast, secure and accurate and fulfils the aims and objective set out at the start of the project. The system is also designed to take as little space on the users storage as possible through the introduction of a compression and decompression functions. The system also contains a simple update function which allows it to learn users.  The system boasts an accuracy of \(87.5\%\) which is very good and should ensure that the user feels protected and secure at all times.
 
 \tableofcontents
 
@@ -721,23 +721,35 @@ Figure \ref{fig:2DGraph} graphs the hold time against the 2D correlation score. 
 
 The raw data points to another interesting anomaly in the data, \(0.9\) if following the trend should have a euclidean distance greater than in \(0.8\) and a 2D correlation co-efficient less than in \(0.8\). However, this is not the case. This small anomaly doesn't affect the system in a huge way. Calculating the accuracy of this data we can see that 9/10 data sets follow the trend leading to an accuracy of 90%.
 
-\section{Test 2: Decisions}
+\section{Test 2: System Test}
 
-The next logical test to do is to test whether the decision being made. This is where the measures defined in the first paragraph of this section come into use. This test essentially tests whether the system can tell the difference between a genuine and an imposter user. In order to do this, I generated and saved some test data. Due to my program only choosing four words from an interval, each interval is comprised of only four words that are the same for each test. Any more and the program would not be able to test each interval correctly. No data is updated in the intervals and the sets of data are tested against a genuine sample of the users data. Different combinations are stored in these intervals. For example, in the first interval, all four words might be genuine whereas in the next interval, there might be three imposter words and one genuine. All possibilities are tested and written below. A copy of the data is stored inside the gitlab under test/data.
+The next logical thing to test in my program is the general accuracy of the decisions it makes. The best way to do this was to simulate the programs use by recording a number of intervals where certain actions happen and seeing the FP, FN, TP, TN rate. All tests were done with the same four words which were all compared against the benchmark figure installed at the start. The words were "Hello google words geographically". These were chosen as they are of different lengths and as such allow me to also test the semantics validation procedure due to the presence of capital letters. The following tests were done, the program should categorise genuine words as true and imposter as false.
 
-The first possibility is that one word in the four is an imposter user
+\begin{enumerate}
+	\item All words are genuine 
+	\item Word 3 is an imposter, all others are genuine
+	\item All words are imposters
+	\item Words 1 and 3 are genuine, Words 2 and 4 are imposters
+\end{enumerate}
 
+Figure \ref{fig:ConfMat} shows the confusion matrix produced after running the tests. 1 indicates true and 0 false. In order to calculate this, I input the expected result as defined above, and the actual result returned by my system for each word. The results look good with 14 out of the 16 words returning the expected result. However, whilst we had no false negatives we had two false positives. This indicates an error rate of \(12.5\%\) which is acceptable for a program such as this. Thus the true accuracy of the system is \(87.5\%\) which I feel is a very good for a system of this type.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.48]{ConfMatrixTest2}
+	\caption{Confusion Matrix of Test Results}
+	\label{fig:ConfMat}
+\end{figure}
 
+In the future, in order to improve the true accuracy, I could implement the Wigner distribution which has been proven to increase the accuracy along with increasing the number of data points produced per word. I would also expand the number of tests done, as a sample size of 16 words is relatively small and more words would allow me to evaluate the system better. Despite this, this test is still good and it shows the perceived accuracy of the system.
 
+This test also allows me to measure the speed of the program. Figure \ref{fig:Time} shows the times taken to perform the validation procedure. The average time taken to perform the interval validation procedure is around 21 second, however this figure is inflated by one particularly long validation score which is around four times larger than the rest. Three of the four scores are between 7 and 17 which is a good time for the procedure and as such ensures that the program is fast enough.
 
-\begin{itemize}
-	\item Test Results
-	\item Calc and use FP, FN, TP, TN - get a percentage
-	\item Discuss in relation to validation measure
-	\item Mention struggling with small words maybe???
-	\item Speed, security??
-\end{itemize}
-
+\begin{figure}
+	\centering
+	\includegraphics{Time}
+	\caption{The time taken to perform the calculations in the test}
+	\label{fig:Time}
+\end{figure}
 
 \chapter{Critical Appraisal}
 
@@ -795,39 +807,6 @@ Keystroke dynamics authentication systems are at an early stage in their develop
 
 Doing this project, enabled me to grow my skill base and as such improve my knowledge of many elements of the project life cycle. Whilst doing this project, I primarily learnt about data and how to manipulate it. I've learnt a lot about a number of different algorithms that I had no clue existed such as the Dynamic Time Warping algorithm in use in my project and the Wigners Distribution that I learnt about it in preparation for this project. I also learnt a lot about the use of git during the development life cycle. One example of how I've applied this new knowledge is my use of issues, branches and merge requests inside my Gitlab. This allowed me to develop new features whilst also safeguarding the work I've already done. Doing the project has also allowed me to further my knowledge of python which has allowed me to code in a more confident manner in the future. I've also developed further independent learning skills such as timekeeping due to the need to keep to deadlines. Doing this project whilst also juggling other university work and a part time job has ensured that I've come out of this project, not only with greater knowledge of   the algorithms and language I was using but also with better time-keeping skills and a more hard working nature.
 
-\begin{enumerate}
-	\item Summary and crit analysis
-	\begin{itemize}
-		\item System works very well - provide examples using test data??
-		\item System is lightweight and secure
-		\item Compared to og planned, system is more complicated
-		\item Struggles with smaller words - less data points
-		\item NEED TO COME BACK TO THIS, NOT DETAILED AT ALL
-	\end{itemize}
-	\item Impact
-	\begin{itemize}
-		\item Benefits 
-		\begin{itemize}
-			\item better security in combo with other sec methods
-			\item Lightweight and users won't notice
-			\item Doesn't spy on people due to only storing KDS and can turn off when user is doing something sensitive
-			\item Can be adapted to be used in the real word easily
-		\end{itemize}
-		\item Risks
-		\begin{itemize}
-			\item Greater surveillance
-			\item Could easily be adapted maliciously - key logger
-			\item NEED MORE
-		\end{itemize}
-	\end{itemize}
-	\item Personal Development
-	\begin{itemize}
-		\item Maths, maths, maths
-		\item Further git knowledge???
-		\item Exp Project Development
-		\item MORE
-	\end{itemize}
-\end{enumerate}
 \chapter{Conclusion}
 
 Comparing the produced system and the planned system brings up a number of differences between the two. Whilst the produced system is more complex as a result of the increased features in play, it still is true to the original aims and objectives. For example, the aims stated the proposed system should be lightweight, accurate and secure and I feel that to a large extent this has been achieved. The aims also stated that the system should have the ability to form profiles for users which I feel as though my system does to an even higher standard than originally stated. The planned system should also have the ability to lock the user out which is inside the completed system. Overall, I believe that the system produced meets the original aims of the project and as such can be judged a success.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  29 APR 2022 13:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  30 APR 2022 17:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -262,19 +262,21 @@ Package caption Info: End \AtBeginDocument code.
 [1
 
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[1] [2
+[1]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 77.
 
-] (./Dissertation Sauce2.toc
-LaTeX Font Info:    Trying to load font information for U+msa on input line 5.
-
-(/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 5.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 77.
+
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
+) [2
+
+]
+(./Dissertation Sauce2.toc)
 \tf@toc=\write3
 \openout3 = `"Dissertation Sauce2.toc"'.
 
@@ -290,17 +292,17 @@ Chapter 2.
 
 ] [3]
 Chapter 3.
-<./Images//OOP.png, id=31, 427.5975pt x 261.97874pt>
+<./Images//OOP.png, id=32, 427.5975pt x 261.97874pt>
 File: ./Images//OOP.png Graphic file (type png)
 <use ./Images//OOP.png>
 Package pdftex.def Info: ./Images//OOP.png  used on input line 122.
 (pdftex.def)             Requested size: 165.59853pt x 101.45575pt.
-<./Images//OldPlan.png, id=33, 453.695pt x 279.0425pt>
+<./Images//OldPlan.png, id=34, 453.695pt x 279.0425pt>
 File: ./Images//OldPlan.png Graphic file (type png)
 <use ./Images//OldPlan.png>
 Package pdftex.def Info: ./Images//OldPlan.png  used on input line 131.
 (pdftex.def)             Requested size: 317.58434pt x 195.3284pt.
-<./Images//SystemPlan.png, id=34, 603.25375pt x 372.39125pt>
+<./Images//SystemPlan.png, id=35, 603.25375pt x 372.39125pt>
 File: ./Images//SystemPlan.png Graphic file (type png)
 <use ./Images//SystemPlan.png>
 Package pdftex.def Info: ./Images//SystemPlan.png  used on input line 137.
@@ -309,12 +311,12 @@ Package pdftex.def Info: ./Images//SystemPlan.png  used on input line 137.
 
  <./Images//OOP.png>] [5 <./Images//OldPlan.png> <./Images//SystemPlan.png>]
 [6]
-<./Images//MathsBackend.png, id=47, 83.31125pt x 320.19624pt>
+<./Images//MathsBackend.png, id=48, 83.31125pt x 320.19624pt>
 File: ./Images//MathsBackend.png Graphic file (type png)
 <use ./Images//MathsBackend.png>
 Package pdftex.def Info: ./Images//MathsBackend.png  used on input line 158.
 (pdftex.def)             Requested size: 103.50105pt x 397.82095pt.
-<./Images//NewMaths.png, id=48, 121.45375pt x 382.42876pt>
+<./Images//NewMaths.png, id=49, 121.45375pt x 382.42876pt>
 File: ./Images//NewMaths.png Graphic file (type png)
 <use ./Images//NewMaths.png>
 Package pdftex.def Info: ./Images//NewMaths.png  used on input line 165.
@@ -323,7 +325,7 @@ Package pdftex.def Info: ./Images//NewMaths.png  used on input line 165.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<./Images//KeyboardEvent.png, id=49, 354.32375pt x 29.10875pt>
+<./Images//KeyboardEvent.png, id=50, 354.32375pt x 29.10875pt>
 File: ./Images//KeyboardEvent.png Graphic file (type png)
 <use ./Images//KeyboardEvent.png>
 Package pdftex.def Info: ./Images//KeyboardEvent.png  used on input line 194.
@@ -332,20 +334,20 @@ Package pdftex.def Info: ./Images//KeyboardEvent.png  used on input line 194.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [7] [8 <./Images//MathsBackend.png> <./Images//NewMaths.png>]
-<./Images//KeyboardEventPreProc.png, id=59, 151.56625pt x 29.10875pt>
+<./Images//KeyboardEventPreProc.png, id=60, 151.56625pt x 29.10875pt>
 File: ./Images//KeyboardEventPreProc.png Graphic file (type png)
 <use ./Images//KeyboardEventPreProc.png>
 Package pdftex.def Info: ./Images//KeyboardEventPreProc.png  used on input line
  205.
 (pdftex.def)             Requested size: 165.59853pt x 31.80429pt.
-<./Images//SimplePairing.png, id=60, 223.83624pt x 117.43875pt>
+<./Images//SimplePairing.png, id=61, 223.83624pt x 117.43875pt>
 File: ./Images//SimplePairing.png Graphic file (type png)
 <use ./Images//SimplePairing.png>
 Package pdftex.def Info: ./Images//SimplePairing.png  used on input line 217.
 (pdftex.def)             Requested size: 131.10168pt x 68.7865pt.
  [9 <./Images//KeyboardEvent.png> <./Images//KeyboardEventPreProc.png> <./Image
 s//SimplePairing.png>]
-<./Images//PairingWrong.png, id=69, 238.8925pt x 132.495pt>
+<./Images//PairingWrong.png, id=70, 238.8925pt x 132.495pt>
 File: ./Images//PairingWrong.png Graphic file (type png)
 <use ./Images//PairingWrong.png>
 Package pdftex.def Info: ./Images//PairingWrong.png  used on input line 229.
@@ -471,19 +473,32 @@ File: ./Images//CorrGraph.png Graphic file (type png)
 <use ./Images//CorrGraph.png>
 Package pdftex.def Info: ./Images//CorrGraph.png  used on input line 695.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
- [28 <./Images//EUCGraph.png>] [29 <./Images//CorrGraph.png>]
+ [28 <./Images//EUCGraph.png>]
+<./Images//ConfMatrixTest2.jpeg, id=175, 717.6411pt x 704.6325pt>
+File: ./Images//ConfMatrixTest2.jpeg Graphic file (type jpg)
+<use ./Images//ConfMatrixTest2.jpeg>
+Package pdftex.def Info: ./Images//ConfMatrixTest2.jpeg  used on input line 738
+.
+(pdftex.def)             Requested size: 344.4638pt x 338.21977pt.
+ [29 <./Images//CorrGraph.png>]
+<./Images//Time.png, id=180, 114.4275pt x 56.46094pt>
+File: ./Images//Time.png Graphic file (type png)
+<use ./Images//Time.png>
+Package pdftex.def Info: ./Images//Time.png  used on input line 749.
+(pdftex.def)             Requested size: 114.42722pt x 56.46078pt.
+ [30 <./Images//ConfMatrixTest2.jpeg>] [31 <./Images//Time.png>]
 Chapter 5.
-[30
+[32
 
-] [31]
-<./Images//GantChartAll.png, id=186, 1258.7025pt x 411.5375pt>
+] [33]
+<./Images//GantChartAll.png, id=195, 1258.7025pt x 411.5375pt>
 File: ./Images//GantChartAll.png Graphic file (type png)
 <use ./Images//GantChartAll.png>
-Package pdftex.def Info: ./Images//GantChartAll.png  used on input line 776.
+Package pdftex.def Info: ./Images//GantChartAll.png  used on input line 788.
 (pdftex.def)             Requested size: 339.85422pt x 111.11661pt.
- [32 <./Images//GantChartAll.png (PNG copy)>] [33] [34] [35]
+ [34 <./Images//GantChartAll.png (PNG copy)>] [35] [36]
 Chapter 6.
-(./Dissertation Sauce2.bbl [36
+(./Dissertation Sauce2.bbl [37
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 53--56
@@ -502,7 +517,7 @@ Overfull \hbox (73.55641pt too wide) in paragraph at lines 58--62
 ial.distance.euclidean.html,
  []
 
-[37
+[38
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 68--71
@@ -516,12 +531,12 @@ Underfull \hbox (badness 1331) in paragraph at lines 68--71
 essed:
  []
 
-) [38] (./Dissertation Sauce2.aux) ) 
+) [39] (./Dissertation Sauce2.aux) ) 
 Here is how much of TeX's memory you used:
- 7305 strings out of 478268
- 117834 string characters out of 5846347
+ 7337 strings out of 478268
+ 118556 string characters out of 5846347
  644713 words of memory out of 5000000
- 25459 multiletter control sequences out of 15000+600000
+ 25488 multiletter control sequences out of 15000+600000
  476139 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,9n,63p,1725b,1343s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -543,10 +558,10 @@ cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 tt9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm100
 0.pfb>
-Output written on "Dissertation Sauce2.pdf" (42 pages, 1003413 bytes).
+Output written on "Dissertation Sauce2.pdf" (43 pages, 1050683 bytes).
 PDF statistics:
- 280 PDF objects out of 1000 (max. 8388607)
- 145 compressed objects within 2 object streams
+ 287 PDF objects out of 1000 (max. 8388607)
+ 148 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 146 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 156 words of extra memory for PDF output out of 10000 (max. 10000000)
 
