@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  30 APR 2022 17:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  1 MAY 2022 18:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -414,48 +414,48 @@ alidationProc.png>]
 <./Images//WordCheck.png, id=120, 288.07625pt x 33.12375pt>
 File: ./Images//WordCheck.png Graphic file (type png)
 <use ./Images//WordCheck.png>
-Package pdftex.def Info: ./Images//WordCheck.png  used on input line 417.
+Package pdftex.def Info: ./Images//WordCheck.png  used on input line 415.
 (pdftex.def)             Requested size: 288.07553pt x 33.12366pt.
  [17 <./Images//WordCheck.png>]
 <./Images//IfLen1.png, id=125, 596.2275pt x 628.3475pt>
 File: ./Images//IfLen1.png Graphic file (type png)
 <use ./Images//IfLen1.png>
-Package pdftex.def Info: ./Images//IfLen1.png  used on input line 430.
+Package pdftex.def Info: ./Images//IfLen1.png  used on input line 428.
 (pdftex.def)             Requested size: 238.48677pt x 251.33455pt.
  [18 <./Images//IfLen1.png>]
 <./Images//EucVs2D.png, id=130, 185.19188pt x 272.51813pt>
 File: ./Images//EucVs2D.png Graphic file (type png)
 <use ./Images//EucVs2D.png>
-Package pdftex.def Info: ./Images//EucVs2D.png  used on input line 471.
-(pdftex.def)             Requested size: 131.10168pt x 192.92369pt.
+Package pdftex.def Info: ./Images//EucVs2D.png  used on input line 462.
+(pdftex.def)             Requested size: 92.5957pt x 136.25873pt.
 
-[19 <./Images//EucVs2D.png>] [20] [21] [22]
+[19] [20 <./Images//EucVs2D.png>] [21] [22]
 <./Images//UncompressedData.png, id=145, 347.2975pt x 820.06375pt>
 File: ./Images//UncompressedData.png Graphic file (type png)
 <use ./Images//UncompressedData.png>
-Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 571
+Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 560
 .
 (pdftex.def)             Requested size: 131.10168pt x 309.5753pt.
  [23 <./Images//UncompressedData.png>] [24]
 <./Images//FolderStruct.png, id=153, 197.23688pt x 487.06969pt>
 File: ./Images//FolderStruct.png Graphic file (type png)
 <use ./Images//FolderStruct.png>
-Package pdftex.def Info: ./Images//FolderStruct.png  used on input line 617.
+Package pdftex.def Info: ./Images//FolderStruct.png  used on input line 606.
 (pdftex.def)             Requested size: 96.59958pt x 238.54732pt.
 
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 62
-3.
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 61
+2.
 
 <./Images//PauseEx.png, id=154, 330.48468pt x 333.49594pt>
 File: ./Images//PauseEx.png Graphic file (type png)
 <use ./Images//PauseEx.png>
-Package pdftex.def Info: ./Images//PauseEx.png  used on input line 631.
+Package pdftex.def Info: ./Images//PauseEx.png  used on input line 620.
 (pdftex.def)             Requested size: 137.9979pt x 139.25822pt.
 <./Images//PlayEx.png, id=155, 328.97906pt x 334.24875pt>
 File: ./Images//PlayEx.png Graphic file (type png)
 <use ./Images//PlayEx.png>
-Package pdftex.def Info: ./Images//PlayEx.png  used on input line 638.
+Package pdftex.def Info: ./Images//PlayEx.png  used on input line 627.
 (pdftex.def)             Requested size: 137.9979pt x 140.2101pt.
 [25 <./Images//PauseEx.png> <./Images//PlayEx.png> <./Images//FolderStruct.png>
 ] [26]
@@ -463,7 +463,7 @@ Chapter 4.
 <./Images//EUCGraph.png, id=165, 462.528pt x 346.896pt>
 File: ./Images//EUCGraph.png Graphic file (type png)
 <use ./Images//EUCGraph.png>
-Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 686.
+Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 675.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
 [27
 
@@ -471,20 +471,20 @@ Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 686.
 <./Images//CorrGraph.png, id=170, 462.528pt x 346.896pt>
 File: ./Images//CorrGraph.png Graphic file (type png)
 <use ./Images//CorrGraph.png>
-Package pdftex.def Info: ./Images//CorrGraph.png  used on input line 695.
+Package pdftex.def Info: ./Images//CorrGraph.png  used on input line 684.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
  [28 <./Images//EUCGraph.png>]
 <./Images//ConfMatrixTest2.jpeg, id=175, 717.6411pt x 704.6325pt>
 File: ./Images//ConfMatrixTest2.jpeg Graphic file (type jpg)
 <use ./Images//ConfMatrixTest2.jpeg>
-Package pdftex.def Info: ./Images//ConfMatrixTest2.jpeg  used on input line 738
+Package pdftex.def Info: ./Images//ConfMatrixTest2.jpeg  used on input line 727
 .
 (pdftex.def)             Requested size: 344.4638pt x 338.21977pt.
  [29 <./Images//CorrGraph.png>]
 <./Images//Time.png, id=180, 114.4275pt x 56.46094pt>
 File: ./Images//Time.png Graphic file (type png)
 <use ./Images//Time.png>
-Package pdftex.def Info: ./Images//Time.png  used on input line 749.
+Package pdftex.def Info: ./Images//Time.png  used on input line 738.
 (pdftex.def)             Requested size: 114.42722pt x 56.46078pt.
  [30 <./Images//ConfMatrixTest2.jpeg>] [31 <./Images//Time.png>]
 Chapter 5.
@@ -494,7 +494,7 @@ Chapter 5.
 <./Images//GantChartAll.png, id=195, 1258.7025pt x 411.5375pt>
 File: ./Images//GantChartAll.png Graphic file (type png)
 <use ./Images//GantChartAll.png>
-Package pdftex.def Info: ./Images//GantChartAll.png  used on input line 788.
+Package pdftex.def Info: ./Images//GantChartAll.png  used on input line 777.
 (pdftex.def)             Requested size: 339.85422pt x 111.11661pt.
  [34 <./Images//GantChartAll.png (PNG copy)>] [35] [36]
 Chapter 6.
@@ -535,7 +535,7 @@ essed:
 Here is how much of TeX's memory you used:
  7337 strings out of 478268
  118556 string characters out of 5846347
- 644713 words of memory out of 5000000
+ 643713 words of memory out of 5000000
  25488 multiletter control sequences out of 15000+600000
  476139 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -558,7 +558,7 @@ cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 tt9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm100
 0.pfb>
-Output written on "Dissertation Sauce2.pdf" (43 pages, 1050683 bytes).
+Output written on "Dissertation Sauce2.pdf" (43 pages, 1052238 bytes).
 PDF statistics:
  287 PDF objects out of 1000 (max. 8388607)
  148 compressed objects within 2 object streams
