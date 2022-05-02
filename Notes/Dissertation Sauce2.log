@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  2 MAY 2022 18:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.10)  2 MAY 2022 19:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -273,13 +273,13 @@ Overfull \hbox (42.3806pt too wide) in paragraph at lines 75--76
  []
 
 [1 <./Images//PlagDec.jpeg>]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 82.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 81.
 
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 82.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 81.
 
 
 (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -306,17 +306,17 @@ Chapter 3.
 <./Images//OOP.png, id=33, 427.5975pt x 261.97874pt>
 File: ./Images//OOP.png Graphic file (type png)
 <use ./Images//OOP.png>
-Package pdftex.def Info: ./Images//OOP.png  used on input line 127.
+Package pdftex.def Info: ./Images//OOP.png  used on input line 126.
 (pdftex.def)             Requested size: 165.59853pt x 101.45575pt.
 <./Images//OldPlan.png, id=35, 453.695pt x 279.0425pt>
 File: ./Images//OldPlan.png Graphic file (type png)
 <use ./Images//OldPlan.png>
-Package pdftex.def Info: ./Images//OldPlan.png  used on input line 136.
+Package pdftex.def Info: ./Images//OldPlan.png  used on input line 135.
 (pdftex.def)             Requested size: 317.58434pt x 195.3284pt.
 <./Images//SystemPlan.png, id=36, 603.25375pt x 372.39125pt>
 File: ./Images//SystemPlan.png Graphic file (type png)
 <use ./Images//SystemPlan.png>
-Package pdftex.def Info: ./Images//SystemPlan.png  used on input line 142.
+Package pdftex.def Info: ./Images//SystemPlan.png  used on input line 141.
 (pdftex.def)             Requested size: 331.79059pt x 204.81581pt.
 [4
 
@@ -325,12 +325,12 @@ Package pdftex.def Info: ./Images//SystemPlan.png  used on input line 142.
 <./Images//MathsBackend.png, id=49, 83.31125pt x 320.19624pt>
 File: ./Images//MathsBackend.png Graphic file (type png)
 <use ./Images//MathsBackend.png>
-Package pdftex.def Info: ./Images//MathsBackend.png  used on input line 163.
+Package pdftex.def Info: ./Images//MathsBackend.png  used on input line 162.
 (pdftex.def)             Requested size: 103.50105pt x 397.82095pt.
 <./Images//NewMaths.png, id=50, 121.45375pt x 382.42876pt>
 File: ./Images//NewMaths.png Graphic file (type png)
 <use ./Images//NewMaths.png>
-Package pdftex.def Info: ./Images//NewMaths.png  used on input line 170.
+Package pdftex.def Info: ./Images//NewMaths.png  used on input line 169.
 (pdftex.def)             Requested size: 103.50105pt x 325.90042pt.
 
 
@@ -339,7 +339,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <./Images//KeyboardEvent.png, id=51, 354.32375pt x 29.10875pt>
 File: ./Images//KeyboardEvent.png Graphic file (type png)
 <use ./Images//KeyboardEvent.png>
-Package pdftex.def Info: ./Images//KeyboardEvent.png  used on input line 199.
+Package pdftex.def Info: ./Images//KeyboardEvent.png  used on input line 198.
 (pdftex.def)             Requested size: 343.69362pt x 28.23544pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -349,75 +349,75 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: ./Images//KeyboardEventPreProc.png Graphic file (type png)
 <use ./Images//KeyboardEventPreProc.png>
 Package pdftex.def Info: ./Images//KeyboardEventPreProc.png  used on input line
- 210.
+ 209.
 (pdftex.def)             Requested size: 165.59853pt x 31.80429pt.
 <./Images//SimplePairing.png, id=62, 223.83624pt x 117.43875pt>
 File: ./Images//SimplePairing.png Graphic file (type png)
 <use ./Images//SimplePairing.png>
-Package pdftex.def Info: ./Images//SimplePairing.png  used on input line 222.
+Package pdftex.def Info: ./Images//SimplePairing.png  used on input line 221.
 (pdftex.def)             Requested size: 131.10168pt x 68.7865pt.
  [9 <./Images//KeyboardEvent.png> <./Images//KeyboardEventPreProc.png> <./Image
 s//SimplePairing.png>]
 <./Images//PairingWrong.png, id=71, 238.8925pt x 132.495pt>
 File: ./Images//PairingWrong.png Graphic file (type png)
 <use ./Images//PairingWrong.png>
-Package pdftex.def Info: ./Images//PairingWrong.png  used on input line 234.
+Package pdftex.def Info: ./Images//PairingWrong.png  used on input line 233.
 (pdftex.def)             Requested size: 131.10168pt x 72.71072pt.
  [10 <./Images//PairingWrong.png>]
 <./Images//WordsChosenVsTime.png, id=77, 462.528pt x 346.896pt>
 File: ./Images//WordsChosenVsTime.png Graphic file (type png)
 <use ./Images//WordsChosenVsTime.png>
 Package pdftex.def Info: ./Images//WordsChosenVsTime.png  used on input line 26
-6.
+5.
 (pdftex.def)             Requested size: 323.76738pt x 242.82553pt.
  [11] [12 <./Images//WordsChosenVsTime.png>]
 <./Images//KDS1.png, id=89, 462.528pt x 346.896pt>
 File: ./Images//KDS1.png Graphic file (type png)
 <use ./Images//KDS1.png>
-Package pdftex.def Info: ./Images//KDS1.png  used on input line 306.
+Package pdftex.def Info: ./Images//KDS1.png  used on input line 305.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
 <./Images//KDS2.png, id=90, 462.528pt x 346.896pt>
 File: ./Images//KDS2.png Graphic file (type png)
 <use ./Images//KDS2.png>
-Package pdftex.def Info: ./Images//KDS2.png  used on input line 313.
+Package pdftex.def Info: ./Images//KDS2.png  used on input line 312.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
 <./Images//KDSBoth.png, id=91, 1387.584pt x 704.6325pt>
 File: ./Images//KDSBoth.png Graphic file (type png)
 <use ./Images//KDSBoth.png>
-Package pdftex.def Info: ./Images//KDSBoth.png  used on input line 320.
+Package pdftex.def Info: ./Images//KDSBoth.png  used on input line 319.
 (pdftex.def)             Requested size: 103.50105pt x 52.55486pt.
  [13]
 <./Images//KDS1DTW.png, id=96, 462.528pt x 346.896pt>
 File: ./Images//KDS1DTW.png Graphic file (type png)
 <use ./Images//KDS1DTW.png>
-Package pdftex.def Info: ./Images//KDS1DTW.png  used on input line 340.
+Package pdftex.def Info: ./Images//KDS1DTW.png  used on input line 339.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
 <./Images//KDS2DTW.png, id=97, 462.528pt x 346.896pt>
 File: ./Images//KDS2DTW.png Graphic file (type png)
 <use ./Images//KDS2DTW.png>
-Package pdftex.def Info: ./Images//KDS2DTW.png  used on input line 347.
+Package pdftex.def Info: ./Images//KDS2DTW.png  used on input line 346.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
 <./Images//KDSBothDTW.png, id=98, 462.528pt x 346.896pt>
 File: ./Images//KDSBothDTW.png Graphic file (type png)
 <use ./Images//KDSBothDTW.png>
-Package pdftex.def Info: ./Images//KDSBothDTW.png  used on input line 354.
+Package pdftex.def Info: ./Images//KDSBothDTW.png  used on input line 353.
 (pdftex.def)             Requested size: 103.50105pt x 77.62477pt.
  [14 <./Images//KDS1.png> <./Images//KDS2.png> <./Images//KDSBoth.png> <./Image
 s//KDS1DTW.png> <./Images//KDS2DTW.png> <./Images//KDSBothDTW.png>]
 <./Images//SemanticsEx.png, id=108, 238.8925pt x 34.1275pt>
 File: ./Images//SemanticsEx.png Graphic file (type png)
 <use ./Images//SemanticsEx.png>
-Package pdftex.def Info: ./Images//SemanticsEx.png  used on input line 377.
+Package pdftex.def Info: ./Images//SemanticsEx.png  used on input line 376.
 (pdftex.def)             Requested size: 131.10168pt x 18.7285pt.
 <./Images//DistancesDict.png, id=109, 240.9pt x 80.3pt>
 File: ./Images//DistancesDict.png Graphic file (type png)
 <use ./Images//DistancesDict.png>
-Package pdftex.def Info: ./Images//DistancesDict.png  used on input line 389.
+Package pdftex.def Info: ./Images//DistancesDict.png  used on input line 388.
 (pdftex.def)             Requested size: 131.10168pt x 43.70197pt.
 <./Images//ValidationProc.png, id=110, 1146.2825pt x 1064.97874pt>
 File: ./Images//ValidationProc.png Graphic file (type png)
 <use ./Images//ValidationProc.png>
-Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 397.
+Package pdftex.def Info: ./Images//ValidationProc.png  used on input line 396.
 (pdftex.def)             Requested size: 343.8874pt x 319.4961pt.
 
 [15 <./Images//SemanticsEx.png> <./Images//DistancesDict.png>] [16 <./Images//V
@@ -425,48 +425,48 @@ alidationProc.png>]
 <./Images//WordCheck.png, id=121, 288.07625pt x 33.12375pt>
 File: ./Images//WordCheck.png Graphic file (type png)
 <use ./Images//WordCheck.png>
-Package pdftex.def Info: ./Images//WordCheck.png  used on input line 420.
+Package pdftex.def Info: ./Images//WordCheck.png  used on input line 419.
 (pdftex.def)             Requested size: 288.07553pt x 33.12366pt.
  [17 <./Images//WordCheck.png>]
 <./Images//IfLen1.png, id=126, 596.2275pt x 628.3475pt>
 File: ./Images//IfLen1.png Graphic file (type png)
 <use ./Images//IfLen1.png>
-Package pdftex.def Info: ./Images//IfLen1.png  used on input line 433.
+Package pdftex.def Info: ./Images//IfLen1.png  used on input line 432.
 (pdftex.def)             Requested size: 238.48677pt x 251.33455pt.
  [18 <./Images//IfLen1.png>]
 <./Images//EucVs2D.png, id=131, 185.19188pt x 272.51813pt>
 File: ./Images//EucVs2D.png Graphic file (type png)
 <use ./Images//EucVs2D.png>
-Package pdftex.def Info: ./Images//EucVs2D.png  used on input line 467.
+Package pdftex.def Info: ./Images//EucVs2D.png  used on input line 466.
 (pdftex.def)             Requested size: 92.5957pt x 136.25873pt.
 
 [19] [20 <./Images//EucVs2D.png>] [21] [22]
 <./Images//UncompressedData.png, id=146, 347.2975pt x 820.06375pt>
 File: ./Images//UncompressedData.png Graphic file (type png)
 <use ./Images//UncompressedData.png>
-Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 565
+Package pdftex.def Info: ./Images//UncompressedData.png  used on input line 564
 .
 (pdftex.def)             Requested size: 131.10168pt x 309.5753pt.
  [23 <./Images//UncompressedData.png>] [24]
 <./Images//FolderStruct.png, id=154, 197.23688pt x 487.06969pt>
 File: ./Images//FolderStruct.png Graphic file (type png)
 <use ./Images//FolderStruct.png>
-Package pdftex.def Info: ./Images//FolderStruct.png  used on input line 611.
+Package pdftex.def Info: ./Images//FolderStruct.png  used on input line 610.
 (pdftex.def)             Requested size: 96.59958pt x 238.54732pt.
 
 
 Package wrapfig Warning: Stationary wrapfigure forced to float on input line 61
-7.
+6.
 
 <./Images//PauseEx.png, id=155, 330.48468pt x 333.49594pt>
 File: ./Images//PauseEx.png Graphic file (type png)
 <use ./Images//PauseEx.png>
-Package pdftex.def Info: ./Images//PauseEx.png  used on input line 625.
+Package pdftex.def Info: ./Images//PauseEx.png  used on input line 624.
 (pdftex.def)             Requested size: 137.9979pt x 139.25822pt.
 <./Images//PlayEx.png, id=156, 328.97906pt x 334.24875pt>
 File: ./Images//PlayEx.png Graphic file (type png)
 <use ./Images//PlayEx.png>
-Package pdftex.def Info: ./Images//PlayEx.png  used on input line 632.
+Package pdftex.def Info: ./Images//PlayEx.png  used on input line 631.
 (pdftex.def)             Requested size: 137.9979pt x 140.2101pt.
 [25 <./Images//PauseEx.png> <./Images//PlayEx.png> <./Images//FolderStruct.png>
 ] [26]
@@ -474,7 +474,7 @@ Chapter 4.
 <./Images//EUCGraph.png, id=166, 462.528pt x 346.896pt>
 File: ./Images//EUCGraph.png Graphic file (type png)
 <use ./Images//EUCGraph.png>
-Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 680.
+Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 679.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
 [27
 
@@ -482,20 +482,20 @@ Package pdftex.def Info: ./Images//EUCGraph.png  used on input line 680.
 <./Images//CorrGraph.png, id=171, 462.528pt x 346.896pt>
 File: ./Images//CorrGraph.png Graphic file (type png)
 <use ./Images//CorrGraph.png>
-Package pdftex.def Info: ./Images//CorrGraph.png  used on input line 689.
+Package pdftex.def Info: ./Images//CorrGraph.png  used on input line 688.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
  [28 <./Images//EUCGraph.png>]
 <./Images//ConfMatrixTest2.jpeg, id=176, 717.6411pt x 704.6325pt>
 File: ./Images//ConfMatrixTest2.jpeg Graphic file (type jpg)
 <use ./Images//ConfMatrixTest2.jpeg>
-Package pdftex.def Info: ./Images//ConfMatrixTest2.jpeg  used on input line 732
+Package pdftex.def Info: ./Images//ConfMatrixTest2.jpeg  used on input line 731
 .
 (pdftex.def)             Requested size: 344.4638pt x 338.21977pt.
  [29 <./Images//CorrGraph.png>]
 <./Images//Time.png, id=181, 114.4275pt x 56.46094pt>
 File: ./Images//Time.png Graphic file (type png)
 <use ./Images//Time.png>
-Package pdftex.def Info: ./Images//Time.png  used on input line 741.
+Package pdftex.def Info: ./Images//Time.png  used on input line 740.
 (pdftex.def)             Requested size: 114.42722pt x 56.46078pt.
  [30 <./Images//ConfMatrixTest2.jpeg>] [31 <./Images//Time.png>]
 Chapter 5.
@@ -505,7 +505,7 @@ Chapter 5.
 <./Images//GantChartAll.png, id=196, 1258.7025pt x 411.5375pt>
 File: ./Images//GantChartAll.png Graphic file (type png)
 <use ./Images//GantChartAll.png>
-Package pdftex.def Info: ./Images//GantChartAll.png  used on input line 786.
+Package pdftex.def Info: ./Images//GantChartAll.png  used on input line 785.
 (pdftex.def)             Requested size: 339.85422pt x 111.11661pt.
 
 
@@ -573,7 +573,7 @@ cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 tt9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm100
 0.pfb>
-Output written on "Dissertation Sauce2.pdf" (43 pages, 1849220 bytes).
+Output written on "Dissertation Sauce2.pdf" (43 pages, 1849195 bytes).
 PDF statistics:
  288 PDF objects out of 1000 (max. 8388607)
  148 compressed objects within 2 object streams
