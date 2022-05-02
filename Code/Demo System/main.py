@@ -1,7 +1,6 @@
 from functools import partial
 from getpass import getuser
 import os
-import subprocess
 import sys
 import threading
 import time
@@ -12,7 +11,7 @@ import Training as t
 from user_profile import User_Profile
 
 # The main running class. Run everything from here.
-interval = 10
+interval = 60
 trainingItersYN = True
 trainingIters = 5
 
@@ -48,7 +47,6 @@ def record(interval, stop):
             print("Thread stopped")
             return None, None
         x += 1
-    # time.sleep(interval)
     keyboard.unhook(keyBoardHook)
     print("Not Recording")
     if stop():

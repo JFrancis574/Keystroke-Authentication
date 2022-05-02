@@ -96,7 +96,9 @@ class Word:
             Dictionary: The compressed dictionary
         """
         print("Compressing")
+        
         allData = self.KDSWord()
+        print("Original array size:", len(allData))
         data = np.array(list(allData.values()))
         keys = np.array(list(allData.keys()))
         startValue = data[0]
@@ -116,7 +118,7 @@ class Word:
                 startValue = data[i]
                 start = keys[i]
                 grouping = (start, keys[i])
-                
+        print("Size after compression: ", len(endDict))      
         return self.remap_keys(endDict)
     
     def toString(self):
