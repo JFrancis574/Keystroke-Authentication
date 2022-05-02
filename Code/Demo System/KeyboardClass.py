@@ -1,3 +1,5 @@
+# OS implementation inside Python Standard Lib
+# https://docs.python.org/3/library/os.html
 import os
 
 class Keyboard:

@@ -1,19 +1,41 @@
+# ctypes implementation inside python standard lib
+# https://docs.python.org/3/library/ctypes.html
 import ctypes
+
+# getpass implementation inside python standard lib
+# https://docs.python.org/3/library/getpass.html
 import getpass
+
+# JSON implementation inside Python Standard Lib
+# https://docs.python.org/3/library/json.html
 import json
+
+# math implementation inside Python Standard Lib
+# https://docs.python.org/3/library/math.html
 import math
+
+# OS implementation inside Python Standard Lib
+# https://docs.python.org/3/library/os.html
 import os.path
+
+# String implementation inside Python Standard Lib
+# https://docs.python.org/3/library/string.html
 import string
+
+
+# subprocess implementation inside Python Standard Lib
+# https://docs.python.org/3/library/subprocess.html
 import subprocess
 
-# NumPy implemtation by NumPy
+# NumPy implementation by NumPy
 # https://numpy.org/
+# Last updated: 02/05/2022
 import numpy as np
 
 # FastDTW implementation by slaypni
-# https://github.com/slaypni/fastdtw
-from fastdtw import fastdtw                    
-                    
+# https://github.com/slaypni/fastdtw                 
+from fastdtw import fastdtw
+
 # Euclidean distance implementation by scipy
 # https://scipy.org/
 from scipy.spatial.distance import euclidean

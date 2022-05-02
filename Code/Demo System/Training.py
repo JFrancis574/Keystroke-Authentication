@@ -1,4 +1,9 @@
+# JSON implementation inside Python Standard Lib
+# https://docs.python.org/3/library/json.html
 import json
+
+# OS implementation inside Python Standard Lib
+# https://docs.python.org/3/library/os.html
 import os
 from Interval import Calculation
 

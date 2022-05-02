@@ -1,8 +1,21 @@
+# getpass implementation inside python standard lib
+# https://docs.python.org/3/library/getpass.html
 import getpass
+
+# OS implementation inside Python Standard Lib
+# https://docs.python.org/3/library/os.html
 import os.path
-from KeyboardClass import Keyboard as k
+
+# Random implementation inside Python Standard Lib
+# https://docs.python.org/3/library/random.html
 from random import choice
+
+# String implementation inside Python Standard Lib
+# https://docs.python.org/3/library/string.html
 from string import ascii_lowercase
+
+
+from KeyboardClass import Keyboard as k
 
 class User_Profile:
     def __init__(self, keyName=None):

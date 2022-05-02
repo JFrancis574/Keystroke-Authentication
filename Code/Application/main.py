@@ -1,17 +1,35 @@
-from functools import partial
-from getpass import getuser
+# OS implementation inside Python Standard Lib
+# https://docs.python.org/3/library/os.html
 import os
+
+# subprocess implementation inside Python Standard Lib
+# https://docs.python.org/3/library/subprocess.html
 import subprocess
-import sys
+
+# threading inside Python Standard Lib
+# https://docs.python.org/3/library/threading.html
 import threading
+
+# Uses pythons builtin time library
+# https://docs.python.org/3/library/time.html
 import time
+
+# Tkinter base libary inside python
+# https://docs.python.org/3/library/tkinter.html
+import tkinter as tk
+
+
+# functools implementation in Python Standard Lib
+# https://docs.python.org/3/library/functools.html
+from functools import partial
+
+# getpass implementation inside python standard lib
+# https://docs.python.org/3/library/getpass.html
+from getpass import getuser
 
 # Implementation by Broppeh
 # https://github.com/boppreh/keyboard
 import keyboard
-
-import tkinter as tk
-
 
 import Interval as i
 import Training as t
@@ -85,8 +103,8 @@ def stop():
         button.configure(image=imgPlay)
         button.image = imgPlay
         stop_threads = True
-        for worker in workers:
-            worker.join()
+        for thread in threads:
+            thread.join()
     else:
         button.configure(image=imgPause)
         button.image = imgPause
@@ -99,7 +117,7 @@ def runner(id, prof, stop):
 
     Args:
         id (int): ID of the thread
-        prof (User_Profule): The User_Profile in use
+        prof (User_Profile): The User_Profile in use
         stop (bool): The function used to stop the thread
     """
     count = 0
@@ -149,11 +167,12 @@ def training():
         prof = User_Profile()
         prof.setNew(True)
 
-        # Grab the training text
+        # Grab the training text from the file
+        # Training text is:
+        # H. W. Dodge, The geology of Darling State Park. Montpelier: Vermont Geological Survey, 1967. 
         file = open(resource_path('TrainingText.csv'))
         content = file.read()
         file.close()
-
 
         recorded = []
 
@@ -192,10 +211,10 @@ if __name__ == '__main__':
     global stop_threads
     stop_threads = False
     prof = training()
-    workers = []
+    threads = []
     id = 0
     tmp = threading.Thread(target=runner, args=(id, prof, lambda: stop_threads))
-    workers.append(tmp)
+    threads.append(tmp)
     tmp.start()
     root = tk.Tk()
     imgPause = tk.PhotoImage(file = resource_path('Pause.png')).subsample(3,3)
@@ -205,5 +224,5 @@ if __name__ == '__main__':
     button.pack()
     root.mainloop()
     stop_threads = True
-    for worker in workers:
-        worker.join()
+    for thread in threads:
+        thread.join()

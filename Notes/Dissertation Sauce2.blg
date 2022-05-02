@@ -5,45 +5,45 @@ The style file: ieeetr.bst
 Database file #1: reference.bib
 Warning--empty booktitle in Salvador2004FastDTWTA
 Warning--empty publisher in inbook
-You've used 19 entries,
+You've used 20 entries,
             1876 wiz_defined-function locations,
-            597 strings with 6346 characters,
-and the built_in function-call counts, 3768 in all, are:
-= -- 362
-> -- 116
+            602 strings with 6433 characters,
+and the built_in function-call counts, 3914 in all, are:
+= -- 376
+> -- 120
 < -- 0
-+ -- 49
-- -- 30
-* -- 225
-:= -- 519
-add.period$ -- 26
-call.type$ -- 19
++ -- 51
+- -- 31
+* -- 230
+:= -- 540
+add.period$ -- 28
+call.type$ -- 20
 change.case$ -- 18
 chr.to.int$ -- 0
-cite$ -- 21
-duplicate$ -- 174
-empty$ -- 434
-format.name$ -- 30
-if$ -- 947
+cite$ -- 22
+duplicate$ -- 183
+empty$ -- 454
+format.name$ -- 31
+if$ -- 985
 int.to.chr$ -- 0
-int.to.str$ -- 19
-missing$ -- 9
-newline$ -- 67
-num.names$ -- 19
-pop$ -- 109
+int.to.str$ -- 20
+missing$ -- 11
+newline$ -- 71
+num.names$ -- 20
+pop$ -- 115
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 126
+skip$ -- 127
 stack$ -- 0
 substring$ -- 168
-swap$ -- 53
+swap$ -- 54
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 2
-while$ -- 33
-width$ -- 21
-write$ -- 171
+while$ -- 34
+width$ -- 22
+write$ -- 180
 (There were 2 warnings)

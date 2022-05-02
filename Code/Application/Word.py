@@ -1,3 +1,6 @@
+# NumPy implementation by NumPy
+# https://numpy.org/
+# Last updated: 02/05/2022
 import numpy as np
 
 class Word:

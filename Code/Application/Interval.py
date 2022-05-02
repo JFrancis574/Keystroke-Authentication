@@ -1,17 +1,38 @@
+# ctypes implementation inside python standard lib
+# https://docs.python.org/3/library/ctypes.html
 import ctypes
+
+# getpass implementation inside python standard lib
+# https://docs.python.org/3/library/getpass.html
 import getpass
+
+# JSON implementation inside Python Standard Lib
+# https://docs.python.org/3/library/json.html
 import json
+
+# math implementation inside Python Standard Lib
+# https://docs.python.org/3/library/math.html
 import math
+
+# OS implementation inside Python Standard Lib
+# https://docs.python.org/3/library/os.html
 import os.path
+
+# String implementation inside Python Standard Lib
+# https://docs.python.org/3/library/string.html
 import string
+
+# subprocess implementation inside Python Standard Lib
+# https://docs.python.org/3/library/subprocess.html
 import subprocess
 
 # NumPy implementation by NumPy
 # https://numpy.org/
+# Last updated: 02/05/2022
 import numpy as np
 
- # FastDTW implementation by slaypni
- # https://github.com/slaypni/fastdtw                 
+# FastDTW implementation by slaypni
+# https://github.com/slaypni/fastdtw                 
 from fastdtw import fastdtw
 
 # Euclidean distance implementation by scipy
@@ -173,7 +194,7 @@ class Calculation:
             out.append(tempWords.pop(mid))
     
     def validation(self, mode='r'):
-        """The big boi. This essentially decided whether to accept the user or to kick the user out. Also handles the security aspect
+        """The big boi. This essentially decided whether to accept the user or to kick the user out. Also handles the security aspect.
 
         Args:
             mode (str, optional): This chooses whether this function is in test mode or not. Defaults to 'r'. r = real, t = test, rnl = real no lock
@@ -239,9 +260,9 @@ class Calculation:
             
             
                 
-            bandingEuc = 1000 # The range at which the euc distance is the same user. SUBJECT TO CHANGE
-            bandingCorr = 0.80 # The range at which the Correlation distance is the same user. SUBJECT TO CHANGE
-            bandingChange = 0.02 # The decrease for correct semantics. SUBJECT TO CHANGE
+            bandingEuc = 1000 # The range at which the euc distance is the same user.
+            bandingCorr = 0.80 # The range at which the Correlation distance is the same user.
+            bandingChange = 0.02 # The decrease for correct semantics.
             
             if self.stop():
                 return None, None

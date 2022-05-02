@@ -238,13 +238,10 @@ As explained above, this contains the source code along with the executable insi
 
 Contained inside here is the source code for the demo system along with an executable. The modules needed are the same as above. The only difference between the two systems is that the demo contains print statements throughout which explain what is going on.
 
-### Test Code 
-Contains test code that was used when starting the project. Has not been updated in quite some time and is a little bit of a mess. Inside this folder, is stored some example data stored inside pickles.
-
 ### Notes
 This contains all things dissertation and notes along with it. The dissertation in pdf form, the interim report and all dissertation related files are stored here. As well as these important documents is a number of note files which I created along the way. The source of the dissertation is also here as I wrote it in LaTeX.
 
-### tester.py
+### tester
 [Code/Application/tester.py](Code/Application/tester.py)
 Contains all the code necessary to run the tests in the dissertation. Further packages are required for this. These are listed below:
 

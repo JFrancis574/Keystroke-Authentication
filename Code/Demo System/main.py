@@ -1,11 +1,35 @@
-from functools import partial
-from getpass import getuser
+# OS implementation inside Python Standard Lib
+# https://docs.python.org/3/library/os.html
 import os
-import sys
+
+# subprocess implementation inside Python Standard Lib
+# https://docs.python.org/3/library/subprocess.html
+import subprocess
+
+# threading inside Python Standard Lib
+# https://docs.python.org/3/library/threading.html
 import threading
+
+# Uses pythons builtin time library
+# https://docs.python.org/3/library/time.html
 import time
-import keyboard
+
+# Tkinter base libary inside python
+# https://docs.python.org/3/library/tkinter.html
 import tkinter as tk
+
+# functools implementation in Python Standard Lib
+# https://docs.python.org/3/library/functools.html
+from functools import partial
+
+# getpass implementation inside python standard lib
+# https://docs.python.org/3/library/getpass.html
+from getpass import getuser
+
+# Implementation by Broppeh
+# https://github.com/boppreh/keyboard
+import keyboard
+
 import Interval as i
 import Training as t
 from user_profile import User_Profile
@@ -157,10 +181,11 @@ def training():
         prof.setNew(True)
 
         # Grab the training text
+        # Training text is:
+        # H. W. Dodge, The geology of Darling State Park. Montpelier: Vermont Geological Survey, 1967. 
         file = open(resource_path('TrainingText.csv'))
         content = file.read()
         file.close()
-
 
         recorded = []
 

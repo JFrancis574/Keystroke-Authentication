@@ -1,17 +1,43 @@
+# JSON implementation inside Python Standard Lib
+# https://docs.python.org/3/library/json.html
 import json
+
+# Random implementation inside Python Standard Lib
+# https://docs.python.org/3/library/random.html
 import random
 
+# Used to generate the graph, implementation by The Matplotlib Development team
+# https://matplotlib.org
 from matplotlib import pyplot as plt
-from Training import Training
-import user_profile as p
+
+# OS implementation inside Python Standard Lib
+# https://docs.python.org/3/library/os.html
 import os
+
+# time implementation inside Python Standard Lib
+# https://docs.python.org/3/library/time.html
 import time as t
-from Interval import Calculation
+
+# timeit implementation inside Python Standard Lib
+# https://docs.python.org/3/library/timeit.html
 import timeit
+
+# Used to generate conf matrix, implementation by Scikit
+# https://scikit-learn.org/stable/
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
+# NumPy implementation by NumPy
+# https://numpy.org/
+# Last updated: 02/05/2022
 import numpy as np
 
+# sys implementation in Python Standard lib
+# https://docs.python.org/3/library/sys.html
 from sys import platform
+
+from Training import Training
+import user_profile as p
+from Interval import Calculation
 
 if platform == 'darwin':
     import keyboardEvent as k

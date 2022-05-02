@@ -1,5 +1,9 @@
+
+# https://www.sqlite.org/index.html, published 27/04/2022
 import sqlite3 as sq
 import bcrypt
+
+# DO NOT USE. OUT OF DATE
 
 class DBStuff():
     def __init__(self, dbName):
