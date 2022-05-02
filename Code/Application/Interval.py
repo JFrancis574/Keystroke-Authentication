@@ -6,8 +6,16 @@ import os.path
 import string
 import subprocess
 
+# NumPy implementation by NumPy
+# https://numpy.org/
 import numpy as np
+
+ # FastDTW implementation by slaypni
+ # https://github.com/slaypni/fastdtw                 
 from fastdtw import fastdtw
+
+# Euclidean distance implementation by scipy
+# https://scipy.org/
 from scipy.spatial.distance import euclidean
 
 import Word as w

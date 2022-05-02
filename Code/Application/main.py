@@ -5,8 +5,14 @@ import subprocess
 import sys
 import threading
 import time
+
+# Implementation by Broppeh
+# https://github.com/boppreh/keyboard
 import keyboard
+
 import tkinter as tk
+
+
 import Interval as i
 import Training as t
 from user_profile import User_Profile
@@ -41,13 +47,15 @@ def record(interval, stop):
         return None, None
     x = 0 
     while x <= interval:
+        # Used instead of time.sleep due to need to stop.
+        # Program would hang if thread was closed whilst recording
         if stop():
             return None, None
         time.sleep(1)
         if stop():
             return None, None
         x += 1
-    # time.sleep(interval)
+    
     keyboard.unhook(keyBoardHook)
     if stop():
         return None, None
@@ -175,6 +183,8 @@ def training():
             root.mainloop()
             return User_Profile()
     else:
+        global trainingItersYN
+        trainingItersYN = False
         return User_Profile()
     
     

@@ -372,6 +372,7 @@ def test2(all=False):
         data, start = record(interval, words, [])
         train = Training(data, start, prof, 1, None, 0)
         print("Benchmark Done")
+    return
         
     i = 3
     while i < tests:
@@ -395,10 +396,10 @@ def loadInJson(data):
         rawData = json.load(read)
     return rawData
 
-# test2(all=True)
+test2(all=True)
 
 def confMatrix():
-    files = ["Words0.json","Words1.json","Words2.json","Words3.json",]
+    files = ["Words0.json","Words1.json","Words2.json","Words3.json"]
     stop = False
     prof = p.User_Profile("Test")
     allDec = []
@@ -410,7 +411,9 @@ def confMatrix():
         inter.wordsOut, inter.semantics = inter.words()
         inter.noWords = len(inter.wordsOut)
         inter.chosen = inter.choose()
+        startTime = t.time()
         _, dec = inter.validation(mode='t')
+        print(t.time() - startTime)
         allDec.append(dec)
     allDec = np.asarray(allDec)
     final = allDec.ravel()
