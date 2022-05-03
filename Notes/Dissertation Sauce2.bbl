@@ -13,6 +13,7 @@ A.~Abo-alian, N.~L. Badr, and M.~F. Tolba, ``Keystroke dynamics-based user
 \bibitem{Salvador2004FastDTWTA}
 S.~Salvador and P.~K.-F. Chan, ``Fastdtw: Toward accurate dynamic time warping
   in linear time and space,'' 2004.
+\newblock Accessed: 20/11/2022.
 
 \bibitem{IzakianHesam2015Fcot}
 H.~Izakian, W.~Pedrycz, and I.~Jamal, ``Fuzzy clustering of time series data
@@ -65,8 +66,9 @@ H.~W. Dodge, {\em The geology of Darling State Park}.
 \newblock Vermont Geological Survey, 1967.
 
 \bibitem{naskar_2020}
-A.~Naskar, ``What is the average typing speed, average words per minute?,'' May
-  2020.
+A.~Naskar, ``What is the average typing speed, average words per minute?.''
+  https://onlinetyping.org/blog/average-typing-speed.php, May 2020.
+\newblock Accessed: 26/04/2022.
 
 \bibitem{getuser}
 P.~S. Foundation, ``Getpass - portable password input.''
@@ -74,18 +76,26 @@ P.~S. Foundation, ``Getpass - portable password input.''
 \newblock Accessed: 20/02/2022.
 
 \bibitem{o'dea_2022}
-S.~O'Dea, ``Uk businesses: Average cost of security breaches 2021,'' Mar 2022.
+S.~O'Dea, ``Uk businesses: Average cost of security breaches 2021.''
+  https://www.statista.com/statistics/586788/average-cost-of-cyber-security-breaches-for-united-kingdom-uk-businesses/,
+  Mar 2022.
+\newblock Accessed: 20/04/2022.
 
 \bibitem{karafiloski_2021}
-D.~Karafiloski, ``Cost of cyber attacks vs. cost of cybersecurity in 2021,''
+D.~Karafiloski, ``Cost of cyber attacks vs. cost of cybersecurity in 2021.''
+  https://www.sumologic.com/blog/cost-of-cyber-attacks-vs-cost-of-cyber-security-in-2021/,
   Sep 2021.
+\newblock Accessed: 23/04/2022.
 
 \bibitem{typingdna_2022}
 TypingDNA, ``Prevent unauthorized use of company computers with continuous
-  authentication,'' Jan 2022.
+  authentication.''
+  https://www.typingdna.com/activelock-continuous-authentication, Jan 2022.
+\newblock Accessed: 25/04/2022.
 
 \bibitem{typingdna_2021}
-TypingDNA, ``Track your mood and improve productivity based on how you type,''
-  Jul 2021.
+TypingDNA, ``Track your mood and improve productivity based on how you type.''
+  https://www.typingdna.com/focus, July 2021.
+\newblock Accessed: 26/04/2022.
 
 \end{thebibliography}

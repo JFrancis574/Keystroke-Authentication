@@ -7,16 +7,16 @@ Warning--empty booktitle in Salvador2004FastDTWTA
 Warning--empty publisher in inbook
 You've used 20 entries,
             1876 wiz_defined-function locations,
-            602 strings with 6433 characters,
-and the built_in function-call counts, 3914 in all, are:
-= -- 376
+            611 strings with 6880 characters,
+and the built_in function-call counts, 4000 in all, are:
+= -- 399
 > -- 120
 < -- 0
 + -- 51
 - -- 31
-* -- 230
-:= -- 540
-add.period$ -- 28
+* -- 235
+:= -- 557
+add.period$ -- 34
 call.type$ -- 20
 change.case$ -- 18
 chr.to.int$ -- 0
@@ -24,17 +24,17 @@ cite$ -- 22
 duplicate$ -- 183
 empty$ -- 454
 format.name$ -- 31
-if$ -- 985
+if$ -- 1008
 int.to.chr$ -- 0
 int.to.str$ -- 20
 missing$ -- 11
-newline$ -- 71
+newline$ -- 77
 num.names$ -- 20
-pop$ -- 115
+pop$ -- 109
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 127
+skip$ -- 122
 stack$ -- 0
 substring$ -- 168
 swap$ -- 54
@@ -45,5 +45,5 @@ type$ -- 0
 warning$ -- 2
 while$ -- 34
 width$ -- 22
-write$ -- 180
+write$ -- 197
 (There were 2 warnings)
