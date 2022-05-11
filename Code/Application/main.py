@@ -81,6 +81,7 @@ def record(interval, stop):
 
 def resource_path(relative_path):
     """When using the installer, stores files in a different temp location
+    Taken from https://stackoverflow.com/questions/51197722/module-sys-has-no-meipass-member-error-on-python-3-6-6 
 
     Args:
         relative_path (string): Name of the file
