@@ -1,3 +1,0 @@
-
-class ProfileError(Exception):
-    pass

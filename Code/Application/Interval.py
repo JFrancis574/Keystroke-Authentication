@@ -44,7 +44,7 @@ import Word as w
 class Calculation:
     """Calculation class that literally does everything
     """
-    def __init__(self, raw, startTime, pf, semanticsCheck, stop):
+    def __init__(self, raw, startTime, pf, semanticsCheck):
         """Preparing the class
 
         Args:
@@ -53,7 +53,6 @@ class Calculation:
             pf (Profile): The users profile
             semanticsCheck (int): Used to determine whether the semantics check is used
         """
-        self.stop = stop
         self.raw = raw
         self.pf = pf
         self.roundInterval = 4
@@ -73,14 +72,10 @@ class Calculation:
         Returns:
             2D array: 2 dimensional array consisting of a seperate array for each key action. Converts the time into one that can actually be used.
         """
-        if self.stop():
-            return None
         if len(self.raw) == 0:
             return []
         rawKeys = []
         for record in self.raw:
-            if self.stop():
-                return
             rawKeys.append([record.name, (record.time - self.startTime), record.event_type])
         return rawKeys
     
@@ -93,8 +88,6 @@ class Calculation:
         """
         pairsArray = []
         for i in range(len(self.processed)):
-            if self.stop():
-                return None
             try:
                 if (self.processed[i][2] == 'down' and self.processed[i+1][2] == 'up' and self.processed[i][0].lower() == self.processed[i+1][0].lower()):
                     # If the next value in the array is the up action
@@ -102,8 +95,6 @@ class Calculation:
                 else:
                     # Otherwise, search for the next opposing action and pair them up
                     for x in range(i, len(self.processed)):
-                        if self.stop():
-                            return
                         if (self.processed[x][0].lower() == self.processed[i][0].lower() and self.processed[x][2] == 'up' and self.processed[i][2] == 'down'):
                             pairsArray.append([self.processed[i][0], self.processed[i][1], self.processed[x][1]])
                             break        
@@ -122,8 +113,6 @@ class Calculation:
         output = []
         semantics = {} # This is used to store details on whether the user uses caps lock or shift. Essentially another security method
         for j, i in enumerate(self.pairs):
-            if self.stop():
-                return None, None
             if i[0] in ['shift', 'caps lock']:
                 semantics[i[0]] = 1
             elif i[0] not in bannedPunc and i[0] not in string.punctuation:
@@ -176,8 +165,6 @@ class Calculation:
             list: list of word objects
         """
         
-        if self.stop():
-            return
         out = []
         # Base cases
         if len(self.wordsOut) <= self.chosenAmount:
@@ -207,8 +194,6 @@ class Calculation:
         if mode in ['r', 'rnl', 't']:
             # For every word that has been chosen.
             for x in range(0, len(self.chosen)):
-                if self.stop():
-                    return None, None
                 fileName = self.chosen[x].word+'.json'
                 if os.path.exists(self.pf.getKeyboardPath()+'/'+fileName):
                     # Loading in the data from the word files
@@ -228,9 +213,6 @@ class Calculation:
                     # https://scipy.org/
                     euclideanDistance, path = fastdtw(fromFile, inInterval, dist=euclidean)
                     
-                    if self.stop():
-                        return None, None
-                    
                     ff_path, ii_path = zip(*path)
                     ff_path = np.asarray(ff_path)
                     ii_path = np.asarray(ii_path)
@@ -245,8 +227,6 @@ class Calculation:
                     Ymean = sum(ii_warped)/len(ii_warped)
                     
                     for i in range(len(ff_warped)):
-                        if self.stop():
-                            return None, None
                         cov += (ff_warped[i] - Xmean)*(ii_warped[i] - Ymean)
                         XSum += math.pow(ff_warped[i]-Xmean, 2)
                         YSum += math.pow(ii_warped[i]-Ymean, 2)
@@ -264,8 +244,6 @@ class Calculation:
             bandingCorr = 0.80 # The range at which the Correlation distance is the same user.
             bandingChange = 0.02 # The decrease for correct semantics.
             
-            if self.stop():
-                return None, None
             
             # Semantics stuff, currently a semantics match in terms of shift and caps lock will lead to the correlation banding being shorter
             if self.semanticsCheck != 0 or len(self.semantics) == 0:
@@ -285,8 +263,6 @@ class Calculation:
             
             wordCheck = []
             for j in list(distances.values()):
-                if self.stop():
-                    return None, None
                 if j[0] == None:
                     wordCheck.append(None)
                 # Both are inside the banding = same user
@@ -305,8 +281,6 @@ class Calculation:
 
             # Decision maker
             if len(wordCheck) != 1:
-                if self.stop():
-                    return None, None
                 if False not in wordCheck and None not in wordCheck:
                     return True, []
                 elif True in wordCheck and None in wordCheck and False not in wordCheck:
@@ -479,8 +453,6 @@ class Calculation:
         """
         outDict = {}
         for x in data:
-            if self.stop():
-                return None
             start = float(list(x.values())[0][0])
             end = float(list(x.values())[0][1])
             value = float(list(x.values())[1])
@@ -488,8 +460,6 @@ class Calculation:
             start10x = int(start*10000)
             end10x = int(round(end*10000,0))+1
             for x in range(start10x, end10x):
-                if self.stop():
-                    return
                 if start != end:
                     outDict[x/10000] = value
                 else:
@@ -522,8 +492,6 @@ class Calculation:
         else:
             intruderWords = [self.chosen[indexes[i]] for i in range(len(indexes))]
         for x in intruderWords:
-            if self.stop():
-                return None
             fileName = x.word+'.json'
             Kds = x.compress()
             with open(self.pf.getKeyboardPath()+'/'+fileName, 'w') as write_file:
@@ -554,8 +522,6 @@ class Calculation:
         Returns:
             int or dictionary: -1 if no semantics data exists, or the data if it does.
         """
-        if self.stop():
-            return None
         if len(self.semantics) == 0:
             return -1
         if os.path.exists(self.pf.getKeyboardPath()+'/Semantics.json'):
